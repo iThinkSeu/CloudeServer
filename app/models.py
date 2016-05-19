@@ -1,13 +1,18 @@
 
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.script import Manager
+from flask.ext.migrate import Migrate, MigrateCommand
 #from flask.ext.sqlalchemy import SQLALchemy
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI']="mysql://root:mysql_HGR@210.73.154.11:3306/flasktestdb"
+app.config['SQLALCHEMY_DATABASE_URI']="mysql://root:root@localhost:3306/dataserverble?charset=utf8"
 
 db = SQLAlchemy(app)
+migrage = Migrate(app,db)
+manager = Manager(app)
+manager.add_command('db',MigrateCommand)
 
 class User(db.Model):
 	id = db.Column(db.Integer,primary_key=True)
@@ -35,6 +40,9 @@ class User(db.Model):
 			return 1
 
 
+
+if __name__ == '__main__':
+	manager.run()
 
 
 
