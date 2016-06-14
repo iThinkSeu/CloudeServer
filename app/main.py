@@ -38,7 +38,7 @@ def index():
 	print "hi"
 	#return "hello"
 	#return redirect(url_for('static', filename='profile_small.jpg'), code=301)
-	return render_template('managebase.html')
+	return render_template('managebase.html',userinfo = "zrr")
 
 if __name__ == '__main__':
-	app.run(port=3001,debug=True)
+	app.run(port=3000,debug=True)
