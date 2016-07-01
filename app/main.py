@@ -7,6 +7,7 @@ from models import *
 from wtforms import Form,TextField,PasswordField,validators
 from hashmd5 import *
 import string
+import os, stat
 
 app = Flask(__name__)
 
@@ -60,6 +61,40 @@ def login():
 		else:
 			return "Login Failed"
 	return render_template('index.html',form=myForm)
+
+@app.route("/applogin",methods=['POST'])
+def applogin():
+	try:
+		username = request.json['username']
+		password = request.json['password']
+		u=User(username=username,password=password)
+		if u.isExisted():
+			state = 'successful'
+			tmp = getTokeninformation(username)
+			token = tmp.token
+			id = tmp.id
+			reason = ''
+		else:
+			id=''
+			state = 'fail'
+			token = 'None'
+			reason = '用户名密码错误'
+	except Exception, e:
+		print "login error!!"
+		print e
+		state = 'fail'
+		reason='服务器异常'
+		token = 'None'
+		id = ''
+
+	response = jsonify({'id':id,
+						'state':state,
+						'username':username,
+						'reason':reason,
+						'token':token})
+	#print state, reason
+	return response
+
 
 @app.route("/",methods=['GET','POST'])
 def index():
@@ -137,5 +172,46 @@ def appregister():
 	return response
 
 
+@app.route("/user/<name>",methods=['GET'])
+def getname(name):
+	print name;
+	return "hello"+str(name);
+
+
+@app.route("/datainget",methods=['GET'])
+def datainget():
+	name = request.args.get('name')
+	print str(name)
+	print request.args.get('type')
+	print request.args.get('value')
+	return "hello"+str(name);
+
+@app.route("/history_data",methods=['GET','POST'])
+def history_data():
+	
+	result = []
+	token = request.json['token']
+	modelist = request.json.get('modelist','')
+	starttime = request.json.get('starttime','')
+	endtime = request.json.get('endtime','')
+	u = getuserinformation(token)
+	if u is not None:	
+		reason = ''
+		state = 'successful'
+		history_data_list = get_history_data(['VDC'],starttime,endtime)
+		for tmp in history_data_list:
+			state = "successful"
+			output = {"dataid":tmp.id ,"datatype":tmp.datatype,"value":tmp.value,"timestamp":str(tmp.timestamp)}
+			result.append(output)
+			print tmp.timestamp
+	else:
+		state = 'fail'
+		reason = 'no user'
+
+
+	response = jsonify({'state':state,'reason':reason,'result':result})
+	return response
+
+
 if __name__ == '__main__':
-	app.run(port=8080,debug=True)
+	app.run(host=os.getenv('IP','0.0.0.0'),port=int(os.getenv('PORT',3000)),debug = True)

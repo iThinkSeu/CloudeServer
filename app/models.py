@@ -4,11 +4,15 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 from datetime import *
+from sqlalchemy import or_
+from sqlalchemy import and_
+
 #from flask.ext.sqlalchemy import SQLALchemy
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI']="mysql://root:0596@223.3.56.220:3306/dataserverble?charset=utf8"
+#app.config['SQLALCHEMY_DATABASE_URI']="mysql://root:0596@223.3.56.220:3306/dataserverble?charset=utf8"
+app.config['SQLALCHEMY_DATABASE_URI']="mysql://root:root@127.0.0.1:3306/dataserverble?charset=utf8"
 
 db = SQLAlchemy(app)
 migrage = Migrate(app,db)
@@ -84,6 +88,11 @@ def getuserinformation(token):
 def getTokeninformation(username):
 	u=User.query.filter_by(username=username).first()
 	return u 
+
+def get_history_data(typelist,start_time,end_time):
+	a = Measuredata.query.filter(Measuredata.datatype.in_(typelist)).filter(Measuredata.timestamp.between(start_time,end_time)).order_by(Measuredata.timestamp.desc()).all()
+	#a = Measuredata.query.filter(Measuredata.datatype.in_(typelist)).order_by(Measuredata.timestamp.desc()).all()
+	return a 
 
 if __name__ == '__main__':
 	manager.run()
