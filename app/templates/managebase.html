@@ -2,22 +2,24 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>微软学生俱乐部管理系统</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="renderer" content="webkit"/>
-    <link href="static/stylesheets/bootstrap.min.css" rel="stylesheet"/>
-    <link href="static/stylesheets/animate.css" rel="stylesheet"/>
-    <link href="{{ url_for('static', filename="stylesheets/style1.css") }}"  rel="stylesheet"/>
-    
-    <style type="text/css">
+   <meta charset="UTF-8" />
+   <title>Highcharts 教程 | 菜鸟教程(runoob.com)</title>
+   <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+   <script src="https://code.highcharts.com/highcharts.js"></script>
+   <link href="static/stylesheets/bootstrap.min.css" rel="stylesheet"/>
+   <link href="static/stylesheets/animate.css" rel="stylesheet"/>
+   <link href="{{ url_for('static', filename="stylesheets/style1.css") }}"  rel="stylesheet"/>
 
-        td {
-            text-align:center;
-        }
-    </style>
+   <style type="text/css">
+      td {
+          text-align:center;
+      }
+   </style>
 </head>
 <body>
-    <div id="wrapper">
+  
+
+<div id="wrapper">
         <nav class="navbar-default navbar-static-side" role="navigation">
             <div class="sidebar-collapse">
                 <ul class="nav" id="side-menu">
@@ -33,7 +35,7 @@
                                 <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">
                                    当前用户</strong>
                              </span> 
-                            <span class="text-muted text-xs block"> {{userinfo}}  <b class="caret"></b></span> 
+                            <span class="text-muted text-xs block"> <%=locals.admin%>  <b class="caret"></b></span> 
                             </span>
                             </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
@@ -86,6 +88,11 @@
               </ul>
           </div>   
       </nav>
+  
+            
+       
+            
+        
 
        <div id="page-wrapper" class="gray-bg dashbard-1">
             <div class="row border-bottom">
@@ -106,99 +113,83 @@
                 </nav>
             </div>
             
-            <div id="content" style="margin-left:0px">
-              <%-body%>
-            </div>
+            {% block content %}
+
+            {% endblock %}
+            <!--
+            <div id="container" style="width: 550px; height: 400px; margin: 0 auto"></div>
+            <script language="JavaScript">
+            $(document).ready(function() {
+               var title = {
+                   text: '月平均气温'   
+               };
+               var subtitle = {
+                    text: 'Source: runoob.com'
+               };
+               var xAxis = {
+                   categories: ['一月', '二月', '三月', '四月', '五月', '六月'
+                          ,'七月', '八月', '九月', '十月', '十一月', '十二月']
+               };
+               var yAxis = {
+                  title: {
+                     text: 'Temperature (\xB0C)'
+                  },
+                  plotLines: [{
+                     value: 0,
+                     width: 1,
+                     color: '#808080'
+                  }]
+               };   
+
+               var tooltip = {
+                  valueSuffix: '\xB0C'
+               }
+
+               var legend = {
+                  layout: 'vertical',
+                  align: 'right',
+                  verticalAlign: 'middle',
+                  borderWidth: 0
+               };
+
+               var series =  [
+                  {
+                     name: 'Tokyo',
+                     data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
+                        26.5, 23.3, 18.3, 13.9, 9.6]
+                  }, 
+                  {
+                     name: 'New York',
+                     data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8,
+                        24.1, 20.1, 14.1, 8.6, 2.5]
+                  }, 
+                  {
+                     name: 'Berlin',
+                     data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6,
+                        17.9, 14.3, 9.0, 3.9, 1.0]
+                  }, 
+                  {
+                     name: 'London',
+                     data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 
+                        16.6, 14.2, 10.3, 6.6, 4.8]
+                  }
+               ];
+
+               var json = {};
+
+               json.title = title;
+               json.subtitle = subtitle;
+               json.xAxis = xAxis;
+               json.yAxis = yAxis;
+               json.tooltip = tooltip;
+               json.legend = legend;
+               json.series = series;
+
+               $('#container').highcharts(json);
+            });
+            </script>
+            -->
        </div>
 </div>
-    <script src={{ url_for('static', filename='javascripts/jquery-2.1.1.min.js') }} tppabs="http://www.zi-han.net/theme/hplus/js/jquery-2.1.1.min.js"></script>   
-    <script src={{url_for('static', filename='javascripts/bootstrap.min.js')}} tppabs="http://www.zi-han.net/theme/hplus/js/bootstrap.min.js?v=3.4.0"></script>
-    <script src={{url_for('static', filename='javascripts/jquery.metisMenu.js')}} tppabs="http://www.zi-han.net/theme/hplus/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-   <!-- <script src="js/plugins/slimscroll/jquery.slimscroll.min.js" tppabs="http://www.zi-han.net/theme/hplus/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>-->
-
-    
-    
-
-    <!-- Custom and plugin javascript -->
-    <script src={{url_for('static', filename='javascripts/hplus.js')}}></script>
-    <script src={{url_for('static', filename='javascripts/pace.min.js')}}></script>
-
-    <!-- jQuery UI
-    <script src="js/plugins/jquery-ui/jquery-ui.min.js" ></script> -->
-  <script src={{url_for('static', filename='javascripts/My97DatePicker/WdatePicker.js')}}></script>
- 
-   
-    <script type="text/javascript">
-    /*  $(function(){
-   $('#form1').submit(function(){
-   $.get('/addUser',"{name:'zrr'}",function(data){alert(data);$("#content").html(data)});
-   });
-   });*/
-     function ValidateValue(textbox) {
-            var IllegalString = "\`~@#;,.!#$%^&*()+{}|\\:\"<>?-=/,\'";
-            var textboxvalue = textbox.value;
-            var index = textboxvalue.length - 1;
-
-            var s = textbox.value.charAt(index);
-
-            if (IllegalString.indexOf(s) >= 0) {
-                s = textboxvalue.substring(0, index);
-                textbox.value = s;
-            }
-        }
-        
- function linkto(num){
-     /*var a1=window.location.host;
-      var a2="http://"+a1+"/userManage";
-      alert(a2);
-	window.location.assign(a2);*/
-    $.get('userManage.html',
-    function(data){
-    //alert(data);
-    $("#content").html(data);
-    });
-    
-      
- }
- 
-  function addUser(){
-    /*  var a1=window.location.host;
-      var a2="http://"+a1+"/userManage";
-	window.location.assign(a2);*/
-    $.get('addUser.html',function(data){
-    //alert(data);
-    $("#content").html(data)
-    });
-   
-      
- }
-
-	function saveUser ()
-   {                                                  
-     var userinfo={name:$("#name").val(),
-               logname:$('#logname').val(),  
-                password:$('#password').val(),
-                password2:$('#password2').val(),
-                 phone:$('#phone').val(),
-                 email:$('#email').val(),
-                 company:$('#company').val()};
-      $.post('/addUser',userinfo,function(data){
-      //alert(data);
-    if(data==="exists")
-       alert("用户已存在！");
-    else
-   { 
-   alert("添加成功！");
-    $("#content").html(data);
-    }
-     });
-  return false;                         
-  }                              
- 
-
-	</script> 
-    
-      
-    
 </body>
 </html>

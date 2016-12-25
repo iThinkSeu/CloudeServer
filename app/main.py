@@ -8,8 +8,11 @@ from wtforms import Form,TextField,PasswordField,validators
 from hashmd5 import *
 import string
 import os, stat
+from flask.ext.bootstrap import Bootstrap
 
 app = Flask(__name__)
+bootstrap=Bootstrap()
+bootstrap.init_app(app)
 
 class LoginForm(Form):
 	username = TextField("username",[validators.Required()])
@@ -101,8 +104,14 @@ def index():
 	print "hi"
 	#return "hello"
 	#return redirect(url_for('static', filename='profile_small.jpg'), code=301)
-	return render_template('managebase.html',userinfo = "zrr")
+	return render_template('manageIndex.html',userinfo = "zrr")
 
+@app.route("/index",methods=['GET','POST'])
+def indexmain():
+	print "hi"
+	#return "hello"
+	#return redirect(url_for('static', filename='profile_small.jpg'), code=301)
+	return render_template('indexMain.html')
 
 @app.route("/postmeasuredata",methods=['GET','POST'])
 def postmeasuredata():
@@ -215,3 +224,5 @@ def history_data():
 
 if __name__ == '__main__':
 	app.run(host=os.getenv('IP','0.0.0.0'),port=int(os.getenv('PORT',3000)),debug = True)
+
+	

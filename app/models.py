@@ -26,7 +26,6 @@ class User(db.Model):
 	password = db.Column(db.String(32))
 	token = db.Column(db.String(32))
 	measuredatas = db.relationship('Measuredata',backref = 'instrument', lazy = 'dynamic')
-
 	def add(self):
 		try:
 			tempuser = User.query.filter_by(username=self.username).first()
