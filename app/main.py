@@ -9,6 +9,7 @@ from hashmd5 import *
 import string
 import os, stat
 from flask.ext.bootstrap import Bootstrap
+from datetime import *
 
 app = Flask(__name__)
 bootstrap=Bootstrap()
@@ -186,6 +187,32 @@ def getname(name):
 	print name;
 	return "hello"+str(name);
 
+@app.route('/getJsonData')
+def add_numbers():
+	a = request.args.get('a', 0, type=int)
+	b = request.args.get('b', 0, type=int)
+	timestamp = datetime.now()
+	print timestamp
+	state = "successful"
+	reason = ''
+	response = jsonify({'state':state,'reason':reason,'timestamp':timestamp,'data':20})
+	return response
+@app.route('/starttime')
+def starttime():
+	state = "successful"
+	reason = ""
+	#start_time = "2017-06-16 15:40:29"
+	start_time = request.args.get('latesttime',"2017-06-16 15:40:29")
+	print start_time
+	end_time = datetime.now()
+	#datalist = get_data_from_starttime(start_time,end_time)
+	datalist = get_data_up(start_time)
+	result = []
+	for tmp in datalist:
+		output = {"dataid":tmp.id ,"datatype":tmp.datatype,"value":tmp.value,"timestamp":str(tmp.timestamp)}
+		result.append(output)
+	response = jsonify({'state':state,'reason':reason,'result':result})
+	return response
 
 @app.route("/datainget",methods=['GET'])
 def datainget():
@@ -212,11 +239,9 @@ def history_data():
 			state = "successful"
 			output = {"dataid":tmp.id ,"datatype":tmp.datatype,"value":tmp.value,"timestamp":str(tmp.timestamp)}
 			result.append(output)
-			print tmp.timestamp
 	else:
 		state = 'fail'
 		reason = 'no user'
-
 
 	response = jsonify({'state':state,'reason':reason,'result':result})
 	return response

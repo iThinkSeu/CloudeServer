@@ -6,14 +6,65 @@
 {% block title %}
    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
    <script src="https://code.highcharts.com/highcharts.js"></script>
+
 {% endblock %}
 
 {% block content %}
 <h1>Hell2o!</h1>
 <div id="container" style="width: 550px; height: 400px; margin: 0 auto"></div>
 <script language="JavaScript">
+   function setCookie(cname,cvalue,exdays){
+      var d = new Date();
+      d.setTime(d.getTime()+(exdays*24*60*60*1000));
+      var expires = "expires="+d.toGMTString();
+      document.cookie = cname+"="+cvalue+"; "+expires;
+   }
+   function getCookie(cname){
+      var name = cname + "=";
+      var ca = document.cookie.split(';');
+      for(var i=0; i<ca.length; i++) {
+         var c = ca[i].trim();
+         if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+      }
+      return "";
+   }
+   function checkCookie(){
+      var latesttime=getCookie("latesttime");
+      if (latesttime!=""){
+         console.log(latesttime); 
+      }
+      else {
+         latesttime = (new Date()).getTime();
+         if (latesttime!="" && latesttime!=null){
+            setCookie("latesttime",latesttime,30);
+         }
+      }
+   }
+   function add0(m){return m<10?'0'+m:m }
+   function format(shijianchuo)
+   {
+   //shijianchuo是整数，否则要parseInt转换
+   var time = new Date(shijianchuo);
+   var y = time.getFullYear();
+   var m = time.getMonth()+1;
+   var d = time.getDate();
+   var h = time.getHours();
+   var mm = time.getMinutes();
+   var s = time.getSeconds();
+   return y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
+   }
+   function formatToTamp(stringTime)
+   {
+      var timestamp = Date.parse(new Date(stringTime));
+      return timestamp;
+   }
 $(document).ready(function() {
 
+Highcharts.setOptions({                                                     
+global: {                                                               
+   useUTC: false                                                       
+}                                                                       
+});  
    var chart = {                                                                
 	type: 'spline',                                                     
 	animation: Highcharts.svg, // don't animate in old IE               
@@ -23,10 +74,44 @@ $(document).ready(function() {
 																		
 			// set up the updating of the chart each second             
 			var series = this.series[0];                                
-			setInterval(function() {                                    
-				var x = (new Date()).getTime(), // current time         
-					y = Math.random();                                  
-				series.addPoint([x, y], true, true);                    
+			setInterval(function() {    
+            
+            var latest_time = getCookie("latesttime");
+            var x = (new Date()).getTime(); // current time                             
+				y = Math.random();
+            console.log(latest_time);
+            $.getJSON("http://127.0.0.1:3000/starttime",{
+            latesttime: latest_time,
+            b: 12},
+            function (result) {
+
+                latest_time = getCookie("latesttime");
+                console.log("json test"); 
+                var list=result.result;
+                console.log(latest_time);
+                if(latest_time!=""&&latest_time!=undefined)
+                {
+                   if(list.length!=0)
+                   {
+                     setCookie("latesttime",list[list.length-1].timestamp,30);//将返回结果中最=大的时间缓存到cookie中，过期时间默认30天
+                     for(var i =0;i<list.length;i++)
+                     {
+                        x = formatToTamp(list[i].timestamp);
+                        y = list[i].value;
+                        series.addPoint([x, y], true, true);
+                     }
+                   }
+                }
+                else
+                {
+                  //cookie为空
+                  console.log("starttime is null!!!!");
+                  setCookie("latesttime",format((new Date()).getTime()),30)
+                  var latest_time = getCookie("latesttime");
+                  console.log(latest_time);
+                }
+             });	
+	             
 			}, 1000);                                                   
 		}                                                               
 	}                                                                   

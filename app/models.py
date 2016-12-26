@@ -26,6 +26,7 @@ class User(db.Model):
 	password = db.Column(db.String(32))
 	token = db.Column(db.String(32))
 	measuredatas = db.relationship('Measuredata',backref = 'instrument', lazy = 'dynamic')
+
 	def add(self):
 		try:
 			tempuser = User.query.filter_by(username=self.username).first()
@@ -92,7 +93,13 @@ def get_history_data(typelist,start_time,end_time):
 	a = Measuredata.query.filter(Measuredata.datatype.in_(typelist)).filter(Measuredata.timestamp.between(start_time,end_time)).order_by(Measuredata.timestamp.desc()).all()
 	#a = Measuredata.query.filter(Measuredata.datatype.in_(typelist)).order_by(Measuredata.timestamp.desc()).all()
 	return a 
-
+def get_data_from_starttime(start_time,end_time):
+	a = Measuredata.query.filter(Measuredata.timestamp.between(start_time,end_time)).order_by(Measuredata.timestamp.asc()).all()
+	return a
+def get_data_up(starttime):
+	a = Measuredata.query.filter(Measuredata.timestamp>starttime).all()
+	return a
+	 
 if __name__ == '__main__':
 	manager.run()
 
