@@ -12,7 +12,8 @@ from sqlalchemy import and_
 app = Flask(__name__)
 
 #app.config['SQLALCHEMY_DATABASE_URI']="mysql://root:0596@223.3.56.220:3306/dataserverble?charset=utf8"
-app.config['SQLALCHEMY_DATABASE_URI']="mysql://root:root@127.0.0.1:3306/dataserverble?charset=utf8"
+#app.config['SQLALCHEMY_DATABASE_URI']="mysql://root:root@127.0.0.1:3306/dataserverble?charset=utf8"
+app.config['SQLALCHEMY_DATABASE_URI']="mysql://root:SEUqianshou2015@218.244.147.240:3306/dataserverble?charset=utf8"
 
 db = SQLAlchemy(app)
 migrage = Migrate(app,db)
