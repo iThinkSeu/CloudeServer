@@ -65,6 +65,8 @@ global: {
    useUTC: false                                                       
 }                                                                       
 });  
+  URL = "http://218.244.147.240";
+  PORT = "4020";
    var chart = {                                                                
 	type: 'spline',                                                     
 	animation: Highcharts.svg, // don't animate in old IE               
@@ -80,7 +82,7 @@ global: {
             var x = (new Date()).getTime(); // current time                             
 				y = Math.random();
             console.log(latest_time);
-            $.getJSON("http://127.0.0.1:3000/starttime",{
+            $.getJSON(URL+":"+PORT+"/starttime",{
             latesttime: latest_time,
             b: 12},
             function (result) {
