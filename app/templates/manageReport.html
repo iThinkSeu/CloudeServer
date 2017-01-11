@@ -1,0 +1,189 @@
+
+
+{% extends "managebase.html" %}
+
+
+{% block title %}
+   <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+   <script src="https://code.highcharts.com/highcharts.js"></script>
+
+{% endblock %}
+
+{% block content %}
+
+<p><label for="meeting">开始时间</label></p>
+<p><input onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"></p>
+<p><label for="meeting">结束时间</label></p>
+<p><input onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"></p>
+
+<p><input type="checkbox" id="VDC" value="VDC">VDC  &nbsp; <input type="checkbox" id="VAC" value="VAC"> VAC &nbsp; <input type="checkbox" id="IDC" value="IDC"> IDC <input type="checkbox" id="IAC" value="IAC"> IAC <br></p> 
+<p><button type="button" class="btn btn-default">查询</button></p>  
+<!--<label for="meeting">开始时间：</label><input type="datetime-local" value="2015-09-24T13:59:59"/>
+<label for="meeting">开始时间：</label><input type="datetime-local" value="2015-09-24T13:59:59"/>
+-->
+<!--表格-->
+<table id = "table_id" class="table table-striped">
+  <caption>分选报表</caption>
+  <thead>
+    <tr>
+      <th>测量模式</th>
+      <th>不合格数</th>
+      <th>合格数</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>直流电压</td>
+      <td>20</td>
+      <td>31</td>
+    </tr>
+    <tr>
+      <td>交流电压</td>
+      <td>35</td>
+      <td>40</td>
+    </tr>
+    <tr>
+      <td>直流电流</td>
+      <td>40</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <td>交流电流</td>
+      <td>60</td>
+      <td>20</td>
+    </tr>
+  </tbody>
+</table>
+</br>
+<p><h3 align="center" style="font-weight:bold;">柱状图</h3></p>
+</br>
+<!--
+<div id ="pieone" style = "margin: 0 auto;width:1020px">
+<div id="container_IDC" style="width: 500px; height: 400px;float:left"></div>
+<div id="container_IAC" style="width: 500px; height: 400px;float:right" ></div>
+</div>
+</br>
+</br>
+<div id ="pietwo" style = "margin: 0 auto;width:1020px">
+<div id="container_VDC" style="width: 500px; height: 400px;float:left"></div>
+<div id="container_VAC" style="width: 500px; height: 400px;float:right" ></div>
+</div>
+<script language="JavaScript">
+$(document).ready(function() {  
+   var chart = {
+       plotBackgroundColor: null,
+       plotBorderWidth: null,
+       plotShadow: false
+   };
+   var title = {
+      text: '直流电压VDC'   
+   };      
+   var tooltip = {
+      pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+   };
+   var plotOptions = {
+      pie: {
+         allowPointSelect: true,
+         cursor: 'pointer',
+         dataLabels: {
+            enabled: true,
+            format: '<b>{point.name}%</b>: {point.percentage:.1f} %',
+            style: {
+               color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+            }
+         }
+      }
+   };
+   var series= [{
+      type: 'pie',
+      name: 'Browser share',
+      data: [
+         {
+            name: '合格',
+            y: 12.8,
+            sliced: true,
+            selected: true
+         },
+         ['不合格',   0.7]
+      ]
+   }];     
+      
+   var json = {};   
+   json.chart = chart; 
+   json.title = title;     
+   json.tooltip = tooltip;  
+   json.series = series;
+   json.plotOptions = plotOptions;
+   $('#container_IDC').highcharts(json);  
+   $('#container_IAC').highcharts(json);  
+   $('#container_VDC').highcharts(json);  
+   $('#container_VAC').highcharts(json);  
+});
+</script>
+
+</br>
+-->
+
+<div id="container_BAR" style="width: 550px; height: 400px; margin: 0 auto"></div>
+<script language="JavaScript">
+$(document).ready(function() {  
+   var chart = {
+      type: 'column'
+   };
+   var title = {
+      text: '柱状图分布'   
+   };
+   var subtitle = {
+      text: 'Source: runoob.com'  
+   };
+   var xAxis = {
+      categories: ['直流电压','交流电压','直流电流','交流电流'],
+      crosshair: true
+   };
+   var yAxis = {
+      min: 0,
+      title: {
+         text: 'y value'         
+      }      
+   };
+   var tooltip = {
+      headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+      pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+         '<td style="padding:0"><b>{point.y:.1f} %</b></td></tr>',
+      footerFormat: '</table>',
+      shared: true,
+      useHTML: true
+   };
+   var plotOptions = {
+      column: {
+         pointPadding: 0.2,
+         borderWidth: 0
+      }
+   };  
+   var credits = {
+      enabled: false
+   };
+   
+   var series= [{
+        name: '合格',
+            data: [49.9, 71.5, 106.4,54.4]
+        }, {
+            name: '不合格',
+            data: [42.4, 33.2, 34.5,51.1]
+   }];     
+      
+   var json = {};   
+   json.chart = chart; 
+   json.title = title;   
+   json.subtitle = subtitle; 
+   json.tooltip = tooltip;
+   json.xAxis = xAxis;
+   json.yAxis = yAxis;  
+   json.series = series;
+   json.plotOptions = plotOptions;  
+   json.credits = credits;
+   $('#container_BAR').highcharts(json);
+  
+});
+</script>
+{% endblock %}

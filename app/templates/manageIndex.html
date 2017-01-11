@@ -159,7 +159,7 @@ global: {
 
    var series =  [
       {                                                              
-		name: 'Random data',                                                
+		name: 'IDC',                                                
 		data: (function() {                                                 
 			// generate an array of random data                             
 			var data = [],                                                  
@@ -191,12 +191,9 @@ global: {
    $('#container').highcharts(json);
 });
 </script>
-{% endblock %}
 
-
-{% block tableBLE %}
-
-<table class="table table-striped">
+<!--表格-->
+<table id = "table_id" class="table table-striped">
   <caption>测量数据表格</caption>
   <thead>
     <tr>
@@ -210,22 +207,45 @@ global: {
     <tr>
       <td>IDC</td>
       <td>2016-6-28 18:30:1</td>
-      <td>1.50KV</td>
+      <td>0.30021A</td>
       <td>合格</th>
     </tr>
     <tr>
       <td>IDC</td>
       <td>2016-6-28 18:32:1</td>
-      <td>1.60KV</td>
+      <td>0.30021A</td>
       <td>合格</th>
     </tr>
     <tr>
       <td>IDC</td>
       <td>2016-6-28 18:35:1</td>
-      <td>1.90KV</td>
-      <td>合格</th>
+      <td>0.30021A</td>
+      <td>不合格</th>
     </tr>
   </tbody>
 </table>
 
+<script language="JavaScript">
+  for(var i = 0;i<3;i++)
+  {
+    //添加表格标题行
+    var row = document.getElementById("table_id").insertRow();
+    var cell;
+    cell = row.insertCell(-1);
+    cell.innerHTML =  "VDC";
+    cell.align = "center";
+
+    cell = row.insertCell(-1);
+    cell.innerHTML = "2016-6-28 18:30:1";
+    cell.align = "center";
+
+    cell = row.insertCell(-1);
+    cell.innerHTML = "1.50001KV";
+    cell.align = "center";
+
+    cell = row.insertCell(-1);
+    cell.innerHTML = "合格";
+    cell.align = "center";
+  }
+</script>
 {% endblock %}

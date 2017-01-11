@@ -245,7 +245,14 @@ def history_data():
 
 	response = jsonify({'state':state,'reason':reason,'result':result})
 	return response
+#历史数据	
+@app.route("/history",methods=['GET','POST'])
+def history():
+	return render_template('manageHistoryData.html')
 
+@app.route("/report",methods=['GET','POST'])
+def report():
+	return render_template('manageReport.html')
 
 if __name__ == '__main__':
 	app.run(host=os.getenv('IP','0.0.0.0'),port=int(os.getenv('PORT',4020)),debug = True)

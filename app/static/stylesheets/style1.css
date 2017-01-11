@@ -2883,11 +2883,13 @@ body {
 }
 body.full-height-layout #wrapper,
 body.full-height-layout #page-wrapper {
-  height: 100%;
+  height: 2000px;
 }
+/*
 #page-wrapper {
   min-height: auto;
 }
+*/
 body.boxed-layout {
   background: url('patterns/shattered.png');
 }
@@ -3023,7 +3025,7 @@ video {
   #page-wrapper {
     position: inherit;
     margin: 0 0 0 240px;
-    min-height: 1000px;
+    min-height: 2200px;
   }
 }
 .title-action {
@@ -6317,7 +6319,7 @@ body.skin-3 {
   #page-wrapper {
     position: inherit;
     margin: 0 0 0 220px;
-    min-height: 1000px;
+    min-height: 100px;
   }
   .body-small .navbar-static-side {
     display: none;

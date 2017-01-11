@@ -3,12 +3,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
    <meta charset="UTF-8" />
-   <title>Highcharts 教程 | 菜鸟教程(runoob.com)</title>
+   <title>高压远程测量云技术研究及系统研制</title>
    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
    <script src="https://code.highcharts.com/highcharts.js"></script>
    <link href="static/stylesheets/bootstrap.min.css" rel="stylesheet"/>
    <link href="static/stylesheets/animate.css" rel="stylesheet"/>
    <link href="{{ url_for('static', filename="stylesheets/style1.css") }}"  rel="stylesheet"/>
+   <link href="{{ url_for('static', filename="stylesheets/mystyle.css") }}"  rel="stylesheet"/>
+
+   <script src="static/javascripts/laydate/laydate.js"></script>
+
 
    <style type="text/css">
       td {
@@ -35,7 +39,7 @@
                                 <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">
                                    当前用户</strong>
                              </span> 
-                            <span class="text-muted text-xs block"> <%=locals.admin%>  <b class="caret"></b></span> 
+                            <span class="text-muted text-xs block"> administrator <b class="caret"></b></span> 
                             </span>
                             </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
@@ -61,38 +65,32 @@
                         </ul>
                     </li>
                     <li id="zjyq" visible="false"  >
-                        <a href="index.aspx"> <span class="nav-label">测量校正</span></a>
+                        <a href="http://127.0.0.1:4020"> <span class="nav-label">测量显示</span></a>
                         <ul class="nav nav-second-level">
-                            <li><a id="szyq" href="javascript:linkto(11)">实时测量</a>
-                            </li>
-                            <li><a id="xxzx"  href="javascript:linkto(11)">分选统计</a>
-                            </li>
-                            <li><a id="cyinfo" href="javascript:linkto(11)">参数校正</a>
-                            </li>
-                            <li><a id="szyq" href="javascript:linkto(11)">系统设置</a>
-                            </li>
+                            <li><a id="szyq" href="javascript:linkto(11)">实时测量</a></li>
+                            <li><a id="xxzx"  href="javascript:linkto(11)">显示设置</a></li>
                         </ul>
                     </li>
                     <li id="zscy" visible="false" >
-                        <a href="index.aspx"> <span class="nav-label">系统介绍</span></a>
+                        <a href="http://127.0.0.1:4020/report"> <span class="nav-label">分选统计</span></a>
                         <ul class="nav nav-second-level">
-                            <li><a id="zxhd"  href="javascript:linkto(11)">项目背景</a>
-                            </li>
-                            <li><a id="jsfx"  href="javascript:linkto(11)">关键技术</a>
-                            </li>
+                            <li><a id="zxhd"  href="http://127.0.0.1:4020/history">历史数据</a></li>
+                            <li><a id="jsfx"  href="http://127.0.0.1:4020/report">分选报表</a></li>
+                            <li><a id="jsfx"  href="javascript:linkto(11)">概率分布</a></li>
                         </ul>
                     </li>
-            
-               
+
+                     <li id="setting" visible="false" >
+                        <a href="index.aspx"> <span class="nav-label">参数校正</span></a>
+                    </li>
+                    <li id="setting" visible="false" >
+                        <a href="index.aspx"> <span class="nav-label">系统设置</span></a>
+                    </li>
                    
               </ul>
           </div>   
       </nav>
   
-            
-       
-            
-        
 
        <div id="page-wrapper" class="gray-bg dashbard-1">
             <div class="row border-bottom">
@@ -117,9 +115,6 @@
 
             {% endblock %}
 
-            {% block tableBLE %}
-
-            {% endblock %}
             <!--
             <div id="container" style="width: 550px; height: 400px; margin: 0 auto"></div>
             <script language="JavaScript">

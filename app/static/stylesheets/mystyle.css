@@ -1,0 +1,15 @@
+
+.content1{
+    width:10px;
+    margin:0 auto;
+    background:#FF69B4;
+}
+.leftDiv1{
+    position:absolute;;
+     
+}
+.rightDiv1{
+    background:#FFC0CB;
+    height:100px;
+    margin-left:900px;
+}  
