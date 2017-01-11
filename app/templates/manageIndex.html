@@ -78,6 +78,11 @@ global: {
 			setInterval(function() {    
             
             var latest_time = getCookie("latesttime");
+             console.log(latest_time+"!!!!");
+            if(latest_time!=""&&latest_time!=undefined)
+            {
+              latest_time = format((new Date()).getTime();
+            }
             var x = (new Date()).getTime(); // current time                             
 				y = Math.random();
             console.log(latest_time);
