@@ -86,12 +86,13 @@ global: {
             }else
             {
                latest_time = format((new Date()).getTime());
+               setCookie("latesttime",format((new Date()).getTime()),30);
                console.log("latest_time is null");
             }
             var x = (new Date()).getTime(); // current time                             
 				y = Math.random();
             console.log(latest_time);
-            $.getJSON(URL+":"+PORT+"/starttime",{
+            $.getJSON("/starttime",{
             latesttime: latest_time,
             b: 12},
             function (result) {
@@ -100,6 +101,7 @@ global: {
                 console.log("json test"); 
                 var list=result.result;
                 console.log(latest_time);
+                console.log(list);
                 if(latest_time!=""&&latest_time!=undefined)
                 {
                    if(list.length!=0)
@@ -117,7 +119,7 @@ global: {
                 {
                   //cookie为空
                   console.log("starttime is null!!!!");
-                  setCookie("latesttime",format((new Date()).getTime()),30)
+                  setCookie("latesttime",format((new Date()).getTime()),30);
                   var latest_time = getCookie("latesttime");
                   console.log(latest_time);
                 }
