@@ -105,7 +105,7 @@ def index():
 	print "hi"
 	#return "hello"
 	#return redirect(url_for('static', filename='profile_small.jpg'), code=301)
-	return render_template('manageIndex.html',userinfo = "zrr")
+	return render_template('index.html');
 
 @app.route("/index",methods=['GET','POST'])
 def indexmain():
@@ -253,6 +253,16 @@ def history():
 @app.route("/report",methods=['GET','POST'])
 def report():
 	return render_template('manageReport.html')
+
+#管理界面
+@app.route("/manage",methods=['GET','POST'])
+def manage():
+	return render_template('manage.html')
+
+#管理界面2
+@app.route("/indicator",methods=['GET','POST'])
+def indicator():
+	return render_template('indicator.html')
 
 if __name__ == '__main__':
 	app.run(host=os.getenv('IP','0.0.0.0'),port=int(os.getenv('PORT',4020)),debug = True)

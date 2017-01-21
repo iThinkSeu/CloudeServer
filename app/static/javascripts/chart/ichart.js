@@ -1,27 +1,4 @@
 
-
-{% extends "managebase.html" %}
-
-
-{% block title %}
-   <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-   <script src="https://code.highcharts.com/highcharts.js"></script>
-
-{% endblock %}
-
-{% block content %}
-<div id = "measurePara">
-<div id="container" style="width: 550px; height: 400px;float:left"></div>
-</br>
-</br>
-</br>
-<p style = "font-size:22px;font-weight:bold;"> 实时测量值:  12.357KV</p>
-<p><span>THD:1.20%</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>误差:0.18kv</span></p> 
-<p><span>上限值:13.1KV</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>下限值:10.20kv</span></p>
-<p><span>失真度:3.2%</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>标称值:12kv</span></p>
-</div>
-
-<script language="JavaScript">
    function setCookie(cname,cvalue,exdays){
       var d = new Date();
       d.setTime(d.getTime()+(exdays*24*60*60*1000));
@@ -100,7 +77,7 @@ global: {
                console.log("latest_time is null");
             }
             var x = (new Date()).getTime(); // current time                             
-				y = Math.random();
+				    y = Math.random();
             console.log(latest_time);
             $.getJSON("/starttime",{
             latesttime: latest_time,
@@ -212,62 +189,3 @@ global: {
 
    $('#container').highcharts(json);
 });
-</script>
-
-<!--表格-->
-<table id = "table_id" class="table table-striped">
-  <caption>测量数据表格</caption>
-  <thead>
-    <tr>
-      <th>模式</th>
-      <th>时间</th>
-      <th>结果</th>
-      <th>分选</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>IDC</td>
-      <td>2016-6-28 18:30:1</td>
-      <td>0.30021A</td>
-      <td>合格</th>
-    </tr>
-    <tr>
-      <td>IDC</td>
-      <td>2016-6-28 18:32:1</td>
-      <td>0.30021A</td>
-      <td>合格</th>
-    </tr>
-    <tr>
-      <td>IDC</td>
-      <td>2016-6-28 18:35:1</td>
-      <td>0.30021A</td>
-      <td>不合格</th>
-    </tr>
-  </tbody>
-</table>
-
-<script language="JavaScript">
-  for(var i = 0;i<3;i++)
-  {
-    //添加表格标题行
-    var row = document.getElementById("table_id").insertRow();
-    var cell;
-    cell = row.insertCell(-1);
-    cell.innerHTML =  "VDC";
-    cell.align = "center";
-
-    cell = row.insertCell(-1);
-    cell.innerHTML = "2016-6-28 18:30:1";
-    cell.align = "center";
-
-    cell = row.insertCell(-1);
-    cell.innerHTML = "1.50001KV";
-    cell.align = "center";
-
-    cell = row.insertCell(-1);
-    cell.innerHTML = "合格";
-    cell.align = "center";
-  }
-</script>
-{% endblock %}

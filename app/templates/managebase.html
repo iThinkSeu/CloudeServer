@@ -86,31 +86,17 @@
                     <li id="setting" visible="false" >
                         <a href="index.aspx"> <span class="nav-label">系统设置</span></a>
                     </li>
-                   
+                 
               </ul>
           </div>   
       </nav>
   
 
        <div id="page-wrapper" class="gray-bg dashbard-1">
-            <div class="row border-bottom">
-                <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0; top: 0px; left: 0px;">
-                    <div class="navbar-header">
-                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#">〓</a>
-                    </div>
-                    <ul class="nav navbar-top-links navbar-right">
-                        <li>
-                            <span class="m-r-sm text-muted welcome-message"><a href="index.aspx"  title="返回首页">●</a>高压远程云平台管理系统</span>
-                        </li>
-                        <li>
-                            <a href="../login.aspx" >
-                                ◆ 退出
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-            
+            <div id = "title" style="text-align:center;">
+            <span style="text-align:center;font-size:22px;font-weight:bold;"><img alt="image" id="titleimg" height="60" width="60" src={{url_for('static',filename = "images/titleimg.png")}}/>高压远程云平台管理系统</span>
+            <span style = "float:right;margin-top: 30px">◆退出</span>      
+            <hr style="color=#000000;" />    
             {% block content %}
 
             {% endblock %}

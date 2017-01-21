@@ -1,0 +1,711 @@
+<!DOCTYPE HTML>
+<!--未加入Bootstrap的两行链接---->
+<html lang="en" xmlns="http://www.w3.org/1999/html" style="text-align: center" xmlns="http://www.w3.org/1999/html"
+      xmlns="http://www.w3.org/1999/html">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>首页</title>
+	<link href="static/stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="static/stylesheets/common.css" rel="stylesheet" type="text/css" media="screen">
+    <link href="static/stylesheets/index.css" rel="stylesheet" type="text/css">
+    <link href="static/stylesheets/exper0.css" rel="stylesheet" type="text/css" media="screen">
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="static/javascripts/laydate/laydate.js"></script>
+	<script src="/jquery/dist/jquery.js"></script>
+</head>
+
+<!--加上auto居中-->
+<body onload="updateFrequencyValue();">
+
+<div id="top" align="center"  style="background:url(static/images/common/top.png);">
+
+	<li id="menuLesson" class="menu">
+		<div>系统简介</div>
+		<div class="list">
+            <a class="menuItem" href="#">远程高压测量云平台</a>
+            <a class="menuItem" href="#">手机移动APP</a>
+            <a class="menuItem" href="#">功能简介</a>
+		</div>
+	</li>
+	<li id="menuExp" class="menu">
+		<div>远程测量</div>
+		<div class="list">
+			<a class="menuItem" href="/manage" target="_blank">高压远程测量管理系统</a>
+			<a class="menuItem" href="#">高压远程测量云平台</a>
+		</div>
+	</li>
+	<li id="menuReport" class="menu">
+		<div>统计报表</div>
+		<div class="list">
+			<a class="menuItem" href="/uploadReport" target="view_window">分析</a>
+			<a class="menuItem" href="#">查看</a>
+		</div>
+	</li>
+	<li class="menu">
+		<a href="#">个人信息</a>
+	</li>
+
+	<div id="userName">
+        <a href="#">
+            admin
+        </a>
+        &nbsp;
+        <a href="/logout">安全退出</a>
+    </div>
+    <a href="/" target="_blank">
+        <div align="center"></div>
+    </a>
+</div>
+
+<!---->
+<div style="font-size: 150%;margin-top:15px ;margin-left: 150px;font-family: Microsoft YaHei"><b>实时数据</b></div>
+
+<div id = "realtime">
+  <div id="voltage" style="margin-left: 1px;display:inline-block;margin-top:10px">          
+      <p style = "display:inline-block;margin-top:20px;font-size: 150%;font-family:Microsoft YaHei">交流电压</p>
+      <div id = "measureborder" style="display:inline-block;width:184px;height:80px;margin-bottom:20px;margin-left:2px;border:1px solid black">
+          <div style = "text-align:center;margin-top: 19px">
+              <span style = "font-size:160%">+12.306KV</span>
+          </div>
+      </div>
+  </div>
+  <div style="display:inline-block;vertical-align: top;margin-left:20px;margin-top: 7px;font-size: 140%;font-family: Microsoft YaHei;">
+        <span id="wavepar">失真度 :</span></br></br>
+        <span>频率 :</span></br>
+  </div>
+  
+  <div style="display:inline-block;vertical-align: top;margin-left:1px;margin-top: 7px;font-size: 140%;font-family: Microsoft YaHei;">
+        <span id="waveval">1.2%</span></br></br>
+        <span>50HZ</span></br>
+  </div>
+  <div style="display:inline-block;vertical-align: top;margin-left:40px;margin-top: 7px;font-size: 140%;font-family: Microsoft YaHei;">
+        <span id="wavepar">标称值 :</span></br></br>
+        <span>误差 :</span></br>
+  </div>
+  <div style="display:inline-block;vertical-align: top;margin-left:1px;margin-top: 7px;font-size: 140%;font-family: Microsoft YaHei;">
+        <span id="waveval">12.0KV</span></br></br>
+        <span>0.306KV</span></br>
+  </div>
+  <div style="display:inline-block;vertical-align: top;margin-left:40px;margin-top: 7px;font-size: 140%;font-family: Microsoft YaHei;">
+        <span id="wavepar">上限值 :</span></br><br>
+        <span>下限值 :</span></br>
+  </div>
+  <div style="display:inline-block;vertical-align: top;margin-left:1px;margin-top: 7px;font-size: 140%;font-family: Microsoft YaHei;">
+        <span id="waveval">12.7KV</span></br></br>
+        <span>11.2KV</span></br>
+  </div>
+  <div style="display:inline-block;margin-left:370px;font-size: 130%;font-family: Microsoft YaHei;">
+        <button id="buttonStart" class="btn-lg btn-default" style="width:120px">开始</button>
+  </div>
+  <div style="display:inline-block;margin-left:70px;font-size: 130%;font-family: Microsoft YaHei;">
+        <button id="buttonStop" class="btn-lg btn-default" style="width:120px">停止</button>
+  </div>
+</div>
+
+<!--hichart曲线-->
+<div id="charts">
+    <div id="divChartWeight">
+    </div>
+
+    <div id="divChartVortex">
+        <!--涡街流量曲线在此-->
+    </div>
+    <div id="container" style="width: 500px; height: 300px;float:left">
+    曲线
+    </div>
+    <div id="container2" style="width: 500px; height: 300px;float:left">
+    曲线
+    </div>
+
+    <div id="divDataRecord">
+        <h1 align="center" id="divDataRecordH">测量数据记录</h1>
+        <div id = "divDataTable" align="left">
+            <table id="tableDataRecord" align="left" border="1">
+                <tr class="fontWeight">
+                    <td align="center">序号</td>
+                    <td align="center">时间</td>
+                    <td align="center">结果</td>
+                    <td align="center">模式</td>
+                </tr>
+                <tr >
+                    <td align="center">1</td>
+                    <td align="center">2017-1-18 12:20:01</td>
+                    <td align="center">12KV</td>
+                    <td align="center">VDC</td>
+                </tr>
+                <tr >
+                    <td align="center">2</td>
+                    <td align="center">2017-1-18 12:20:20</td>
+                    <td align="center">13.01KV</td>
+                    <td align="center">VDC</td>
+                </tr>
+                <tr >
+                    <td align="center">3</td>
+                    <td align="center">2017-1-18 12:20:50</td>
+                    <td align="center">12.07KV</td>
+                    <td align="center">VAC</td>
+                </tr>
+                <tr >
+                    <td align="center">4</td>
+                    <td align="center">2017-1-18 12:21:01</td>
+                    <td align="center">10.21KV</td>
+                    <td align="center">VDC</td>
+                </tr>
+            </table>
+        </div>
+
+        <button id="buttonStartRecord" class="btn-lg btn-default">保存记录</button>
+        <button id="buttonClearRecord" class="btn-lg btn-default">清空表格</button>
+
+        <div id="sampleInterval">采样间隔</div>
+        <input id="inputSampleInterval" onkeyup="recordIntervalChange()" type="text" value="1"/>  <!--键盘按键被松开时触发-->
+        <div id="sampleIntervalUnit">s</div>
+
+        <button id="buttonPauseGraph" class="btn-lg btn-default">暂停曲线</button>
+    </div>
+</div>
+
+
+
+<hr>
+<!--表格-->
+<div style="font-size: 150%;margin-left: 150px;font-family: Microsoft YaHei"><b>历史查询</b></div>
+<div style="display:inline-block;width:30%">
+  <div>
+      
+      <table id = "table_id" class="table table-striped" style="text-align: center;">
+      <thead>
+        <tr border="1">
+          <td class="fontWeight">模式</td>
+          <td class="fontWeight">时间</td>
+          <td class="fontWeight">结果</td>
+          <td class="fontWeight">分选</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>IDC</td>
+          <td>2016-6-28 18:30:1</td>
+          <td>0.30021A</td>
+          <td>合格</th>
+        </tr>
+        <tr>
+          <td>IDC</td>
+          <td>2016-6-28 18:32:1</td>
+          <td>0.30021A</td>
+          <td>合格</th>
+        </tr>
+        <tr>
+          <td>IDC</td>
+          <td>2016-6-28 18:35:1</td>
+          <td>0.30021A</td>
+          <td>不合格</th>
+        </tr>
+      </tbody>
+      </table>
+    </div>
+</div>
+<div id="select" style = "display:inline-block;margin-left: 30px">
+    <p><input type="radio" name="selectImg" id="barshow"  value="bar">柱状图  &nbsp; <input type="radio" checked="checked" name="selectImg" id="pieshow" value="pie"> 饼状图 &nbsp;<input type="radio" name="selectImg" id="errorshow" value="error"> 误差分布 &nbsp;<br></p>
+    <p><label for="meeting">开始时间</label></p>
+    <p><input onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" value="2017-01-18 15:25:27"></p>
+    <p><label for="meeting">结束时间</label></p>
+    <p><input onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" value="2017-01-18 15:26:27"></p>
+    <p><input type="checkbox" id="VDC" value="VDC">VDC  &nbsp; <input type="checkbox" id="VAC" value="VAC"> VAC &nbsp; <input type="checkbox" id="IDC" value="IDC"> IDC <input type="checkbox" id="IAC" value="IAC"> IAC <br></p> 
+    <p><button onclick="displayResult()" type="button" class="btn btn-default">查询</button></p>  
+</div>
+<div id ="container_PIE" style="display:inline-block;float:right;margin-top:30px;margin-right:30px;">
+    <div id="container_IDC" style="width: 200px; height: 200px;display:inline-block;"></div>
+    <div id="container_IAC" style="display:inline-block;width: 200px; height: 200px;"></div>
+    <div id="container_VDC" style="width: 200px; height: 200px;float: left"></div>
+    <div id="container_VAC" style="width: 200px; height: 200px;float: left"></div>
+</div>
+
+<div id="container_BAR" style="width: 500px; height: 300px; display:inline-block;display:none;margin-right: 180px;float: right"></div>
+
+<div id="bottom" align="center">
+    <div class="all">
+        <div class="b_text">
+            <h6>介绍</h6>
+            <ul>
+                <li><a href="#">关于我们</a></li></br>
+                <li><a href="#">联系我们</a></li></br>
+                <li><a href="#">加入我们</a></li></br>
+                <li><a href="#">技术支持</a></li></br>
+            </ul>
+        </div>
+        <div class="b_text">
+            <h6>合作</h6>
+            <ul>
+                <li><a href="#">新加仪器</a></li>
+                <li><a href="#">高校合作</a></li>
+                <li><a href="#">友情链接</a></li>
+            </ul>
+        </div>
+        <div class="b_text">
+            <h6>服务</h6>
+            <ul>
+                <li><a href="#">在线测量</a></li>
+                <li><a href="#">注册登录</a></li>
+                <li><a href="#">统计分析</a></li>
+                <li><a href="#">常见问题</a></li>
+            </ul>
+        </div>
+        <div class="b_text">
+            <h6>学习路径</h6>
+            <ul>
+                <li><a href="#">原理介绍</a></li>
+                <li><a href="#">系统介绍</a></li>
+                <li><a href="#">经典案例</a></li>
+            </ul>
+        </div>
+    </div>
+  <!--<div class="power">COPYRIGHT@2016-2018 南京长胜仪器有限公司</div>-->
+</div>
+
+
+<script language="JavaScript">
+function displayResult(){
+  var radios = document.getElementsByName('selectImg');
+  console.log("test");
+  for (var i = 0, length = radios.length; i < length; i++) {
+    if (radios[i].checked) {
+      // 弹出选中值
+      //alert(radios[i].value);
+      if(radios[i].value=="bar")
+      {
+        document.getElementById("container_PIE").style.display="none";//隐藏
+        document.getElementById("container_BAR").style.display="";//显示
+      }else if(radios[i].value=="pie")
+      {
+        document.getElementById("container_PIE").style.display="";//隐藏
+        document.getElementById("container_BAR").style.display="none";//隐藏
+      }
+      // 选中后退出循环
+      break;
+    }
+  }
+}
+</script>
+
+<script language="JavaScript">
+   function setCookie(cname,cvalue,exdays){
+      var d = new Date();
+      d.setTime(d.getTime()+(exdays*24*60*60*1000));
+      var expires = "expires="+d.toGMTString();
+      document.cookie = cname+"="+cvalue+"; "+expires;
+   }
+   function getCookie(cname){
+      var name = cname + "=";
+      var ca = document.cookie.split(';');
+      for(var i=0; i<ca.length; i++) {
+         var c = ca[i].trim();
+         if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+      }
+      return "";
+   }
+   function checkCookie(){
+      var latesttime=getCookie("latesttime");
+      if (latesttime!=""){
+         console.log(latesttime); 
+      }
+      else {
+         latesttime = (new Date()).getTime();
+         if (latesttime!="" && latesttime!=null){
+            setCookie("latesttime",latesttime,30);
+         }
+      }
+   }
+   function add0(m){return m<10?'0'+m:m }
+   function format(shijianchuo)
+   {
+   //shijianchuo是整数，否则要parseInt转换
+   var time = new Date(shijianchuo);
+   var y = time.getFullYear();
+   var m = time.getMonth()+1;
+   var d = time.getDate();
+   var h = time.getHours();
+   var mm = time.getMinutes();
+   var s = time.getSeconds();
+   return y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
+   }
+   function formatToTamp(stringTime)
+   {
+      var timestamp = Date.parse(new Date(stringTime));
+      return timestamp;
+   }
+$(document).ready(function() {
+
+Highcharts.setOptions({
+    colors: ['#434348', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655',
+'#FFF263', '#6AF9C4']
+});
+Highcharts.setOptions({                                                    
+global: {                                                               
+   useUTC: false                                                      
+}                                                                       
+});
+ 
+  URL = "http://218.244.147.240";
+  PORT = "4020";
+   var chart = {                                                                
+    type: 'spline',                                                     
+    animation: Highcharts.svg, // don't animate in old IE               
+    marginRight: 10,                                                    
+    events: {                                                           
+        load: function() {                                              
+                                                                        
+            // set up the updating of the chart each second             
+            var series = this.series[0];                                
+            setInterval(function() {    
+            
+            var latest_time = getCookie("latesttime");
+             console.log(latest_time+"!!!!");
+            if(latest_time!=""&&latest_time!=undefined)
+            {
+                console.log("latest_time is not null");
+
+            }else
+            {
+               latest_time = format((new Date()).getTime());
+               setCookie("latesttime",format((new Date()).getTime()),30);
+               console.log("latest_time is null");
+            }
+            var x = (new Date()).getTime(); // current time                             
+                y = Math.random();
+            console.log(latest_time);
+            $.getJSON("/starttime",{
+            latesttime: latest_time,
+            b: 12},
+            function (result) {
+
+                latest_time = getCookie("latesttime");
+                console.log("json test"); 
+                var list=result.result;
+                console.log(latest_time);
+                console.log(list);
+                if(latest_time!=""&&latest_time!=undefined)
+                {
+                   if(list.length!=0)
+                   {
+                     setCookie("latesttime",list[list.length-1].timestamp,30);//将返回结果中最=大的时间缓存到cookie中，过期时间默认30天
+                     for(var i =0;i<list.length;i++)
+                     {
+                        x = formatToTamp(list[i].timestamp);
+                        y = list[i].value;
+                        series.addPoint([x, y], true, true);
+                     }
+                   }
+                }
+                else
+                {
+                  //cookie为空
+                  console.log("starttime is null!!!!");
+                  setCookie("latesttime",format((new Date()).getTime()),30);
+                  var latest_time = getCookie("latesttime");
+                  console.log(latest_time);
+                }
+             });    
+                 
+            }, 1000);                                                   
+        }                                                               
+    }                                                                   
+    };
+
+   var title = {
+       text: '实时曲线'   
+   };
+   var subtitle = {
+        text: 'realtime curve'
+   };
+   var xAxis = {
+         
+            tickInterval: 3800,
+            gridLineColor: '#dddfe1',
+             gridLineWidth: 1,
+            type: 'datetime',                                                   
+            tickPixelInterval: 100   
+   };
+   var yAxis = {
+      gridLineColor: '#dddfe1',
+       gridLineWidth: 1,
+      title: {
+         text: '测量结果'
+      },
+      plotLines: [{
+         value: 0,
+         width: 1,
+         color: '#040000'
+      }]
+   };
+   var colors={
+    colors:['#000000','#120000']
+   };   
+
+   var tooltip = {
+        formatter: function() {                                             
+            return '<b>'+ this.series.name +'</b><br/>'+                
+            Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>'+
+            Highcharts.numberFormat(this.y, 2);                         
+    }  
+   };
+
+   var legend = {
+      layout: 'vertical',
+      backgroundColor: '#FFFFFF',
+      align: 'right',
+      verticalAlign: 'top',
+      borderWidth:0,
+      x:0,
+      y:30
+   };
+
+   var series =  [
+      {                                                              
+        name: 'IAC',                                                
+        data: (function() {                                                 
+            // generate an array of random data                             
+            var data = [],                                                  
+                time = (new Date()).getTime(),                              
+                i;                                                          
+                                                                            
+            for (i = -19; i <= 0; i++) {                                    
+                data.push({                                                 
+                    x: time + i * 1000,                                     
+                    y: Math.random()                                        
+                });                                                         
+            }                                                               
+            return data;                                                    
+           })()                                                                
+      }
+   ];
+
+
+   var titlesin = {
+       text: '时域波形'   
+   };
+
+ var xAxisSin = {
+         
+            tickInterval: 2,
+            gridLineColor: '#dddfe1',
+             gridLineWidth: 1,                                                  
+            tickPixelInterval: 100   
+   };
+   var legendsin = {
+      layout: 'vertical',
+      backgroundColor: '#FFFFFF',
+      align: 'right',
+      verticalAlign: 'top',
+      borderWidth:0,
+      x:0,
+      y:30
+   };
+
+      var seriesin =  [
+      {                                                              
+        name: 'IAC',                                                
+        data: (function() {                                                 
+            // generate an array of random data                             
+            var data = [],                                                  
+                time = (new Date()).getTime(),                              
+                i;                                                          
+                                                                            
+            for (i = -0.1; i <= Math.PI*2.5; i+=Math.PI*0.05) {                                    
+                data.push({                                                 
+                    x: i,                                     
+                    y: Math.sin(i)                                        
+                });                                                         
+            }                                                               
+            return data;                                                    
+           })()                                                                
+      }
+   ];
+
+   var json = {};
+   var json2 = {};
+
+   json.title = title;
+   json.subtitle = subtitle;
+   json.xAxis = xAxis;
+   json.yAxis = yAxis;
+   json.tooltip = tooltip;
+   json.legend = legend;
+   json.series = series;
+   json.chart = chart;
+   json.colors = colors;
+   json2.xAxis = xAxisSin;
+   json2.title = titlesin;
+   json2.series = seriesin;
+   json2.legend = legendsin;
+   $('#container').highcharts(json);
+   $('#container2').highcharts(json2);
+});
+</script>
+
+
+<script language="JavaScript">
+  for(var i = 0;i<4;i++)
+  {
+    //添加表格标题行
+    var row = document.getElementById("table_id").insertRow();
+    var cell;
+    cell = row.insertCell(-1);
+    cell.innerHTML =  "VDC";
+    cell.align = "center";
+
+    cell = row.insertCell(-1);
+    cell.innerHTML = "2016-6-28 18:30:1";
+    cell.align = "center";
+
+    cell = row.insertCell(-1);
+    cell.innerHTML = "1.50001KV";
+    cell.align = "center";
+
+    cell = row.insertCell(-1);
+    cell.innerHTML = "合格";
+    cell.align = "center";
+  }
+</script>
+
+
+
+
+
+<!--<div id="container_BAR" style="width: 550px; height: 380px; display:inline-block;margin-left: 50px"></div>-->
+<script language="JavaScript">
+$(document).ready(function() {
+
+    Highcharts.setOptions({
+        colors: ['#7cb5ec', '#434348', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655',
+    '#FFF263', '#6AF9C4']
+    });  
+
+    Highcharts.setOptions({
+      credits:{
+                enabled: false
+       }
+    }); 
+
+   var chart = {
+      type: 'column'
+   };
+   var title = {
+      text: '柱状图分布'   
+   };
+   var subtitle = {
+      text: 'Source: runoob.com'  
+   };
+   var xAxis = {
+      categories: ['直流电压','交流电压','直流电流','交流电流'],
+      crosshair: true
+   };
+   var yAxis = {
+      min: 0,
+      title: {
+         text: 'y value'         
+      }      
+   };
+   var tooltip = {
+      headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+      pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+         '<td style="padding:0"><b>{point.y:.1f} %</b></td></tr>',
+      footerFormat: '</table>',
+      shared: true,
+      useHTML: true
+   };
+   var plotOptions = {
+      column: {
+         pointPadding: 0.2,
+         borderWidth: 0
+      }
+   };  
+   var credits = {
+      enabled: false
+   };
+   
+   var series= [{
+        name: '合格',
+            data: [49.9, 71.5, 106.4,54.4]
+        }, {
+            name: '不合格',
+            data: [42.4, 33.2, 34.5,51.1]
+   }];     
+      
+   var json = {};   
+   json.chart = chart; 
+   json.title = title;   
+   json.subtitle = subtitle; 
+   json.tooltip = tooltip;
+   json.xAxis = xAxis;
+   json.yAxis = yAxis;  
+   json.series = series;
+   json.plotOptions = plotOptions;  
+   json.credits = credits;
+   $('#container_BAR').highcharts(json);
+  
+});
+</script>
+
+<script language="JavaScript">
+$(document).ready(function() {  
+   var chart = {
+       plotBackgroundColor: null,
+       plotBorderWidth: null,
+       plotShadow: false
+   };
+   var title = {
+      text: '直流电压VDC'   
+   };      
+   var tooltip = {
+      pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+   };
+   var plotOptions = {
+      pie: {
+         allowPointSelect: true,
+         cursor: 'pointer',
+         dataLabels: {
+            enabled: true,
+            format: '<b>{point.name}%</b>: {point.percentage:.1f} %',
+            style: {
+               color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+            }
+         }
+      }
+   };
+   var series= [{
+      type: 'pie',
+      name: 'Browser share',
+      data: [
+         {
+            name: '合格',
+            y: 12.8,
+            sliced: true,
+            selected: true
+         },
+         ['不合格',   0.7]
+      ]
+   }];     
+      
+   var json = {};   
+   json.chart = chart; 
+   json.title = title;     
+   json.tooltip = tooltip;  
+   json.series = series;
+   json.plotOptions = plotOptions;
+   $('#container_IDC').highcharts(json);  
+   $('#container_IAC').highcharts(json);  
+   $('#container_VDC').highcharts(json);  
+   $('#container_VAC').highcharts(json);  
+});
+</script>
+
+
+</body>
+
+</html>
