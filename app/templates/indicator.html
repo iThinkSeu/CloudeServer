@@ -70,7 +70,7 @@
       <p style = "display:inline-block;margin-top:20px;font-size: 150%;font-family:Microsoft YaHei">交流电压</p>
       <div id = "measureborder" style="display:inline-block;width:184px;height:80px;margin-bottom:20px;margin-left:2px;border:1px solid black">
           <div style = "text-align:center;margin-top: 19px">
-              <span style = "font-size:160%">+12.306KV</span>
+              <span id="measureValue" style = "font-size:160%">12.306KV</span>
           </div>
       </div>
   </div>
@@ -80,24 +80,24 @@
   </div>
   
   <div style="display:inline-block;vertical-align: top;margin-left:1px;margin-top: 7px;font-size: 140%;font-family: Microsoft YaHei;">
-        <span id="waveval">1.2%</span></br></br>
+        <span id="waveval">0.05%</span></br></br>
         <span>50HZ</span></br>
   </div>
   <div style="display:inline-block;vertical-align: top;margin-left:40px;margin-top: 7px;font-size: 140%;font-family: Microsoft YaHei;">
-        <span id="wavepar">标称值 :</span></br></br>
+        <span >标称值 :</span></br></br>
         <span>误差 :</span></br>
   </div>
   <div style="display:inline-block;vertical-align: top;margin-left:1px;margin-top: 7px;font-size: 140%;font-family: Microsoft YaHei;">
-        <span id="waveval">12.0KV</span></br></br>
-        <span>0.306KV</span></br>
+        <span id="waveVal">12.000KV</span></br></br>
+        <span id="measureError">0.30600KV</span></br>
   </div>
   <div style="display:inline-block;vertical-align: top;margin-left:40px;margin-top: 7px;font-size: 140%;font-family: Microsoft YaHei;">
-        <span id="wavepar">上限值 :</span></br><br>
+        <span >上限值 :</span></br><br>
         <span>下限值 :</span></br>
   </div>
   <div style="display:inline-block;vertical-align: top;margin-left:1px;margin-top: 7px;font-size: 140%;font-family: Microsoft YaHei;">
-        <span id="waveval">12.7KV</span></br></br>
-        <span>11.2KV</span></br>
+        <span id="upLimit">12.200KV</span></br></br>
+        <span>11.800KV</span></br>
   </div>
   <div style="display:inline-block;margin-left:370px;font-size: 130%;font-family: Microsoft YaHei;">
         <button id="buttonStart" class="btn-lg btn-default" style="width:120px">开始</button>
@@ -131,30 +131,6 @@
                     <td align="center">时间</td>
                     <td align="center">结果</td>
                     <td align="center">模式</td>
-                </tr>
-                <tr >
-                    <td align="center">1</td>
-                    <td align="center">2017-1-18 12:20:01</td>
-                    <td align="center">12KV</td>
-                    <td align="center">VDC</td>
-                </tr>
-                <tr >
-                    <td align="center">2</td>
-                    <td align="center">2017-1-18 12:20:20</td>
-                    <td align="center">13.01KV</td>
-                    <td align="center">VDC</td>
-                </tr>
-                <tr >
-                    <td align="center">3</td>
-                    <td align="center">2017-1-18 12:20:50</td>
-                    <td align="center">12.07KV</td>
-                    <td align="center">VAC</td>
-                </tr>
-                <tr >
-                    <td align="center">4</td>
-                    <td align="center">2017-1-18 12:21:01</td>
-                    <td align="center">10.21KV</td>
-                    <td align="center">VDC</td>
                 </tr>
             </table>
         </div>
@@ -312,6 +288,30 @@ function displayResult(){
 }
 </script>
 
+
+<script type=language="JavaScript">
+function addMeasureTable(id,time,value,mode){
+    //添加表格标题行
+    var row = document.getElementById("tableDataRecord").insertRow();
+    var cell;
+    cell = row.insertCell(-1);
+    cell.innerHTML =  id;
+    cell.align = "center";
+
+    cell = row.insertCell(-1);
+    cell.innerHTML = time;
+    cell.align = "center";
+
+    cell = row.insertCell(-1);
+    cell.innerHTML = value;
+    cell.align = "center";
+
+    cell = row.insertCell(-1);
+    cell.innerHTML = mode;
+    cell.align = "center";
+}
+</script>
+
 <script language="JavaScript">
    function setCookie(cname,cvalue,exdays){
       var d = new Date();
@@ -370,6 +370,7 @@ global: {
 }                                                                       
 });
  
+ var RecordCount=0;
   URL = "http://218.244.147.240";
   PORT = "4020";
    var chart = {                                                                
@@ -418,6 +419,29 @@ global: {
                         x = formatToTamp(list[i].timestamp);
                         y = list[i].value;
                         series.addPoint([x, y], true, true);
+                        document.getElementById("measureValue").innerText=y+"KV";
+                        document.getElementById("measureError").innerText=(y-12).toFixed(3)+"KV";
+                        RecordCount=RecordCount+1;
+                        
+                        //添加表格行
+                        var row = document.getElementById("tableDataRecord").insertRow();
+                        var cell;
+                        cell = row.insertCell(-1);
+                        cell.innerHTML =  RecordCount;
+                        cell.align = "center";
+
+                        cell = row.insertCell(-1);
+                        cell.innerHTML = list[i].timestamp;
+                        cell.align = "center";
+
+                        cell = row.insertCell(-1);
+                        cell.innerHTML = y+"KV";
+                        cell.align = "center";
+
+                        cell = row.insertCell(-1);
+                        cell.innerHTML = "VAC";
+                        cell.align = "center";
+
                      }
                    }
                 }
@@ -489,7 +513,7 @@ global: {
         name: 'VAC',                                                
         data: (function() {                                                 
             // generate an array of random data                             
-            var data = [],                                                  
+            var data = [],                                                              
                 time = (new Date()).getTime(),                              
                 i;                                                          
                                                                             
@@ -498,7 +522,8 @@ global: {
                     x: time + i * 1000,                                     
                     y: Math.random()                                        
                 });                                                         
-            }                                                               
+            } 
+                                                                          
             return data;                                                    
            })()                                                                
       }
