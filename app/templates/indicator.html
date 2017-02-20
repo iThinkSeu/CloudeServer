@@ -47,7 +47,7 @@
 		</div>
 	</li>
 	<li class="menu">
-		<a href="#">个人信息</a>
+		<a href="#">后台管理</a>
 	</li>
 
 	<div id="userName">
@@ -197,13 +197,13 @@
         <tr>
           <td>IDC</td>
           <td>2016-6-28 18:32:1</td>
-          <td>0.30021A</td>
+          <td>0.30001A</td>
           <td>合格</th>
         </tr>
         <tr>
           <td>IDC</td>
           <td>2016-6-28 18:35:1</td>
-          <td>0.30021A</td>
+          <td>1.22045A</td>
           <td>不合格</th>
         </tr>
       </tbody>
@@ -211,11 +211,11 @@
     </div>
 </div>
 <div id="select" style = "display:inline-block;margin-left: 30px">
-    <p><input type="radio" name="selectImg" id="barshow"  value="bar">柱状图  &nbsp; <input type="radio" checked="checked" name="selectImg" id="pieshow" value="pie"> 饼状图 &nbsp;<input type="radio" name="selectImg" id="errorshow" value="error"> 误差分布 &nbsp;<br></p>
+    <p><input type="radio" name="selectImg" id="barshow"  value="bar">柱状图  &nbsp; <input type="radio" checked="checked" name="selectImg" id="pieshow" value="pie"> 饼状图 &nbsp;<input type="radio" name="selectImg" id="errorshow" value="error"> 概率分布 &nbsp;<br></p>
     <p><label for="meeting">开始时间</label></p>
-    <p><input onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" value="2017-01-18 15:25:27"></p>
+    <p><input onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" value="2016-06-27 15:25:27"></p>
     <p><label for="meeting">结束时间</label></p>
-    <p><input onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" value="2017-01-18 15:26:27"></p>
+    <p><input onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" value="2016-06-28 19:00:00"></p>
     <p><input type="checkbox" id="VDC" value="VDC">VDC  &nbsp; <input type="checkbox" id="VAC" value="VAC"> VAC &nbsp; <input type="checkbox" id="IDC" value="IDC"> IDC <input type="checkbox" id="IAC" value="IAC"> IAC <br></p> 
     <p><button onclick="displayResult()" type="button" class="btn btn-default">查询</button></p>  
 </div>
@@ -227,6 +227,11 @@
 </div>
 
 <div id="container_BAR" style="width: 500px; height: 300px; display:inline-block;display:none;margin-right: 180px;float: right"></div>
+<div id="container_Hist" style="width: 600px; height: 320px; display:inline-block;display:none;margin-right: 120px;float: right">
+</div> 
+
+<span id = "Average" style="position:absolute;display:none;left:1436px; top:657px;">平均值:12.001</span>
+<span id = "Deviation" style="position:absolute;display:none; left:1436px; top:680px;">标准差:0.51</span>
 
 <div id="bottom" align="center">
     <div class="all">
@@ -279,13 +284,27 @@ function displayResult(){
       //alert(radios[i].value);
       if(radios[i].value=="bar")
       {
+        document.getElementById("Average").style.display="none";
+         document.getElementById("Deviation").style.display="none";
+        document.getElementById("container_Hist").style.display="none";//隐藏
         document.getElementById("container_PIE").style.display="none";//隐藏
         document.getElementById("container_BAR").style.display="";//显示
       }else if(radios[i].value=="pie")
       {
+        document.getElementById("Average").style.display="none";
+        document.getElementById("Deviation").style.display="none";
         document.getElementById("container_PIE").style.display="";//隐藏
         document.getElementById("container_BAR").style.display="none";//隐藏
+        document.getElementById("container_Hist").style.display="none";//隐藏
+      }else if(radios[i].value=="error")
+      {
+        document.getElementById("Average").style.display="";//显示
+        document.getElementById("Deviation").style.display="";//显示
+        document.getElementById("container_PIE").style.display="none";//隐藏
+        document.getElementById("container_BAR").style.display="none";//隐藏
+        document.getElementById("container_Hist").style.display="";//隐藏
       }
+
       // 选中后退出循环
       break;
     }
@@ -560,11 +579,11 @@ global: {
     cell.align = "center";
 
     cell = row.insertCell(-1);
-    cell.innerHTML = "2016-6-28 18:30:1";
+    cell.innerHTML = "2016-6-28 18:30:"+2*i;
     cell.align = "center";
 
     cell = row.insertCell(-1);
-    cell.innerHTML = "1.50001KV";
+    cell.innerHTML = "1.500"+i+"2KV";
     cell.align = "center";
 
     cell = row.insertCell(-1);
@@ -631,10 +650,10 @@ $(document).ready(function() {
    
    var series= [{
         name: '合格',
-            data: [49.9, 71.5, 106.4,54.4]
+            data: [49.9, 71.5, 76.4,54.4]
         }, {
             name: '不合格',
-            data: [42.4, 33.2, 34.5,51.1]
+            data: [50.1, 28.5, 23.6,45.6]
    }];     
       
    var json = {};   
@@ -661,9 +680,21 @@ $(document).ready(function() {
    };
    var title = {
       text: '直流电压VDC'   
-   };      
+   };  
+
+   var title_VAC = {
+      text:'交流电压VAC'
+   };
+
+   var title_IDC={
+    text:'直流电流IDC'
+   };
+   var title_IAC={
+    text:'交流电流IAC'
+   };
+
    var tooltip = {
-      pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+      pointFormat: '{series.name}:<b>{point.percentage:.1f}%</b>'
    };
    var plotOptions = {
       pie: {
@@ -671,7 +702,7 @@ $(document).ready(function() {
          cursor: 'pointer',
          dataLabels: {
             enabled: true,
-            format: '<b>{point.name}%</b>: {point.percentage:.1f} %',
+            format: '<b>{point.name}</b>:{point.percentage:.1f} %',
             style: {
                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
             }
@@ -690,22 +721,287 @@ $(document).ready(function() {
          },
          ['不合格',   0.7]
       ]
-   }];     
+   }];
+
+   var series_VAC= [{
+      type: 'pie',
+      name: 'Browser share',
+      data: [
+         {
+            name: '合格',
+            y: 10.8,
+            sliced: true,
+            selected: true
+         },
+         ['不合格',   0.7]
+      ]
+   }];       
+
+
+  var series_IDC= [{
+      type: 'pie',
+      name: 'Browser share',
+      data: [
+         {
+            name: '合格',
+            y: 10.8,
+            sliced: true,
+            selected: true
+         },
+         ['不合格',   0.75]
+      ]
+   }];      
+
+
+  var series_IAC= [{
+      type: 'pie',
+      name: 'Browser share',
+      data: [
+         {
+            name: '合格',
+            y: 10.8,
+            sliced: true,
+            selected: true
+         },
+         ['不合格',   0.6]
+      ]
+   }];       
+
       
-   var json = {};   
+   var json = {}; 
+   var json_VAC = {};
+   var json_IDC = {};  
+   var json_IAC = {};
    json.chart = chart; 
    json.title = title;     
    json.tooltip = tooltip;  
    json.series = series;
    json.plotOptions = plotOptions;
-   $('#container_IDC').highcharts(json);  
-   $('#container_IAC').highcharts(json);  
+
+   json_VAC.chart=chart;
+   json_VAC.title=title_VAC;
+   json_VAC.tooltip = tooltip;
+   json_VAC.series=series_VAC;
+   json_VAC.plotOptions = plotOptions;
+
+   json_IDC.chart=chart;
+   json_IDC.title=title_IDC;
+   json_IDC.tooltip = tooltip;
+   json_IDC.series=series_IDC;
+   json_IDC.plotOptions = plotOptions;
+
+
+   json_IAC.chart=chart;
+   json_IAC.title=title_IAC;
+   json_IAC.tooltip = tooltip;
+   json_IAC.series=series_IAC;
+   json_IAC.plotOptions = plotOptions;
+
+   $('#container_IDC').highcharts(json_IDC);  
+   $('#container_IAC').highcharts(json_IAC);  
    $('#container_VDC').highcharts(json);  
-   $('#container_VAC').highcharts(json);  
+   $('#container_VAC').highcharts(json_VAC);  
 });
 </script>
 
+<script language="JavaScript">
 
+var ndata=new Array();
+
+nndata=[11.80007969
+,11.7060846
+,12.25682948
+,11.82774261
+,10.84977879
+,12.15704791
+,12.04015328
+,12.03049536
+,11.78687374
+,12.42614874
+,11.5805736
+,12.45266825
+,12.12516084
+,12.0462549
+,12.41806652
+,11.18648573
+,12.7177372
+,11.81638803
+,11.48843306
+,11.77586995
+,12.46344285
+,12.99244498
+,11.78424567
+,12.27505221
+,11.49900521
+,12.13418148
+,12.59054291
+,12.06713944
+,12.3808259
+,12.26753723
+,12.08794505
+,11.97829673
+,12.46664773
+,12.58905189
+,11.99792199
+,11.58757289
+,11.56370948
+,12.21483183
+,12.55969358
+,11.72412588
+,12.38624185
+,11.84944652
+,11.96276701
+,10.85571742
+,11.51360096
+,11.58419357
+,13.25286897
+,10.98314345
+,12.21363303
+,12.62258277
+,12.06955615
+,11.91300929
+,12.1649506
+,11.24695694
+,12.04844751
+,11.9285008
+,12.76332617
+,12.02693459
+,11.7576956
+,12.17409984
+,11.53407932
+,12.29273569
+,11.59872821
+,12.49387581
+,11.57086984
+,10.71356704
+,12.50477774
+,12.25298095
+,11.8576478
+,11.94079317
+,12.26648104
+,13.8565217
+,10.39214724
+,12.59429149
+,11.11107625
+,12.19263198
+,11.95322942
+,11.92672965
+,10.97479065
+,11.70873687
+,11.23121395
+,11.98361145
+,13.06713123
+,11.2029876
+,12.26917087
+,12.50368526
+,12.67327637
+,12.51692241
+,11.96040506
+,12.95023788
+,11.65836923
+,11.76056179
+,12.27234837
+,12.42226711
+,11.6374363
+,12.02693459
+,11.58571643
+,11.58779699
+,12.00340606
+,11.77345451
+];
+for(i=0;i<nndata.length;i++){
+ ndata[i]=new Array();
+ ndata[i][0]=nndata[i];
+ ndata[i][1]=i;
+}
+data=[];
+data=ndata;
+/**
+ * Get histogram data out of xy data
+ * @param   {Array} data  Array of tuples [x, y]
+ * @param   {Number} step Resolution for the histogram
+ * @returns {Array}       Histogram data
+ */
+function histogram(data, step) {
+    var histo = {},
+        x,
+        i,
+        arr = [];
+
+    // Group down
+    for (i = 0; i < data.length; i++) {
+        x = Math.floor(data[i][0] / step) * step;
+        if (!histo[x]) {
+            histo[x] = 0;
+        }
+        histo[x]++;
+    }
+
+    // Make the histo group into an array
+    for (x in histo) {
+        if (histo.hasOwnProperty((x))) {
+            arr.push([parseFloat(x), histo[x]]);
+        }
+    }
+
+    // Finally, sort the array
+    arr.sort(function (a, b) {
+        return a[0] - b[0];
+    });
+
+    return arr;
+}
+
+Highcharts.chart('container_Hist', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: '概率分布'
+    },
+    xAxis: {
+        gridLineWidth: 1,
+         title: {
+            text: '测量值区间'
+        }
+    },
+    yAxis: [{
+        title: {
+            text: '统计次数'
+        }
+    }, {
+        opposite: true,
+        title: {
+            text: 'Y value'
+        }
+    }],
+    series: [{
+        name: 'Histogram',
+        type: 'column',
+        data: histogram(data, 0.3),
+        pointPadding: 0,
+        groupPadding: 0,
+        pointPlacement: 'between'
+    }, {
+        name: 'XY data',
+        type: 'scatter',
+        data: data,
+        yAxis: 1,
+        marker: {
+            radius: 1.5
+        }
+       },{
+        name: 'Curve',
+         type:'line',
+         data:histogram(data, 0.3),
+         pointPlacement: 'between',
+          lineWidth: 3,
+          color:'#29cb81',
+          fillColor: 'white',
+         //pointInterval: 0.3 // one hour
+       }]
+});
+</script>
 </body>
 
 </html>

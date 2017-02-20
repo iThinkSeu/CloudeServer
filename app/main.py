@@ -257,13 +257,23 @@ def report():
 #管理界面
 @app.route("/manage",methods=['GET','POST'])
 def manage():
-	return render_template('manage.html')
+	return render_template('manageIndex.html')
 
 #管理界面2
 @app.route("/indicator",methods=['GET','POST'])
 def indicator():
 	return render_template('indicator.html')
 
+#管理界面2
+@app.route("/user",methods=['GET','POST'])
+def manageuser():
+	return render_template('manageUser.html')
+
+
+#管理界面2
+@app.route("/revise",methods=['GET','POST'])
+def managerevise():
+	return render_template('manageRevise.html')
 if __name__ == '__main__':
 	app.run(host=os.getenv('IP','0.0.0.0'),port=int(os.getenv('PORT',4020)),debug = True)
 
