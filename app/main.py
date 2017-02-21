@@ -234,7 +234,7 @@ def history_data():
 	if u is not None:	
 		reason = ''
 		state = 'successful'
-		history_data_list = get_history_data(['VDC'],starttime,endtime)
+		history_data_list = get_history_data(['VAC'],starttime,endtime)
 		for tmp in history_data_list:
 			state = "successful"
 			output = {"dataid":tmp.id ,"datatype":tmp.datatype,"value":tmp.value,"timestamp":str(tmp.timestamp)}
