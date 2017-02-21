@@ -478,7 +478,7 @@ global: {
       gridLineColor: '#dddfe1',
        gridLineWidth: 1,
       title: {
-         text: '测量结果'
+         text: '测量结果/KV'
       },
       plotLines: [{
          value: 0,
@@ -539,7 +539,16 @@ global: {
             tickInterval: 2,
             gridLineColor: '#dddfe1',
              gridLineWidth: 1,                                                  
-            tickPixelInterval: 100   
+            tickPixelInterval: 100,   
+            title: {
+             text: '时间/ms'
+            }
+   };
+   var yAxisSin = {
+         
+            title: {
+             text: 'Value/KV'
+            }
    };
    var legendsin = {
       layout: 'vertical',
@@ -562,7 +571,7 @@ global: {
                                                                             
             for (i = -0.1; i <= Math.PI*2.5; i+=Math.PI*0.05) {                                    
                 data.push({                                                 
-                    x: i,                                     
+                    x: i*10/Math.PI,                                     
                     y: 12*1.414*Math.sin(i)                                        
                 });                                                         
             }                                                               
@@ -584,6 +593,7 @@ global: {
    json.chart = chart;
    json.colors = colors;
    json2.xAxis = xAxisSin;
+   json2.yAxis = yAxisSin
    json2.title = titlesin;
    json2.series = seriesin;
    json2.legend = legendsin;
