@@ -71,6 +71,7 @@ class Measuredata(db.Model):
 	instrumentid = db.Column(db.Integer,db.ForeignKey('users.id'))
 	datatype = db.Column(db.String(32))
 	value = db.Column(db.Float)
+	separation = db.Column(db.String(32))
 	timestamp = db.Column(db.DateTime, default = datetime.now)
 	def add(self):
 		try:
@@ -81,6 +82,16 @@ class Measuredata(db.Model):
 			print e
 			db.session.rollback()
 			return 2
+
+class revise(db.Model):
+	"""docstring for revises"""
+	__tablename__ = "revises"
+	id = db.Column(db.Integer,primary_key=True)
+	type = db.Column(db.String(32))
+	realvalue = db.Column(db.Float)
+	measurevalue = db.Column(db.Float)
+
+
 
 def getuserinformation(token):
 	u=User.query.filter_by(token=token).first()

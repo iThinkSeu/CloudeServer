@@ -273,7 +273,8 @@ def manageuser():
 #管理界面2
 @app.route("/revise",methods=['GET','POST'])
 def managerevise():
-	return render_template('manageRevise.html')
+	revises = revise.query.all()
+	return render_template('manageRevise.html',revises=revises)
 if __name__ == '__main__':
 	app.run(host=os.getenv('IP','0.0.0.0'),port=int(os.getenv('PORT',4020)),debug = True)
 

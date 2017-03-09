@@ -23,24 +23,26 @@
                       <option value="audi">0XC9001001F104</option>
                       <option value="opel">0XC9001001F105</option>
                       <option value="audi">0XC9001001F106</option>
+                    </select> &nbsp;&nbsp;
+                    <span>模式选择</span>
+                    <select id="modeselect1" style="width: 60px">
+                      <option value ="VDC">VDC</option>
+                      <option value ="VAC">VAC</option>
+                      <option value="IDC">IDC</option>
+                      <option value="IAC">IAC</option>
                     </select>
+                    <select id="modeselect2" style="width: 60px">
+                      <option value ="VDC">VDC</option>
+                      <option value ="VAC">VAC</option>
+                      <option value="IDC">IDC</option>
+                      <option value="IAC">IAC</option>
+                    </select>
+                    <select id="modeselect3" style="width: 60px">
+                    </select>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button class="btn btn-success">查询</button>                         
                  </div>
                  <br><br>
-                      <!-- <div class="form-group">
-                        <span>全选 <input type="checkbox"/></span>
-                        <button class="btn btn-success">通过</button>
-                        <button class="btn btn-primary">恢复</button>
-                        <button class="btn btn-danger">删除</button>
-                        <ul class="pagination visible-md visible-lg visible-sm" id="page-right">
-                          <li><a href="#">&laquo;</a></li>
-                          <li class="active"><a href="#">1</a></li>
-                          <li><a href="#">2</a></li>
-                          <li><a href="#">3</a></li>
-                          <li><a href="#">4</a></li>
-                          <li><a href="#">5</a></li>
-                          <li><a href="#">&raquo;</a></li>
-                        </ul>
-                    </div> -->
           </div>
           <div class="panel-body">
                <table class="table">  
@@ -57,69 +59,16 @@
                 </tr>
                 </thead>
                 <tbody>
+                {% for revise in revises %}
                 <tr>
-                  <td>1</td>
-                  <td>VDC</td>
-                  <td>1.500KV</td>
-                  <td>1.512KV</td>
+                  <td>{{loop.index}}</td>
+                  <td>{{revise.type}}</td>
+                  <td>{{revise.realvalue}}</td>
+                  <td>{{revise.measurevalue}}</td>
                   <td><button class="btn btn-danger">删除</button><button class="btn btn-success">修改</button></td>
                 </tr>
-                <tr>
-                  <td>2</td>
-                  <td>VDC</td>
-                  <td>2.000KV</td>
-                  <td>2.013KV</td>
-                  <td><button class="btn btn-danger">删除</button><button class="btn btn-success">修改</button></td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>VDC</td>
-                  <td>2.500KV</td>
-                  <td>2.517KV</td>
-                  <td><button class="btn btn-danger">删除</button><button class="btn btn-success">修改</button></td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>VDC</td>
-                  <td>3.000KV</td>
-                  <td>3.024KV</td>
-                  <td><button class="btn btn-danger">删除</button><button class="btn btn-success">修改</button></td>
-                </tr>
-                <tr>
-                  <td>5</td>
-                  <td>VDC</td>
-                  <td>3.500KV</td>
-                  <td>3.518KV</td>
-                  <td><button class="btn btn-danger">删除</button><button class="btn btn-success">修改</button></td>
-                </tr>
-                <tr>
-                  <td>6</td>
-                  <td>VDC</td>
-                  <td>4.000KV</td>
-                  <td>4.012KV</td>
-                  <td><button class="btn btn-danger">删除</button><button class="btn btn-success">修改</button></td>
-                </tr>
-                <tr>
-                  <td>7</td>
-                  <td>VDC</td>
-                  <td>4.500KV</td>
-                  <td>4.515KV</td>
-                  <td><button class="btn btn-danger">删除</button><button class="btn btn-success">修改</button></td>
-                </tr>
-                <tr>
-                  <td>8</td>
-                  <td>VDC</td>
-                  <td>5.000KV</td>
-                  <td>5.013KV</td>
-                  <td><button class="btn btn-danger">删除</button><button class="btn btn-success">修改</button></td>
-                </tr>
-                <tr>
-                  <td>9</td>
-                  <td>VDC</td>
-                  <td>5.500KV</td>
-                  <td>5.516KV</td>
-                  <td><button class="btn btn-danger">删除</button><button class="btn btn-success">修改</button></td>
-                </tr>
+                {% endfor %}
+
                </tbody>
             </table>
           </div>
@@ -137,4 +86,81 @@
     <button class="btn btn-success" style="float: right;margin-right: 10px">添加</button>
 
  </div>
+
+<script language="javascript">
+        
+        $(document).ready(function() {
+            //绑定下拉框change事件，当下来框改变时调用 SelectChange()方法
+            $("#modeselect1").change(function() { Select1Change(); }); 
+            $("#modeselect2").change(function() { Select2Change(); }); 
+
+        })
+         function Select1Change() {
+            //获取下拉框选中项的text属性值
+            var selectValue = $("#modeselect1").val();
+            $("#modeselect3").empty();
+            $("#modeselect2").empty();
+            switch(selectValue)
+            {
+               case "VDC":
+                 $("#modeselect2").append("<option value='P'>P</option>");
+                 $("#modeselect2").append("<option value='N'>N</option>");
+                 break;
+               case "VAC":
+                 $("#modeselect2").append("<option value='V'>V</option>");
+                 $("#modeselect2").append("<option value='F'>F</option>");
+                 break;
+               case "IAC":
+                 $("#modeselect2").append("<option value='I'>I</option>");
+                 $("#modeselect2").append("<option value='F'>F</option>");
+                 break;
+               case "IDC":
+                 $("#modeselect2").append("<option value='P'>P</option>");
+                 $("#modeselect2").append("<option value='N'>N</option>");
+                 break;
+            }
+      
+        }
+
+        function Select2Change() {
+            //获取下拉框选中项的text属性值
+            var select1Value = $("#modeselect1").val();
+            var select2Value = $("#modeselect2").val();
+            $("#modeselect3").empty();
+            switch(select1Value)
+            {
+               case "VDC":
+                 break;
+               case "VAC":
+                 break;
+               case "IAC": 
+                    if(select2Value=="I")
+                    {
+                      $("#modeselect3").append("<option value= 1>1</option>");
+                      $("#modeselect3").append("<option value= 2>2</option>");
+                      $("#modeselect3").append("<option value= 3>3</option>");
+                      $("#modeselect3").append("<option value= 4>4</option>");
+                      $("#modeselect3").append("<option value= 5>5</option>");
+                      $("#modeselect3").append("<option value= 6>6</option>");
+                      $("#modeselect3").append("<option value= 7>7</option>");
+                      $("#modeselect3").append("<option value= 8>8</option>");                           
+                    }
+                 break;
+               case "IDC":
+                      $("#modeselect3").append("<option value= 1>1</option>");
+                      $("#modeselect3").append("<option value= 2>2</option>");
+                      $("#modeselect3").append("<option value= 3>3</option>");
+                      $("#modeselect3").append("<option value= 4>4</option>");
+                      $("#modeselect3").append("<option value= 5>5</option>");
+                      $("#modeselect3").append("<option value= 6>6</option>");
+                      $("#modeselect3").append("<option value= 7>7</option>");
+                      $("#modeselect3").append("<option value= 8>8</option>");     
+                 break;
+            }
+      
+        }
+
+
+</script>
+
 {% endblock %}
