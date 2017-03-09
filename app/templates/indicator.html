@@ -16,7 +16,20 @@
     <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="static/javascripts/laydate/laydate.js"></script>
-	<script src="/jquery/dist/jquery.js"></script>
+	  <script src="/jquery/dist/jquery.js"></script>
+
+      <style type="text/css">
+       .menu{
+
+         height: 54px;
+       }
+      #menuExp:hover {
+      height: 54px;
+      }
+      #menuReport:hover {
+           height: 54px; 
+      }
+     </style>
 </head>
 
 <!--加上auto居中-->
@@ -25,31 +38,17 @@
 <div id="top" align="center"  style="background:url(static/images/common/top.png);">
 
 	<li id="menuLesson" class="menu">
-		<div>系统简介</div>
-		<div class="list">
-            <a class="menuItem" href="#">远程高压测量云平台</a>
-            <a class="menuItem" href="#">手机移动APP</a>
-            <a class="menuItem" href="#">功能简介</a>
-		</div>
+		<a href="#">系统简介</a>
 	</li>
 	<li id="menuExp" class="menu">
-		<div>远程测量</div>
-		<div class="list">
-			<a class="menuItem" href="/manage" target="_blank">高压远程测量管理系统</a>
-			<a class="menuItem" href="#">高压远程测量云平台</a>
-		</div>
+    <a href="/indicator">实时测量</a>
 	</li>
 	<li id="menuReport" class="menu">
-		<div>统计报表</div>
-		<div class="list">
-			<a class="menuItem" href="/uploadReport" target="view_window">分析</a>
-			<a class="menuItem" href="#">查看</a>
-		</div>
+    <a href="/revise">远程校正</a>
 	</li>
 	<li class="menu">
-		<a href="#">后台管理</a>
+		<a href="/manage">后台管理</a>
 	</li>
-
 	<div id="userName">
         <a href="#">
             admin
@@ -1013,7 +1012,7 @@ Highcharts.chart('container_Hist', {
     series: [{
         name: 'Histogram',
         type: 'column',
-        data: histogram(data, 0.3),
+        data: histogram(data, 0.05),
         pointPadding: 0,
         groupPadding: 0,
         pointPlacement: 'between'
@@ -1028,7 +1027,7 @@ Highcharts.chart('container_Hist', {
        },{
         name: 'Curve',
          type:'line',
-         data:histogram(data, 0.3),
+         data:histogram(data, 0.05),
          pointPlacement: 'between',
           lineWidth: 3,
           color:'#29cb81',
