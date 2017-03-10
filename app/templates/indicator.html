@@ -66,7 +66,7 @@
 
 <div id = "realtime">
   <div id="voltage" style="margin-left: 1px;display:inline-block;margin-top:10px">          
-      <p style = "display:inline-block;margin-top:20px;font-size: 150%;font-family:Microsoft YaHei">交流电压</p>
+      <p id = "modetext" style = "display:inline-block;margin-top:20px;font-size: 150%;font-family:Microsoft YaHei">交流电压</p>
       <div id = "measureborder" style="display:inline-block;width:184px;height:80px;margin-bottom:20px;margin-left:2px;border:1px solid black">
           <div style = "text-align:center;margin-top: 19px">
               <span id="measureValue" style = "font-size:160%">12.306KV</span>
@@ -163,6 +163,15 @@
         </tr>
       </thead>
       <tbody>
+      {% for history in historys %}
+      <tr>
+      <td>{{loop.index}}</td>
+      <td>{{history.datatype}}</td>
+      <td>{{history.value}}</td>
+      <td>{{history.separation}}</td>
+      <td><button class="btn btn-danger">删除</button><button class="btn btn-success">修改</button></td>
+      </tr>
+      {% endfor %}
       </tbody>
       </table>
     </div>
@@ -400,8 +409,16 @@ global: {
                         x = formatToTamp(list[i].timestamp);
                         y = list[i].value;
                         series.addPoint([x, y], true, true);
-                        document.getElementById("measureValue").innerText=y+"KV";
-                        document.getElementById("measureError").innerText=(y-12).toFixed(3)+"KV";
+                        var datatype = list[i].datatype;
+                        var danwei;
+                        if(datatype=="VDC"||datatype=="VAC")
+                            danwei="KV";
+                        else if(datatype=="IAC"||datatype=="IDC")
+                            danwei = "mA";
+
+                        document.getElementById("modetext").innerText=datatype;
+                        document.getElementById("measureValue").innerText=y+danwei;
+                        document.getElementById("measureError").innerText=(y-12).toFixed(3)+danwei;
                         RecordCount=RecordCount+1;
                         
                         //添加表格行
@@ -416,11 +433,11 @@ global: {
                         cell.align = "center";
 
                         cell = row.insertCell(-1);
-                        cell.innerHTML = y+"KV";
+                        cell.innerHTML = y+danwei;
                         cell.align = "center";
 
                         cell = row.insertCell(-1);
-                        cell.innerHTML = "VAC";
+                        cell.innerHTML = datatype;
                         cell.align = "center";
 
                      }

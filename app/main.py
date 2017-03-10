@@ -262,7 +262,11 @@ def manage():
 #管理界面2
 @app.route("/indicator",methods=['GET','POST'])
 def indicator():
-	return render_template('indicator.html')
+	start_time = "2017-06-16 15:40:29"
+	print start_time
+	end_time = datetime.now()
+	history_data_list = get_history_data(['VAC','VDC','IAC','IDC'],starttime,endtime)
+	return render_template('indicator.html',historys=history_data_list)
 
 #管理界面2
 @app.route("/user",methods=['GET','POST'])
