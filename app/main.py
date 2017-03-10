@@ -266,6 +266,7 @@ def indicator():
 	print start_time
 	end_time = datetime.now()
 	history_data_list = get_history_data(['VAC','VDC','IAC','IDC'],start_time,end_time)
+	print history_data_list;
 	return render_template('indicator.html',historys=history_data_list)
 
 #管理界面2
