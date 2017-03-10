@@ -165,11 +165,10 @@
       <tbody>
       {% for history in historys %}
       <tr>
-      <td>{{loop.index}}</td>
       <td>{{history.datatype}}</td>
+      <td>{{history.timestamp}}</td>
       <td>{{history.value}}</td>
       <td>{{history.separation}}</td>
-      <td><button class="btn btn-danger">删除</button><button class="btn btn-success">修改</button></td>
       </tr>
       {% endfor %}
       </tbody>
