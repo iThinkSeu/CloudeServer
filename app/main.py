@@ -10,6 +10,7 @@ import string
 import os, stat
 from flask.ext.bootstrap import Bootstrap
 from datetime import *
+import re
 
 app = Flask(__name__)
 bootstrap=Bootstrap()
@@ -216,12 +217,38 @@ def starttime():
 
 @app.route("/datainget",methods=['GET'])
 def datainget():
-	name = request.args.get('name')
-	print str(name)
-	print request.args.get('type')
-	print request.args.get('value')
-	return "hello"+str(name);
+	data = request.args.get('data','')
+	print str(data)
+	dataArr = re.split(':|\n',data)
+	print dataArr
+	if(dataArr[0]=='CAL'):
+		if(dataArr[1]=='VACV'):
+			response = 'CAL:VACV 1:50.00:50.01#CAL:VACV 2:60.00:60.02#CAL:VACV 2E#'
+			return response
+	return 'NOUPDATE';
 
+@app.route("/get_web_history",methods=['GET','POST'])
+def get_web_history():
+	result = []
+	token = request.args.get('token','')
+	modelist = request.args.get('modelist','')
+	starttime = request.args.get('starttime',"2017-06-16 15:40:29")
+	endtime = request.args.get('endtime','')
+	u = getuserinformation(token)
+	if u is not None:	
+		reason = ''
+		state = 'successful'
+		history_data_list = get_history_data(['VAC'],starttime,endtime)
+		for tmp in history_data_list:
+			state = "successful"
+			output = {"dataid":tmp.id ,"datatype":tmp.datatype,"value":tmp.value,"timestamp":str(tmp.timestamp)}
+			result.append(output)
+	else:
+		state = 'fail'
+		reason = 'no user'
+
+	response = jsonify({'state':state,'reason':reason,'result':result})
+	return response
 @app.route("/history_data",methods=['GET','POST'])
 def history_data():
 	
@@ -262,12 +289,10 @@ def manage():
 #管理界面2
 @app.route("/indicator",methods=['GET','POST'])
 def indicator():
-	start_time = "2017-03-9 15:40:29"
+	start_time = "2017-07-9 15:40:29"
 	print start_time
-	end_time = datetime.now()
-	history_data_list = get_history_data(['VAC','VDC','IAC','IDC'],start_time,end_time)
-	print history_data_list;
-	return render_template('indicator.html',historys=history_data_list)
+	#print history_data_list;
+	return render_template('indicator.html')
 
 #管理界面2
 @app.route("/user",methods=['GET','POST'])
@@ -280,6 +305,7 @@ def manageuser():
 def managerevise():
 	revises = revise.query.all()
 	return render_template('manageRevise.html',revises=revises)
+
 if __name__ == '__main__':
 	app.run(host=os.getenv('IP','0.0.0.0'),port=int(os.getenv('PORT',4020)),debug = True)
 

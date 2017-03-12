@@ -150,8 +150,8 @@
 <hr>
 <!--表格-->
 <div style="font-size: 150%;margin-left: 150px;font-family: Microsoft YaHei"><b>历史查询</b></div>
-<div style="display:inline-block;width:30%">
-  <div>
+<div style="display:inline-block;width:30%";>
+  <div id="history_table" style="overflow-x: auto; overflow-y: auto; height: 300px;">
       
       <table id = "table_id" class="table table-striped" style="text-align: center;">
       <thead>
@@ -163,14 +163,6 @@
         </tr>
       </thead>
       <tbody>
-      {% for history in historys %}
-      <tr>
-      <td>{{history.datatype}}</td>
-      <td>{{history.timestamp}}</td>
-      <td>{{history.value}}</td>
-      <td>{{history.separation}}</td>
-      </tr>
-      {% endfor %}
       </tbody>
       </table>
     </div>
@@ -178,11 +170,11 @@
 <div id="select" style = "display:inline-block;margin-left: 30px">
     <p><input type="radio" name="selectImg" id="barshow"  value="bar">柱状图  &nbsp; <input type="radio" checked="checked" name="selectImg" id="pieshow" value="pie"> 饼状图 &nbsp;<input type="radio" name="selectImg" id="errorshow" value="error"> 概率分布 &nbsp;<br></p>
     <p><label for="meeting">开始时间</label></p>
-    <p><input onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" value="2016-06-27 15:25:27"></p>
+    <p><input id = "starttime" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" value="2016-06-27 15:25:27"></p>
     <p><label for="meeting">结束时间</label></p>
-    <p><input onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" value="2016-06-28 19:00:00"></p>
+    <p><input id = "endtime" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" value="2016-06-28 19:00:00"></p>
     <p><input type="checkbox" id="VDC" value="VDC">VDC  &nbsp; <input type="checkbox" id="VAC" value="VAC"> VAC &nbsp; <input type="checkbox" id="IDC" value="IDC"> IDC <input type="checkbox" id="IAC" value="IAC"> IAC <br></p> 
-    <p><button onclick="displayResult()" type="button" class="btn btn-default">查询</button></p>  
+    <p><button id = "querybutton" onclick="displayResult()" type="button" class="btn btn-default">查询</button></p>  
 </div>
 <div id ="container_PIE" style="display:inline-block;float:right;margin-top:30px;margin-right:30px;">
     <div id="container_IDC" style="width: 200px; height: 200px;display:inline-block;"></div>
@@ -274,6 +266,43 @@ function displayResult(){
       break;
     }
   }
+
+  starttime="2016-06-16 14:26:08";
+  endtime="2017-06-16 14:26:08";
+  $.getJSON("/get_web_history", { starttime: starttime, endtime: endtime,token:"18d54ec8446d03451f5552033c64dbda" }, function(result){
+               var list=result.result;
+               console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+               for(var i =0;i<list.length;i++)
+               {
+                  time = list[i].timestamp;
+                  value = list[i].value;
+                  var datatype = list[i].datatype;
+                  var danwei;
+                  if(datatype=="VDC"||datatype=="VAC")
+                      danwei="KV";
+                  else if(datatype=="IAC"||datatype=="IDC")
+                      danwei = "mA";
+
+                  //添加表格行
+                  var row = document.getElementById("table_id").insertRow();
+                  var cell;
+                  cell = row.insertCell(-1);
+                  cell.innerHTML =  datatype;
+                  cell.align = "center";
+
+                  cell = row.insertCell(-1);
+                  cell.innerHTML = format(list[i].timestamp);
+                  cell.align = "center";
+
+                  cell = row.insertCell(-1);
+                  cell.innerHTML = list[i].value+danwei;
+                  cell.align = "center";
+
+                  cell = row.insertCell(-1);
+                  cell.innerHTML = list[i].separation;
+                  cell.align = "center";                    
+               }  
+        });
 }
 </script>
 
@@ -302,6 +331,7 @@ function addMeasureTable(id,time,value,mode){
 </script>
 
 <script language="JavaScript">
+
    function setCookie(cname,cvalue,exdays){
       var d = new Date();
       d.setTime(d.getTime()+(exdays*24*60*60*1000));
@@ -329,6 +359,8 @@ function addMeasureTable(id,time,value,mode){
          }
       }
    }
+
+  
    function add0(m){return m<10?'0'+m:m }
    function format(shijianchuo)
    {
@@ -600,7 +632,7 @@ global: {
 
 
 <script language="JavaScript">
-  for(var i = 0;i<4;i++)
+  for(var i = 0;i<2;i++)
   {
     //添加表格标题行
     var row = document.getElementById("table_id").insertRow();
@@ -621,6 +653,8 @@ global: {
     cell.innerHTML = "合格";
     cell.align = "center";
   }
+
+
 </script>
 
 
