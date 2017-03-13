@@ -225,7 +225,7 @@ def datainget():
 		if(dataArr[1]=='VACV'):
 			response = 'CAL:VACV 1:50.00:50.01#CAL:VACV 2:60.00:60.02#CAL:VACV 2E#'
 			return response
-	return 'NOUPDATE';
+	return 'CAL:NOTUPDATE#'
 
 @app.route("/get_web_history",methods=['GET','POST'])
 def get_web_history():
