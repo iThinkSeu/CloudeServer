@@ -221,11 +221,13 @@ def datainget():
 	print str(data)
 	dataArr = re.split(':|\n',data)
 	print dataArr
+	response = 'CAL:NOUPdate#'
 	if(dataArr[0]=='CAL'):
 		if(dataArr[1]=='VACV'):
 			response = 'CAL:VACV 1:50.00:50.01#CAL:VACV 2:60.00:60.02#CAL:VACV 2E#'
-			return response
-	return 'CAL:NOUPdate#'
+		else if (dataArr[1]=='OK')
+			response = 'CAL:COMPlete#'
+	return response
 
 @app.route("/get_web_history",methods=['GET','POST'])
 def get_web_history():
