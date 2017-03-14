@@ -122,10 +122,16 @@ def postmeasuredata():
 		datatype = request.json.get('datatype','')
 		value_string = request.json.get('value','')
 		value = float(str(value_string))
-		u = getuserinformation(token)
+		ErrorResult = request.json.get('ErrorResult','')
+		VWRTHD = request.json.get('VWRTHD','')
+		stand = request.json.get('stand','')
+		up = request.json.get('up','')
+		down = request.json.get('down','')
+		instrumentID = request.json.get('instrumentID','ABCDEF')
+		u = getinstrumentbyID(instrumentID)
 		if u is not None:
 			if(datatype in ['VDC','VAC','IDC','IAC']):
-				tmpmeasure = Measuredata(datatype = datatype,value = value)
+				tmpmeasure = Measuredata(datatype = datatype,value = value,separation=ErrorResult,VWRTHD=VWRTHD,stand=stand,up=up,down=down)
 				u.publishmeasuredata(tmpmeasure)
 				state = 'successful'
 				reason = ''
@@ -198,7 +204,7 @@ def add_numbers():
 	reason = ''
 	response = jsonify({'state':state,'reason':reason,'timestamp':timestamp,'data':20})
 	return response
-@app.route('/starttime')
+@app.route('/starttime',methods=['GET','POST'])
 def starttime():
 	state = "successful"
 	reason = ""
@@ -210,7 +216,7 @@ def starttime():
 	datalist = get_data_up(start_time)
 	result = []
 	for tmp in datalist:
-		output = {"dataid":tmp.id ,"datatype":tmp.datatype,"value":tmp.value,"timestamp":str(tmp.timestamp)}
+		output = {"dataid":tmp.id ,"datatype":tmp.datatype,"value":tmp.value,"separation":tmp.separation,"VWRTHD":tmp.VWRTHD,"stand":tmp.stand,"up":tmp.up,"down":tmp.down,"timestamp":str(tmp.timestamp)}
 		result.append(output)
 	response = jsonify({'state':state,'reason':reason,'result':result})
 	return response
@@ -218,15 +224,40 @@ def starttime():
 @app.route("/datainget",methods=['GET'])
 def datainget():
 	data = request.args.get('data','')
-	print str(data)
-	dataArr = re.split(':|\n',data)
-	print dataArr
+	dataArr = re.split(':|_|\n',data)
+	print "receive data:"+data
 	response = 'CAL:NOUPdate#'
 	if(dataArr[0]=='CAL'):
+		print "receive:CAL!"
 		if(dataArr[1]=='VACV'):
 			response = 'CAL:VACV 1:50.00:50.01#CAL:VACV 2:60.00:60.02#CAL:VACV 2E#'
 		elif (dataArr[1]=='OK'):
 			response = 'CAL:COMPlete#'
+	elif (dataArr[0]=='MEA'):
+		print "receive:MEA!"
+		print dataArr
+		datatype = dataArr[1]
+		VAL = dataArr[2]
+		VWRTHD = dataArr[4]
+		ErrorResult = dataArr[8]
+		up = dataArr[10]
+		stand = dataArr[12]
+		down = dataArr[14]
+		value = float(str(VAL.rstrip('kV').rstrip('mA').rstrip('S')))
+		instrumentID='ABCDEF'
+		u = getinstrumentbyID(instrumentID)
+		if u is not None:
+			if(datatype in ['VDC','VAC','IDC','IAC']):
+				tmpmeasure = Measuredata(datatype = datatype,value = value,separation=ErrorResult,VWRTHD=VWRTHD,stand=stand,up=up,down=down)
+				u.publishmeasuredata(tmpmeasure)
+				response = 'successful#'
+			else:
+				response = 'fail no this measure type#'				
+		else:
+			response = 'fail,no user#'
+	else:
+		response = 'no CAL or MEA type#'
+
 	return response
 
 @app.route("/get_web_history",methods=['GET','POST'])

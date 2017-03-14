@@ -1,4 +1,4 @@
-
+# -*- coding: utf-8 -*-
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.script import Manager
@@ -20,13 +20,29 @@ migrage = Migrate(app,db)
 manager = Manager(app)
 manager.add_command('db',MigrateCommand)
 
+class manageinstrument(db.Model):
+	__tablename__ = 'manageinstruments'
+	id = db.Column(db.Integer, primary_key = True)
+	userid = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key = True)
+	instrumentid = db.Column(db.Integer, db.ForeignKey('instruments.id'), primary_key = True)
+	timestamp = db.Column(db.DateTime,default = datetime.now)
+	def add(self):
+		try:
+			db.session.add(self)
+			db.session.commit()
+		except Exception, e:
+			print e
+			db.session.rollback()
+			return 2
+			
 class User(db.Model):
 	__tablename__ = "users"
 	id = db.Column(db.Integer,primary_key=True)
 	username = db.Column(db.String(32),unique = True)
 	password = db.Column(db.String(32))
 	token = db.Column(db.String(32))
-	measuredatas = db.relationship('Measuredata',backref = 'instrument', lazy = 'dynamic')
+	#manageinstruments的外键，该用户管理了哪些仪器
+	manageinstruments = db.relationship('manageinstrument', foreign_keys = [manageinstrument.userid], backref = db.backref('manageuser', lazy='joined'), lazy='dynamic', cascade = 'all, delete-orphan')
 
 	def add(self):
 		try:
@@ -53,6 +69,55 @@ class User(db.Model):
 			return 0
 		else:
 			return 1
+	def manageinstrument(self,instrument):
+		try:
+			lp = self.manageinstruments.filter_by(instrumentid = instrument.id).first()
+			if lp is None:
+				lp = manageinstrument(manageuser = self, managewhatinstrument = instrument)
+				db.session.add(lp)
+				db.session.commit()
+				return 0
+			else:
+				return 1
+		except Exception, e:
+			print e
+			db.session.rollback()
+			return 2	
+
+class instrument(db.Model):
+	__tablename__ = "instruments"
+	id = db.Column(db.Integer,primary_key=True)
+	instrumentID = db.Column(db.String(64),unique = True)
+	password = db.Column(db.String(32))
+	timestamp = db.Column(db.DateTime, default = datetime.now)
+	measuredatas = db.relationship('Measuredata',backref = 'instrument', lazy = 'dynamic')
+	#管理这个仪器的所有帐号用户
+	manageusers = db.relationship('manageinstrument', foreign_keys = [manageinstrument.instrumentid], backref = db.backref('managewhatinstrument', lazy='joined'), lazy='dynamic', cascade = 'all, delete-orphan')
+	def add(self):
+		try:
+			temp = instrument.query.filter_by(instrumentID=self.instrumentID).first()
+			if temp is None:
+				db.session.add(self)
+				db.session.commit()
+				return 0
+			else:
+				return 1
+		except Exception, e:
+			print e
+			db.session.rollback()
+			return 2
+	def isExisted(self):
+		temp = instrument.query.filter_by(instrumentID=self.instrumentID,password=self.password).first()
+		if tempuser is None:
+			return 0
+		else:
+			return 1
+	def isExistedusername(self):
+		tempuser = User.query.filter_by(username = self.username).first()
+		if tempuser is None:
+			return 0
+		else:
+			return 1
 	def publishmeasuredata(self,measuredata):
 		try:
 			measuredata.instrument = self
@@ -65,13 +130,18 @@ class User(db.Model):
 			db.session.rollback()
 			return 2	
 
+
 class Measuredata(db.Model):
 	__tablename__ = "messuredatas"
 	id = db.Column(db.Integer,primary_key = True)
-	instrumentid = db.Column(db.Integer,db.ForeignKey('users.id'))
+	instrumentID = db.Column(db.String(32),db.ForeignKey('instruments.instrumentID'))
 	datatype = db.Column(db.String(32))
 	value = db.Column(db.Float)
 	separation = db.Column(db.String(32))
+	VWRTHD = db.Column(db.String(32))
+	stand = db.Column(db.Float)
+	up = db.Column(db.Float)
+	down = db.Column(db.Float)
 	timestamp = db.Column(db.DateTime, default = datetime.now)
 	def add(self):
 		try:
@@ -95,6 +165,9 @@ class revise(db.Model):
 
 def getuserinformation(token):
 	u=User.query.filter_by(token=token).first()
+	return u 
+def getinstrumentbyID(instrumentID):
+	u=instrument.query.filter_by(instrumentID=instrumentID).first()
 	return u 
 
 def getTokeninformation(username):
