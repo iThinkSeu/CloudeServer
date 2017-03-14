@@ -62,11 +62,11 @@
 </div>
 
 <!---->
-<div style="font-size: 150%;margin-top:15px ;margin-left: 150px;font-family: Microsoft YaHei"><b>实时数据</b></div>
+<div style="font-size: 150%;margin-top:15px ;margin-left: 102px;font-family: Microsoft YaHei"><b>实时数据</b></div>
 
 <div id = "realtime">
   <div id="voltage" style="margin-left: 1px;display:inline-block;margin-top:10px">          
-      <p id = "modetext" style = "display:inline-block;margin-top:20px;font-size: 150%;font-family:Microsoft YaHei">交流电压</p>
+      <p id = "modetext" style = "display:inline-block;margin-top:20px;font-size: 150%;font-family:Microsoft YaHei">VAC</p>
       <div id = "measureborder" style="display:inline-block;width:184px;height:80px;margin-bottom:20px;margin-left:2px;border:1px solid black">
           <div style = "text-align:center;margin-top: 19px">
               <span id="measureValue" style = "font-size:160%">12.306KV</span>
@@ -74,20 +74,20 @@
       </div>
   </div>
   <div style="display:inline-block;vertical-align: top;margin-left:20px;margin-top: 7px;font-size: 140%;font-family: Microsoft YaHei;">
-        <span id="wavepar">失真度 :</span></br></br>
-        <span>频率 :</span></br>
+        <span id="VWRTHD">失真度 :</span></br></br>
+        <span id = "f">频率 :</span></br>
   </div>
   
   <div style="display:inline-block;vertical-align: top;margin-left:1px;margin-top: 7px;font-size: 140%;font-family: Microsoft YaHei;">
-        <span id="waveval">0.05%</span></br></br>
-        <span>50HZ</span></br>
+        <span id="VWRTHDval">0.05%</span></br></br>
+        <span id = "fval">50HZ</span></br>
   </div>
   <div style="display:inline-block;vertical-align: top;margin-left:40px;margin-top: 7px;font-size: 140%;font-family: Microsoft YaHei;">
         <span >标称值 :</span></br></br>
         <span>误差 :</span></br>
   </div>
   <div style="display:inline-block;vertical-align: top;margin-left:1px;margin-top: 7px;font-size: 140%;font-family: Microsoft YaHei;">
-        <span id="waveVal">12.000KV</span></br></br>
+        <span id="stand">12.000KV</span></br></br>
         <span id="measureError">0.30600KV</span></br>
   </div>
   <div style="display:inline-block;vertical-align: top;margin-left:40px;margin-top: 7px;font-size: 140%;font-family: Microsoft YaHei;">
@@ -95,8 +95,8 @@
         <span>下限值 :</span></br>
   </div>
   <div style="display:inline-block;vertical-align: top;margin-left:1px;margin-top: 7px;font-size: 140%;font-family: Microsoft YaHei;">
-        <span id="upLimit">12.200KV</span></br></br>
-        <span>11.800KV</span></br>
+        <span id="up">12.200KV</span></br></br>
+        <span id="down">11.800KV</span></br>
   </div>
   <div style="display:inline-block;margin-left:370px;font-size: 130%;font-family: Microsoft YaHei;">
         <button id="buttonStart" class="btn-lg btn-default" style="width:120px">开始</button>
@@ -125,12 +125,12 @@
         <h1 align="center" id="divDataRecordH">测量数据记录</h1>
         <div id = "divDataTable" align="left">
             <table id="tableDataRecord" align="left" border="1">
-                <tr class="fontWeight">
+                <td class="fontWeight">
                     <td align="center">序号</td>
                     <td align="center">时间</td>
                     <td align="center">结果</td>
                     <td align="center">模式</td>
-                </tr>
+                </td>
             </table>
         </div>
 
@@ -266,9 +266,9 @@ function displayResult(){
       break;
     }
   }
-
-  starttime="2016-06-16 14:26:08";
-  endtime="2017-06-16 14:26:08";
+  $('#table_id tr:not(:first)').empty();
+  starttime=document.getElementById('starttime').value;
+  endtime=document.getElementById('endtime').value;
   $.getJSON("/get_web_history", { starttime: starttime, endtime: endtime,token:"18d54ec8446d03451f5552033c64dbda" }, function(result){
                var list=result.result;
                console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -279,7 +279,7 @@ function displayResult(){
                   var datatype = list[i].datatype;
                   var danwei;
                   if(datatype=="VDC"||datatype=="VAC")
-                      danwei="KV";
+                      danwei="kV";
                   else if(datatype=="IAC"||datatype=="IDC")
                       danwei = "mA";
 
@@ -441,17 +441,60 @@ global: {
                         y = list[i].value;
                         series.addPoint([x, y], true, true);
                         var datatype = list[i].datatype;
+                        var separation = list[i].separation;
+                        var VWRTHDval = list[i].VWRTHD;
+                        var stand = list[i].stand;
+                        var up = list[i].up;
+                        var down = list[i].down;
                         var danwei;
-                        if(datatype=="VDC"||datatype=="VAC")
-                            danwei="KV";
-                        else if(datatype=="IAC"||datatype=="IDC")
-                            danwei = "mA";
+                        var f = "--";
+                        var fval = "--";
+
+                        switch(datatype)
+                        {
+                          case "VDC":
+                                danwei = "kV";
+                                VWRTHD = "纹波系数 :";
+                                f = "--";
+                                fval = "--";
+                                break;
+                          case "VAC":
+                                danwei = "kV";
+                                VWRTHD = "失真度 :";
+                                f = "频率 :";
+                                fval = "50HZ";
+                                break;
+                          case "IAC":
+                                danwei = "mA";
+                                VWRTHD = "-- :";
+                                f = "频率 :";
+                                fval = "50HZ";
+                                break;
+                          case "IDC":
+                                danwei = "mA";
+                                VWRTHD = "-- :";
+                                f = "--";
+                                fval ="--"
+                                break; 
+                          default:
+                                danwei = "--";
+                                VWRTHD = "-- :";
+                                f = "--";
+                                fval ="--"
+                                break;
+                        }
 
                         document.getElementById("modetext").innerText=datatype;
                         document.getElementById("measureValue").innerText=y+danwei;
-                        document.getElementById("measureError").innerText=(y-12).toFixed(3)+danwei;
+                        document.getElementById("measureError").innerText=(y-stand).toFixed(3)+danwei;
+                        document.getElementById("VWRTHD").innerText=VWRTHD;
+                        document.getElementById("VWRTHDval").innerText=VWRTHDval;
+                        document.getElementById("f").innerText=f;
+                        document.getElementById("fval").innerText=fval;
+                        document.getElementById("stand").innerText=stand;
+                        document.getElementById("up").innerText=up;
+                        document.getElementById("down").innerText=down;
                         RecordCount=RecordCount+1;
-                        
                         //添加表格行
                         var row = document.getElementById("tableDataRecord").insertRow();
                         var cell;

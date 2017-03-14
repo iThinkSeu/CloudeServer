@@ -267,14 +267,16 @@ def get_web_history():
 	modelist = request.args.get('modelist','')
 	starttime = request.args.get('starttime',"2017-06-16 15:40:29")
 	endtime = request.args.get('endtime','')
+	print "starttime="+starttime
+	print "endtime="+endtime
 	u = getuserinformation(token)
 	if u is not None:	
 		reason = ''
 		state = 'successful'
-		history_data_list = get_history_data(['VAC'],starttime,endtime)
+		history_data_list = get_history_data(['VAC','VDC'],starttime,endtime)
 		for tmp in history_data_list:
 			state = "successful"
-			output = {"dataid":tmp.id ,"datatype":tmp.datatype,"value":tmp.value,"timestamp":str(tmp.timestamp)}
+			output = {"dataid":tmp.id ,"datatype":tmp.datatype,"value":tmp.value,"separation":tmp.separation,"timestamp":str(tmp.timestamp)}
 			result.append(output)
 	else:
 		state = 'fail'
