@@ -132,10 +132,11 @@ def postmeasuredata():
 		up = request.json.get('up','')
 		down = request.json.get('down','')
 		instrumentID = request.json.get('ID','ABCDEF')
+		fre = request.json.get("fre","--")
 		u = getinstrumentbyID(instrumentID)
 		if u is not None:
 			if(datatype in ['VDC','VAC','IDC','IAC','VAC-T','VDC-T']):
-				tmpmeasure = Measuredata(datatype = datatype,value = value,separation=ErrorResult,VWRTHD=VWRTHD,stand=stand,up=up,down=down)
+				tmpmeasure = Measuredata(datatype = datatype,value = value,separation=ErrorResult,VWRTHD=VWRTHD,stand=stand,up=up,down=down,fre=fre)
 				u.publishmeasuredata(tmpmeasure)
 				state = 'successful'
 				reason = ''
