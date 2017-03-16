@@ -142,6 +142,7 @@ class Measuredata(db.Model):
 	stand = db.Column(db.Float)
 	up = db.Column(db.Float)
 	down = db.Column(db.Float)
+	fre = db.Column(db.String(32))
 	timestamp = db.Column(db.DateTime, default = datetime.now)
 	def add(self):
 		try:
@@ -157,10 +158,24 @@ class revise(db.Model):
 	"""docstring for revises"""
 	__tablename__ = "revises"
 	id = db.Column(db.Integer,primary_key=True)
+	instrumentID = db.Column(db.String(32))
 	type = db.Column(db.String(32))
 	realvalue = db.Column(db.Float)
 	measurevalue = db.Column(db.Float)
-
+	flag = db.Column(db.Boolean,default =False)
+	def add(self):
+		try:
+			tempuser = revise.query.filter_by(instrumentID=self.instrumentID,type = self.type,realvalue=self.realvalue).first()
+			if tempuser is None:
+				db.session.add(self)
+				db.session.commit()
+				return 0
+			else:
+				return 1
+		except Exception, e:
+			print e
+			db.session.rollback()
+			return 2
 
 
 def getuserinformation(token):
@@ -184,7 +199,9 @@ def get_data_from_starttime(start_time,end_time):
 def get_data_up(starttime):
 	a = Measuredata.query.filter(Measuredata.timestamp>starttime).all()
 	return a
-	 
+def getrevisetabledb(instrumentID,revisetype):
+	a = revise.query.filter_by(instrumentID=instrumentID,type=revisetype).order_by(revise.realvalue.asc()).all()
+	return a	 
 if __name__ == '__main__':
 	manager.run()
 

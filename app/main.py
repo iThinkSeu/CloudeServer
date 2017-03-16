@@ -2,7 +2,7 @@
 from flask import Flask
 from flask import request,jsonify,json
 from flask import render_template
-from flask import redirect,url_for
+from flask import redirect,url_for,flash
 from models import *
 from wtforms import Form,TextField,PasswordField,validators
 from hashmd5 import *
@@ -11,8 +11,12 @@ import os, stat
 from flask.ext.bootstrap import Bootstrap
 from datetime import *
 import re
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 app = Flask(__name__)
+app.secret_key = 'some_secret'
 bootstrap=Bootstrap()
 bootstrap.init_app(app)
 
@@ -227,37 +231,55 @@ def datainget():
 	dataArr = re.split(':|_|\n',data)
 	print "receive data:"+data
 	response = 'CAL:NOUPdate#'
-	if(dataArr[0]=='CAL'):
-		print "receive:CAL!"
-		if(dataArr[1]=='VACV'):
-			response = 'CAL:VACV 1:50.00:50.01#CAL:VACV 2:60.00:60.02#CAL:VACV 2E#'
-		elif (dataArr[1]=='OK'):
+	instrumentID = dataArr[1]
+	if(dataArr[2]=='CAL'):
+		revisetype = dataArr[3]
+		print "receive:CAL!"+revisetype
+		if(dataArr[3]!='OK'):
+			calrevises = revise.query.filter_by(instrumentID=instrumentID,type=revisetype).all()
+			calstr = ''
+			print "CAL!"+revisetype
+			num = 0;
+			for rev in calrevises:
+				num = num+1;
+				print "CAL! in num="
+				print num
+				calstr = calstr+"CAL:"+revisetype+" "+str(num)+":"+str(rev.realvalue)+":"+str(rev.measurevalue)+"#"
+			response = calstr
+		elif (dataArr[3]=='OK'):
 			response = 'CAL:COMPlete#'
-	elif (dataArr[0]=='MEA'):
+	elif (dataArr[2]=='MEA'):
 		print "receive:MEA!"
 		print dataArr
-		datatype = dataArr[1]
-		VAL = dataArr[2]
-		VWRTHD = dataArr[4]
-		ErrorResult = dataArr[8]
-		up = dataArr[10]
-		stand = dataArr[12]
-		down = dataArr[14]
+		ID = dataArr[1]
+		datatype = dataArr[3]
+		VAL = dataArr[4]
+		ErrorResult = dataArr[6]
+		up = float(str(dataArr[8].rstrip('kV').rstrip('mA').rstrip('S')))
+		stand = float(str(dataArr[10].rstrip('kV').rstrip('mA').rstrip('S')))
+		down = float(str(dataArr[12].rstrip('kV').rstrip('mA').rstrip('S')))
+		if(dataArr[3]==u'VAC'or dataArr[3]==u'IAC'):
+			Freq = dataArr[14]
+		else:
+			Freq = "--"
+		if(datatype==u"VAC" or datatype==u"VDC"):
+			VWRTHD = dataArr[16]
+		else:
+			VWRTHD = "--"
 		value = float(str(VAL.rstrip('kV').rstrip('mA').rstrip('S')))
-		instrumentID='ABCDEF'
+		instrumentID='001'
 		u = getinstrumentbyID(instrumentID)
 		if u is not None:
 			if(datatype in ['VDC','VAC','IDC','IAC']):
-				tmpmeasure = Measuredata(datatype = datatype,value = value,separation=ErrorResult,VWRTHD=VWRTHD,stand=stand,up=up,down=down)
+				tmpmeasure = Measuredata(datatype = datatype,value = value,separation=ErrorResult,VWRTHD=VWRTHD,stand=stand,up=up,down=down,fre = Freq)
 				u.publishmeasuredata(tmpmeasure)
 				response = 'successful#'
 			else:
 				response = 'fail no this measure type#'				
 		else:
-			response = 'fail,no user#'
+			response = 'fail,no instrumentID#'
 	else:
 		response = 'no CAL or MEA type#'
-
 	return response
 
 @app.route("/get_web_history",methods=['GET','POST'])
@@ -284,9 +306,85 @@ def get_web_history():
 
 	response = jsonify({'state':state,'reason':reason,'result':result})
 	return response
+@app.route("/getrevisetable",methods=['GET','POST'])
+def getrevisetable():
+	result = []
+	token = request.args.get('token','')
+	instrumentID = request.args.get('instrumentID','ABCDEF')
+	revisetype = request.args.get('revisetype',"VACV")
+	print "instrumentID="+instrumentID
+	print "revisetype="+revisetype
+	u = getuserinformation(token)
+	if u is not None:	
+		reason = ''
+		state = 'successful'
+		revisetablelist = getrevisetabledb(instrumentID,revisetype)
+		for tmp in revisetablelist:
+			state = "successful"
+			output = {"instrumentID":tmp.instrumentID ,"id":tmp.id,"revisetype":tmp.type,"realvalue":tmp.realvalue,"measurevalue":tmp.measurevalue,"flag":tmp.flag}
+			result.append(output)
+	else:
+		state = 'fail'
+		reason = 'no user'
+	response = jsonify({'state':state,'reason':reason,'result':result})
+	return response
+@app.route("/deleterevise",methods=['GET','POST'])
+def deleterevise():
+	if request.method=="POST":
+		reviseid = request.values.get('id',None)
+		print reviseid
+		if reviseid:
+			rs = revise.query.filter(revise.id==reviseid).first()
+			if rs:
+				db.session.delete(rs)
+				db.session.commit()
+	return "successful"
+
+@app.route("/addrevise",methods=['GET','POST'])
+def addrevise():
+	response = "添加成功"
+	if request.method=="POST":
+		revisetype = request.values.get('revisetype',None)
+		realvalue = request.values.get('realvalue','')
+		measurevalue = request.values.get('measurevalue','')
+		instrumentID = request.values.get('instrumentID',"001")
+		print revisetype
+		if revisetype:
+			rs = revise(instrumentID=instrumentID,type=revisetype,realvalue=realvalue,measurevalue=measurevalue)
+			state = rs.add()
+			if(state==1): 
+				response = "已经存在"
+			elif(state==2):
+				response = "dberror"
+	return response
+
+@app.route("/submitrevise",methods=['GET','POST'])
+def submitrevise():
+	response = "设置成功"
+	if request.method=="POST":
+		data = request.values.get('data','')
+		revisetype = request.values.get('revisetype','VACV')
+		instrumentID = request.values.get('instrumentID',"001")
+		print "data!!!!!!!!!!!!!!!!!"
+		print data
+		dataArr = re.split(':|\n',data)
+		drs = revise.query.filter_by(instrumentID=instrumentID,type=revisetype).all();
+		for tmp in drs:
+			db.session.delete(tmp)	
+			db.session.commit()
+		print "len="
+		print len(dataArr)
+		for i in range(1,len(dataArr),3):
+			print i
+			realvalue = dataArr[i]
+			measurevalue = dataArr[i+1]
+			print realvalue+":"+measurevalue
+			rs = revise(instrumentID=instrumentID,type=revisetype,realvalue=realvalue,measurevalue=measurevalue,flag=True)
+			rs.add()
+	return response
+
 @app.route("/history_data",methods=['GET','POST'])
-def history_data():
-	
+def history_data():	
 	result = []
 	token = request.json['token']
 	modelist = request.json.get('modelist','')
@@ -307,6 +405,8 @@ def history_data():
 
 	response = jsonify({'state':state,'reason':reason,'result':result})
 	return response
+
+
 #历史数据	
 @app.route("/history",methods=['GET','POST'])
 def history():
@@ -338,8 +438,23 @@ def manageuser():
 #管理界面2
 @app.route("/revise",methods=['GET','POST'])
 def managerevise():
+	#if request.method=='POST':
+	#	instrumentID = request.values.get('instrumentID','ABCDEF')
+	#	revisetype = request.values.get('revisetype',"VACV")
+	#	print revisetype
+	#	print instrumentID
+	#	rs = revise.query.filter_by(instrumentID=instrumentID,type=revisetype).all()
+	#	print rs
+	#	return render_template('manageRevise.html',revises=rs);
+	rs = revise.query.filter_by(instrumentID="ABCDEF",type="VACV").all();
+	return render_template('manageRevise.html',revises=rs)
+
+@app.route("/getrevisetable",methods=['GET','POST'])
+def getrevise():
 	revises = revise.query.all()
-	return render_template('manageRevise.html',revises=revises)
+	return "test"
+
+
 
 if __name__ == '__main__':
 	app.run(host=os.getenv('IP','0.0.0.0'),port=int(os.getenv('PORT',4020)),debug = True)
