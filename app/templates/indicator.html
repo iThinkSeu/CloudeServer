@@ -114,10 +114,10 @@
     <div id="divChartVortex">
         <!--涡街流量曲线在此-->
     </div>
-    <div id="container" style="width: 500px; height: 300px;float:left">
+    <div id="container" style="width: 800px; height: 300px;float:left">
     曲线
     </div>
-    <div id="container2" style="width: 500px; height: 300px;float:left">
+    <div id="container2" style="width: 1px; height: 1px;float:left">
     曲线
     </div>
 
@@ -480,15 +480,15 @@ global: {
                         }
 
                         document.getElementById("modetext").innerText=datatype;
-                        document.getElementById("measureValue").innerText=y+danwei;
+                        document.getElementById("measureValue").innerText=y.toFixed(3)+danwei;
                         document.getElementById("measureError").innerText=(y-stand).toFixed(3)+danwei;
                         document.getElementById("VWRTHD").innerText=VWRTHD;
                         document.getElementById("VWRTHDval").innerText=VWRTHDval;
                         document.getElementById("f").innerText=f;
                         document.getElementById("fval").innerText=fval;
-                        document.getElementById("stand").innerText=stand;
-                        document.getElementById("up").innerText=up;
-                        document.getElementById("down").innerText=down;
+                        document.getElementById("stand").innerText=stand.toFixed(3);
+                        document.getElementById("up").innerText=up.toFixed(3);
+                        document.getElementById("down").innerText=down.toFixed(3);
                         RecordCount=RecordCount+1;
                         //添加表格行
                         var row = document.getElementById("tableDataRecord").insertRow();
