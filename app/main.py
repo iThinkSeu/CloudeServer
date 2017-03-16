@@ -283,7 +283,7 @@ def datainget():
 			if(datatype in ['VDC','VAC','IDC','IAC']):
 				tmpmeasure = Measuredata(datatype = datatype,value = value,separation=ErrorResult,VWRTHD=VWRTHD,stand=stand,up=up,down=down,fre = Freq)
 				u.publishmeasuredata(tmpmeasure)
-				response = 'successful#'
+				response = ''
 			else:
 				response = 'fail no this measure type#'				
 		else:
