@@ -221,7 +221,7 @@ def starttime():
 	datalist = get_data_up(start_time)
 	result = []
 	for tmp in datalist:
-		output = {"dataid":tmp.id ,"datatype":tmp.datatype,"value":tmp.value,"separation":tmp.separation,"VWRTHD":tmp.VWRTHD,"stand":tmp.stand,"up":tmp.up,"down":tmp.down,"timestamp":str(tmp.timestamp)}
+		output = {"dataid":tmp.id ,"datatype":tmp.datatype,"value":tmp.value,"separation":tmp.separation,"VWRTHD":tmp.VWRTHD,"stand":tmp.stand,"up":tmp.up,"down":tmp.down,"fre":tmp.fre,"timestamp":str(tmp.timestamp)}
 		result.append(output)
 	response = jsonify({'state':state,'reason':reason,'result':result})
 	return response

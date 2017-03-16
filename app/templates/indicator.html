@@ -448,7 +448,7 @@ global: {
                         var down = list[i].down;
                         var danwei;
                         var f = "--";
-                        var fval = "--";
+                        var fval = list[i].fre;
 
                         switch(datatype)
                         {
@@ -456,31 +456,26 @@ global: {
                                 danwei = "kV";
                                 VWRTHD = "纹波系数 :";
                                 f = "--";
-                                fval = "--";
                                 break;
                           case "VAC":
                                 danwei = "kV";
                                 VWRTHD = "失真度 :";
                                 f = "频率 :";
-                                fval = "50HZ";
                                 break;
                           case "IAC":
                                 danwei = "mA";
                                 VWRTHD = "-- :";
                                 f = "频率 :";
-                                fval = "50HZ";
                                 break;
                           case "IDC":
                                 danwei = "mA";
                                 VWRTHD = "-- :";
-                                f = "--";
-                                fval ="--"
+                                f = "--: ";
                                 break; 
                           default:
                                 danwei = "--";
                                 VWRTHD = "-- :";
                                 f = "--";
-                                fval ="--"
                                 break;
                         }
 
