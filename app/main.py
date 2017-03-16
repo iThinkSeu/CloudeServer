@@ -250,6 +250,7 @@ def datainget():
 				rev.flag=False
 				rev.add()
 			if(update==True):
+				calstr = calstr+"CAL:"+revisetype+" "+str(num)+"E#"
 				response = calstr
 			else:
 				response = 'CAL:NOUPdate#'
