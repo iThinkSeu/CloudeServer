@@ -486,9 +486,9 @@ global: {
                         document.getElementById("VWRTHDval").innerText=VWRTHDval;
                         document.getElementById("f").innerText=f;
                         document.getElementById("fval").innerText=fval;
-                        document.getElementById("stand").innerText=stand.toFixed(3);
-                        document.getElementById("up").innerText=up.toFixed(3);
-                        document.getElementById("down").innerText=down.toFixed(3);
+                        document.getElementById("stand").innerText=stand.toFixed(3)+danwei;
+                        document.getElementById("up").innerText=up.toFixed(3)+danwei;
+                        document.getElementById("down").innerText=down.toFixed(3)+danwei;
                         RecordCount=RecordCount+1;
                         //添加表格行
                         var row = document.getElementById("tableDataRecord").insertRow();
