@@ -162,7 +162,7 @@ class revise(db.Model):
 	type = db.Column(db.String(32))
 	realvalue = db.Column(db.Float)
 	measurevalue = db.Column(db.Float)
-	flag = db.Column(db.Boolean,default =False)
+	flag = db.Column(db.Boolean)
 	def add(self):
 		try:
 			tempuser = revise.query.filter_by(instrumentID=self.instrumentID,type = self.type,realvalue=self.realvalue).first()
@@ -176,7 +176,15 @@ class revise(db.Model):
 			print e
 			db.session.rollback()
 			return 2
-
+	def addpwd(self):
+		try:
+			db.session.add(self)
+			db.session.commit()
+			return 0
+		except Exception, e:
+			print e
+			db.session.rollback()
+			return 2
 
 def getuserinformation(token):
 	u=User.query.filter_by(token=token).first()

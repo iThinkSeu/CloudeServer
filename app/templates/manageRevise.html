@@ -18,6 +18,7 @@
                     <span>校正设备ID</span>
                     <select id="selectID">
                       <option value ="001">001</option>
+                      <option value ="001">002</option>
                       <option value ="ABCDEF">ABCDEF</option>
                     </select> &nbsp;&nbsp;
                     <span>模式选择</span>
@@ -251,7 +252,7 @@ function submitButton(){
       console.log("reviseButton query!!!");
       var obj = document.getElementById("revisetable");
       length = $("#revisetable").find("tr").length;
-      instrumentID = "ABCDEF";  
+      instrumentID = $("#selectID").val();;  
       console.log(obj.rows.length+"new length="+length);
       //alert(obj.rows[1].cells[1].innerText);
       var str = '';

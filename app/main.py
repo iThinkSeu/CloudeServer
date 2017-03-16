@@ -236,16 +236,24 @@ def datainget():
 		revisetype = dataArr[3]
 		print "receive:CAL!"+revisetype
 		if(dataArr[3]!='OK'):
-			calrevises = revise.query.filter_by(instrumentID=instrumentID,type=revisetype).all()
+			calrevises = revise.query.filter_by(instrumentID=instrumentID,type=revisetype,flag=True).all()
 			calstr = ''
 			print "CAL!"+revisetype
 			num = 0;
+			update = False
 			for rev in calrevises:
+				update = True
 				num = num+1;
 				print "CAL! in num="
 				print num
 				calstr = calstr+"CAL:"+revisetype+" "+str(num)+":"+str(rev.realvalue)+":"+str(rev.measurevalue)+"#"
-			response = calstr
+				rev.flag=False
+				rev.add()
+			if(update==True):
+				response = calstr
+			else:
+				response = 'CAL:NOUPdate#'
+			return response
 		elif (dataArr[3]=='OK'):
 			response = 'CAL:COMPlete#'
 	elif (dataArr[2]=='MEA'):
@@ -262,8 +270,10 @@ def datainget():
 			Freq = dataArr[14]
 		else:
 			Freq = "--"
-		if(datatype==u"VAC" or datatype==u"VDC"):
+		if(datatype==u"VAC"):
 			VWRTHD = dataArr[16]
+		elif(datatype==u"VDC"):
+			VWRTHD = dataArr[14]
 		else:
 			VWRTHD = "--"
 		value = float(str(VAL.rstrip('kV').rstrip('mA').rstrip('S')))
@@ -350,7 +360,7 @@ def addrevise():
 		instrumentID = request.values.get('instrumentID',"001")
 		print revisetype
 		if revisetype:
-			rs = revise(instrumentID=instrumentID,type=revisetype,realvalue=realvalue,measurevalue=measurevalue)
+			rs = revise(instrumentID=instrumentID,type=revisetype,realvalue=realvalue,measurevalue=measurevalue,flag=True)
 			state = rs.add()
 			if(state==1): 
 				response = "已经存在"
@@ -370,6 +380,7 @@ def submitrevise():
 		dataArr = re.split(':|\n',data)
 		drs = revise.query.filter_by(instrumentID=instrumentID,type=revisetype).all();
 		for tmp in drs:
+			print "delete"
 			db.session.delete(tmp)	
 			db.session.commit()
 		print "len="
@@ -379,8 +390,11 @@ def submitrevise():
 			realvalue = dataArr[i]
 			measurevalue = dataArr[i+1]
 			print realvalue+":"+measurevalue
-			rs = revise(instrumentID=instrumentID,type=revisetype,realvalue=realvalue,measurevalue=measurevalue,flag=True)
-			rs.add()
+			rs = revise(instrumentID=instrumentID,type=revisetype,realvalue=realvalue,measurevalue=measurevalue,flag=1)
+			print "flag!!!!!"
+			print rs.flag
+			rs.flag = True
+			print rs.add()
 	return response
 
 @app.route("/history_data",methods=['GET','POST'])
