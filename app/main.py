@@ -119,6 +119,7 @@ def indexmain():
 	#return redirect(url_for('static', filename='profile_small.jpg'), code=301)
 	return render_template('indexMain.html')
 
+
 @app.route("/postmeasuredata",methods=['GET','POST'])
 def postmeasuredata():
 	try:
@@ -138,6 +139,41 @@ def postmeasuredata():
 			if(datatype in ['VDC','VAC','IDC','IAC','VAC-T','VDC-T']):
 				tmpmeasure = Measuredata(datatype = datatype,value = value,separation=ErrorResult,VWRTHD=VWRTHD,stand=stand,up=up,down=down,fre=fre)
 				u.publishmeasuredata(tmpmeasure)
+				state = 'successful'
+				reason = ''
+			else:
+				state = 'fail'
+				reason = 'no this measure type'				
+		else:
+			state = 'fail'
+			reason = 'no user'
+	except Exception, e:	
+		print e
+		state = 'fail'
+		reason = 'exception'
+
+	response = jsonify({'state':state,
+						'reason':reason})
+	return response
+
+@app.route("/postsavedata",methods=['GET','POST'])
+def postsavedata():
+	try:
+		token = request.json['token']
+		datatype = request.json.get('datatype','')
+		value = request.json.get('value','')
+		ErrorResult = request.json.get('separation','')
+		VWRTHD = request.json.get('VWRTHD','')
+		stand = request.json.get('stand','')
+		up = request.json.get('up','')
+		down = request.json.get('down','')
+		instrumentID = request.json.get('ID','ABCDEF')
+		fre = request.json.get("fre","--")
+		u = getinstrumentbyID(instrumentID)
+		if u is not None:
+			if(datatype in ['VDC','VAC','IDC','IAC','VAC-T','VDC-T']):
+				tmp = savedata(datatype = datatype,value = value,separation=ErrorResult,VWRTHD=VWRTHD,stand=stand,up=up,down=down,fre=fre)
+				u.publishsavedata(tmp)
 				state = 'successful'
 				reason = ''
 			else:

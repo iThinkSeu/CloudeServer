@@ -129,6 +129,17 @@ class instrument(db.Model):
 			print e
 			db.session.rollback()
 			return 2	
+	def publishsavedata(self,savedata):
+		try:
+			savedata.instrument = self
+			db.session.add(savedata)
+			db.session.execute('set names utf8mb4')
+			db.session.commit()
+			return 0
+		except Exception, e:
+			print e
+			db.session.rollback()
+			return 2	
 
 
 class Measuredata(db.Model):
@@ -153,6 +164,29 @@ class Measuredata(db.Model):
 			print e
 			db.session.rollback()
 			return 2
+class savedata(db.Model):
+	__tablename__ = "savedatas"
+	id = db.Column(db.Integer,primary_key = True)
+	instrumentID = db.Column(db.String(32),db.ForeignKey('instruments.instrumentID'))
+	datatype = db.Column(db.String(32))
+	value = db.Column(db.String(32))
+	separation = db.Column(db.String(32))
+	VWRTHD = db.Column(db.String(32))
+	stand = db.Column(db.String(32))
+	up = db.Column(db.String(32))
+	down = db.Column(db.String(32))
+	fre = db.Column(db.String(32))
+	timestamp = db.Column(db.DateTime, default = datetime.now)
+	def add(self):
+		try:
+			db.session.add(self)
+			db.session.execute('set names utf8mb4')
+			db.session.commit()
+		except Exception, e:
+			print e
+			db.session.rollback()
+			return 2
+
 
 class revise(db.Model):
 	"""docstring for revises"""
