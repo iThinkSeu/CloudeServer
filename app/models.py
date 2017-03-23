@@ -91,6 +91,8 @@ class instrument(db.Model):
 	password = db.Column(db.String(32))
 	timestamp = db.Column(db.DateTime, default = datetime.now)
 	measuredatas = db.relationship('Measuredata',backref = 'instrument', lazy = 'dynamic')
+	savedatas = db.relationship('savedata',backref = 'instrument', lazy = 'dynamic')
+
 	#管理这个仪器的所有帐号用户
 	manageusers = db.relationship('manageinstrument', foreign_keys = [manageinstrument.instrumentid], backref = db.backref('managewhatinstrument', lazy='joined'), lazy='dynamic', cascade = 'all, delete-orphan')
 	def add(self):
