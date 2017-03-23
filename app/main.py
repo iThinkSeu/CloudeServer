@@ -439,15 +439,22 @@ def submitrevise():
 def history_data():	
 	result = []
 	token = request.json['token']
-	modelist = request.json.get('modelist',['VAC'])
+	modelist = request.json.get('modelist','VAC')
+	mList = []
 	print modelist
+	dataArr = re.split(':|#|\n',modelist)
+	for m in dataArr:
+		if m in ['VDC','VAC','IDC','IAC']:
+			mList.append(m)
+			print m
+	print mList
 	starttime = request.json.get('starttime','')
 	endtime = request.json.get('endtime','')
 	u = getuserinformation(token)
 	if u is not None:	
 		reason = ''
 		state = 'successful'
-		history_data_list = get_history_data(modelist,starttime,endtime)
+		history_data_list = get_history_data(mList,starttime,endtime)
 		for tmp in history_data_list:
 			state = "successful"
 			output = {"dataid":tmp.id ,"datatype":tmp.datatype,"value":tmp.value,"timestamp":str(tmp.timestamp)}
