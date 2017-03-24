@@ -234,7 +234,7 @@ def getTokeninformation(username):
 	return u 
 
 def get_history_data(typelist,start_time,end_time):
-	a = Measuredata.query.filter(Measuredata.datatype.in_(typelist)).filter(Measuredata.timestamp.between(start_time,end_time)).order_by(Measuredata.timestamp.desc()).all()
+	a = savedata.query.filter(Measuredata.datatype.in_(typelist)).filter(Measuredata.timestamp.between(start_time,end_time)).order_by(Measuredata.timestamp.desc()).all()
 	#a = Measuredata.query.filter(Measuredata.datatype.in_(typelist)).order_by(Measuredata.timestamp.desc()).all()
 	return a 
 def get_data_from_starttime(start_time,end_time):
