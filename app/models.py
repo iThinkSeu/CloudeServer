@@ -240,8 +240,11 @@ def get_history_data(typelist,start_time,end_time):
 def get_data_from_starttime(start_time,end_time):
 	a = Measuredata.query.filter(Measuredata.timestamp.between(start_time,end_time)).order_by(Measuredata.timestamp.asc()).all()
 	return a
-def get_data_up(starttime):
-	a = Measuredata.query.filter(Measuredata.timestamp>starttime).all()
+def get_data_up(instrumentID,starttime):
+	a = Measuredata.query.filter_by(instrumentID=instrumentID).filter(Measuredata.timestamp>starttime).all()
+	return a
+def get_savedata_up(instrumentID,starttime):
+	a = savedata.query.filter_by(instrumentID=instrumentID).filter(savedata.timestamp>starttime).all()
 	return a
 def getrevisetabledb(instrumentID,revisetype):
 	a = revise.query.filter_by(instrumentID=instrumentID,type=revisetype).order_by(revise.realvalue.asc()).all()

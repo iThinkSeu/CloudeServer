@@ -230,10 +230,16 @@ def appregister():
 	return response
 
 
-@app.route("/user/<name>",methods=['GET'])
+@app.route("/getuser/<name>",methods=['GET'])
 def getname(name):
 	print name;
 	return "hello"+str(name);
+
+@app.route("/test/test",methods=['GET'])
+def testtest():
+	print "testtest";
+	return "hello testtest"
+
 
 @app.route('/getJsonData')
 def add_numbers():
@@ -251,15 +257,25 @@ def starttime():
 	reason = ""
 	#start_time = "2017-06-16 15:40:29"
 	start_time = request.args.get('latesttime',"2017-06-16 15:40:29")
+	start_save = request.args.get('latestsave',"2017-06-16 15:40:29")
+	instrumentID = request.args.get('instrumentID',"ABCDEF")
+	#start_time = "2017-06-16 15:40:29"
 	print start_time
+	print start_save
 	end_time = datetime.now()
 	#datalist = get_data_from_starttime(start_time,end_time)
-	datalist = get_data_up(start_time)
+	datalist = get_data_up(instrumentID,start_time)
+	savelist = get_savedata_up(instrumentID,start_save)
 	result = []
 	for tmp in datalist:
 		output = {"dataid":tmp.id ,"datatype":tmp.datatype,"value":tmp.value,"separation":tmp.separation,"VWRTHD":tmp.VWRTHD,"stand":tmp.stand,"up":tmp.up,"down":tmp.down,"fre":tmp.fre,"timestamp":str(tmp.timestamp)}
 		result.append(output)
-	response = jsonify({'state':state,'reason':reason,'result':result})
+	save_result = []
+	for tmp in savelist:
+		print "save_list out"
+		output = {"dataid":tmp.id ,"datatype":tmp.datatype,"value":tmp.value,"separation":tmp.separation,"VWRTHD":tmp.VWRTHD,"stand":tmp.stand,"up":tmp.up,"down":tmp.down,"fre":tmp.fre,"timestamp":str(tmp.timestamp)}
+		save_result.append(output)
+	response = jsonify({'state':state,'reason':reason,'save_result':save_result,'result':result})
 	return response
 
 @app.route("/datainget",methods=['GET'])
@@ -509,11 +525,23 @@ def managerevise():
 	rs = revise.query.filter_by(instrumentID="ABCDEF",type="VACV").all();
 	return render_template('manageRevise.html',revises=rs)
 
-@app.route("/getrevisetable",methods=['GET','POST'])
-def getrevise():
-	revises = revise.query.all()
+@app.route("/test",methods=['GET','POST'])
+def test():
+	state = "successful"
+	reason = ""
+	#start_time = "2017-06-16 15:40:29"
+	start_time = request.args.get('latesttime',"2017-06-16 11:40:29")
+	print start_time
+	end_time = datetime.now()
+	#datalist = get_data_from_starttime(start_time,end_time)
+	datalist = get_data_up(start_time)
+	result = []
+	for tmp in datalist:
+		output = {"dataid":tmp.id ,"datatype":tmp.datatype,"value":tmp.value,"separation":tmp.separation,"VWRTHD":tmp.VWRTHD,"stand":tmp.stand,"up":tmp.up,"down":tmp.down,"fre":tmp.fre,"timestamp":str(tmp.timestamp)}
+		result.append(output)
+	response = jsonify({'state':state,'reason':reason,'result':result})
+	return response
 	return "test"
-
 
 
 if __name__ == '__main__':
