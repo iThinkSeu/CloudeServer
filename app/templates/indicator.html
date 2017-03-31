@@ -168,6 +168,8 @@
     </div>
 </div>
 <div id="select" style = "display:inline-block;margin-left: 30px">
+    <sapn >概率分布步长Step: </span>
+    <input id = "step_val" type='text' style="width:79px" value=0.1></input>
     <p><input type="radio" name="selectImg" id="barshow"  value="bar">柱状图  &nbsp; <input type="radio" checked="checked" name="selectImg" id="pieshow" value="pie"> 饼状图 &nbsp;<input type="radio" name="selectImg" id="errorshow" value="error"> 概率分布 &nbsp;<br></p>
     <p><label for="meeting">开始时间</label></p>
     <p><input id = "starttime" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" value="2016-06-27 15:25:27"></p>
@@ -275,10 +277,12 @@ function displayResult(){
                var list=result.result;
                var good = [0,0,0,0];
                var fail = [0,0,0,0];
+               var hist = [];
                for(var i =0;i<list.length;i++)
                {
                   time = list[i].timestamp;
                   value = list[i].value;
+                  hist.push(parseFloat(value))
                   var datatype = list[i].datatype;
                   var danwei;
                   if(datatype=="VDC"||datatype=="VAC")
@@ -346,8 +350,11 @@ function displayResult(){
                           break;
                   }
                } 
+              var step =  $("#step_val").val();
               updateBarPlot(good,fail);
               updatePiePlot(good,fail);
+              console.log(hist);
+              updateHistPlot(hist,100);
         });
 }
 </script>
@@ -563,7 +570,6 @@ global: {
                         document.getElementById("stand").innerText=stand.toFixed(3)+danwei;
                         document.getElementById("up").innerText=up.toFixed(3)+danwei;
                         document.getElementById("down").innerText=down.toFixed(3)+danwei;
-
                      }
 
                    }
@@ -616,7 +622,7 @@ global: {
                     }
 
                 }
-                else
+              else
                 {
                   //cookie为空
                   console.log("starttime is null!!!!");
@@ -689,7 +695,7 @@ global: {
                                                                             
             for (i = -19; i <= 0; i++) {                                    
                 data.push({                                                 
-                    x: time + i * 1000,                                     
+                    x: 0,                                     
                     y: 0                                        
                 });                                                         
             } 
@@ -874,6 +880,7 @@ function updateBarPlot(good,fail)
    $('#container_BAR').highcharts(json);
 }
 
+//更新饼状图分析
 function updatePiePlot(good,fail)
 {
    var chart = {
@@ -1005,248 +1012,12 @@ function updatePiePlot(good,fail)
    $('#container_VDC').highcharts(json);  
    $('#container_VAC').highcharts(json_VAC);  
 }
-</script>
 
-
-
-<script language="JavaScript">
-$(document).ready(function() {  
-   var chart = {
-       plotBackgroundColor: null,
-       plotBorderWidth: null,
-       plotShadow: false
-   };
-   var title = {
-      text: '直流电压VDC'   
-   };  
-
-   var title_VAC = {
-      text:'交流电压VAC'
-   };
-
-   var title_IDC={
-    text:'直流电流IDC'
-   };
-   var title_IAC={
-    text:'交流电流IAC'
-   };
-
-   var tooltip = {
-      pointFormat: '{series.name}:<b>{point.percentage:.1f}%</b>'
-   };
-   var plotOptions = {
-      pie: {
-         allowPointSelect: true,
-         cursor: 'pointer',
-         dataLabels: {
-            enabled: true,
-            format: '<b>{point.name}</b>:{point.percentage:.1f} %',
-            style: {
-               color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-            }
-         }
-      }
-   };
-   var series= [{
-      type: 'pie',
-      name: 'Browser share',
-      data: [
-         {
-            name: '合格',
-            y: 12.8,
-            sliced: true,
-            selected: true
-         },
-         ['不合格',   0.7]
-      ]
-   }];
-
-   var series_VAC= [{
-      type: 'pie',
-      name: 'Browser share',
-      data: [
-         {
-            name: '合格',
-            y: 10.8,
-            sliced: true,
-            selected: true
-         },
-         ['不合格',   0.7]
-      ]
-   }];       
-
-
-  var series_IDC= [{
-      type: 'pie',
-      name: 'Browser share',
-      data: [
-         {
-            name: '合格',
-            y: 10.8,
-            sliced: true,
-            selected: true
-         },
-         ['不合格',   0.75]
-      ]
-   }];      
-
-
-  var series_IAC= [{
-      type: 'pie',
-      name: 'Browser share',
-      data: [
-         {
-            name: '合格',
-            y: 10.8,
-            sliced: true,
-            selected: true
-         },
-         ['不合格',   0.6]
-      ]
-   }];       
-
-      
-   var json = {}; 
-   var json_VAC = {};
-   var json_IDC = {};  
-   var json_IAC = {};
-   json.chart = chart; 
-   json.title = title;     
-   json.tooltip = tooltip;  
-   json.series = series;
-   json.plotOptions = plotOptions;
-
-   json_VAC.chart=chart;
-   json_VAC.title=title_VAC;
-   json_VAC.tooltip = tooltip;
-   json_VAC.series=series_VAC;
-   json_VAC.plotOptions = plotOptions;
-
-   json_IDC.chart=chart;
-   json_IDC.title=title_IDC;
-   json_IDC.tooltip = tooltip;
-   json_IDC.series=series_IDC;
-   json_IDC.plotOptions = plotOptions;
-
-
-   json_IAC.chart=chart;
-   json_IAC.title=title_IAC;
-   json_IAC.tooltip = tooltip;
-   json_IAC.series=series_IAC;
-   json_IAC.plotOptions = plotOptions;
-
-   $('#container_IDC').highcharts(json_IDC);  
-   $('#container_IAC').highcharts(json_IAC);  
-   $('#container_VDC').highcharts(json);  
-   $('#container_VAC').highcharts(json_VAC);  
-});
-</script>
-
-<script language="JavaScript">
+//更新概率分布函数
+function updateHistPlot(nndata,step)
+{
 
 var ndata=new Array();
-
-nndata=[11.80007969
-,11.7060846
-,12.25682948
-,11.82774261
-,10.84977879
-,12.15704791
-,12.04015328
-,12.03049536
-,11.78687374
-,12.42614874
-,11.5805736
-,12.45266825
-,12.12516084
-,12.0462549
-,12.41806652
-,11.18648573
-,12.7177372
-,11.81638803
-,11.48843306
-,11.77586995
-,12.46344285
-,12.99244498
-,11.78424567
-,12.27505221
-,11.49900521
-,12.13418148
-,12.59054291
-,12.06713944
-,12.3808259
-,12.26753723
-,12.08794505
-,11.97829673
-,12.46664773
-,12.58905189
-,11.99792199
-,11.58757289
-,11.56370948
-,12.21483183
-,12.55969358
-,11.72412588
-,12.38624185
-,11.84944652
-,11.96276701
-,10.85571742
-,11.51360096
-,11.58419357
-,13.25286897
-,10.98314345
-,12.21363303
-,12.62258277
-,12.06955615
-,11.91300929
-,12.1649506
-,11.24695694
-,12.04844751
-,11.9285008
-,12.76332617
-,12.02693459
-,11.7576956
-,12.17409984
-,11.53407932
-,12.29273569
-,11.59872821
-,12.49387581
-,11.57086984
-,10.71356704
-,12.50477774
-,12.25298095
-,11.8576478
-,11.94079317
-,12.26648104
-,13.8565217
-,10.39214724
-,12.59429149
-,11.11107625
-,12.19263198
-,11.95322942
-,11.92672965
-,10.97479065
-,11.70873687
-,11.23121395
-,11.98361145
-,13.06713123
-,11.2029876
-,12.26917087
-,12.50368526
-,12.67327637
-,12.51692241
-,11.96040506
-,12.95023788
-,11.65836923
-,11.76056179
-,12.27234837
-,12.42226711
-,11.6374363
-,12.02693459
-,11.58571643
-,11.58779699
-,12.00340606
-,11.77345451
-];
 for(i=0;i<nndata.length;i++){
  ndata[i]=new Array();
  ndata[i][0]=nndata[i];
@@ -1254,6 +1025,59 @@ for(i=0;i<nndata.length;i++){
 }
 data=[];
 data=ndata;
+
+Highcharts.chart('container_Hist', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: '概率分布'
+    },
+    xAxis: {
+        gridLineWidth: 1,
+         title: {
+            text: '测量值区间'
+        }
+    },
+    yAxis: [{
+        title: {
+            text: '统计次数'
+        }
+    }, {
+        opposite: true,
+        title: {
+            text: 'Y value'
+        }
+    }],
+    series: [{
+        name: 'Histogram',
+        type: 'column',
+        data: histogram(data, step),
+        pointPadding: 0,
+        groupPadding: 0,
+        pointPlacement: 'between'
+    }, {
+        name: 'XY data',
+        type: 'scatter',
+        data: data,
+        yAxis: 1,
+        marker: {
+            radius: 1.5
+        }
+       },{
+        name: 'Curve',
+         type:'line',
+         data:histogram(data, step),
+         pointPlacement: 'between',
+          lineWidth: 3,
+          color:'#29cb81',
+          fillColor: 'white',
+         //pointInterval: 0.3 // one hour
+       }]
+});
+}
+
+
 /**
  * Get histogram data out of xy data
  * @param   {Array} data  Array of tuples [x, y]
@@ -1290,55 +1114,6 @@ function histogram(data, step) {
     return arr;
 }
 
-Highcharts.chart('container_Hist', {
-    chart: {
-        type: 'column'
-    },
-    title: {
-        text: '概率分布'
-    },
-    xAxis: {
-        gridLineWidth: 1,
-         title: {
-            text: '测量值区间'
-        }
-    },
-    yAxis: [{
-        title: {
-            text: '统计次数'
-        }
-    }, {
-        opposite: true,
-        title: {
-            text: 'Y value'
-        }
-    }],
-    series: [{
-        name: 'Histogram',
-        type: 'column',
-        data: histogram(data, 0.05),
-        pointPadding: 0,
-        groupPadding: 0,
-        pointPlacement: 'between'
-    }, {
-        name: 'XY data',
-        type: 'scatter',
-        data: data,
-        yAxis: 1,
-        marker: {
-            radius: 1.5
-        }
-       },{
-        name: 'Curve',
-         type:'line',
-         data:histogram(data, 0.05),
-         pointPlacement: 'between',
-          lineWidth: 3,
-          color:'#29cb81',
-          fillColor: 'white',
-         //pointInterval: 0.3 // one hour
-       }]
-});
 </script>
 </body>
 
