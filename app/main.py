@@ -28,7 +28,7 @@ bootstrap.init_app(app)
 basedir=os.path.abspath(os.path.dirname(__file__))
 log = logging.getLogger()
 formatter = logging.Formatter('%(name)-12s %(asctime)s level-%(levelname)-8s %(funcName)s %(message)s')   
-fileTimeHandler = TimedRotatingFileHandler(basedir+"/logs/flask.log", 'midnight',1)
+fileTimeHandler = TimedRotatingFileHandler("C:/Flasklogs/flask.log", 'midnight',1)
 
 fileTimeHandler.suffix = "%Y%m%d.log"  
 fileTimeHandler.setFormatter(formatter)
