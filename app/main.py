@@ -10,15 +10,32 @@ import string
 import os, stat
 from flask.ext.bootstrap import Bootstrap
 from datetime import *
+import logging
+from logging.handlers import TimedRotatingFileHandler
 import re
 import sys
 reload(sys)
+
 sys.setdefaultencoding('utf8')
 
 app = Flask(__name__)
 app.secret_key = 'some_secret'
 bootstrap=Bootstrap()
 bootstrap.init_app(app)
+
+basedir=os.path.abspath(os.path.dirname(__file__))
+log = logging.getLogger()
+formatter = logging.Formatter('%(name)-12s %(asctime)s level-%(levelname)-8s %(funcName)s %(message)s')   
+fileTimeHandler = TimedRotatingFileHandler(basedir+"/logs/flask.log", 'midnight',1)
+
+fileTimeHandler.suffix = "%Y%m%d.log"  
+fileTimeHandler.setFormatter(formatter)
+logging.basicConfig(level = logging.NOTSET)
+fileTimeHandler.setFormatter(formatter)
+log.addHandler(fileTimeHandler)
+
+log.error(basedir)
+log.debug("here")
 
 class LoginForm(Form):
 	username = TextField("username",[validators.Required()])
@@ -230,10 +247,10 @@ def appregister():
 	return response
 
 
-@app.route("/getuser/<name>",methods=['GET'])
-def getname(name):
-	print name;
-	return "hello"+str(name);
+@app.route("/getuser/<name>")
+def getuser(name):
+	#print name;
+	return "hello"
 
 @app.route("/test/test",methods=['GET'])
 def testtest():
@@ -260,8 +277,8 @@ def starttime():
 	start_save = request.args.get('latestsave',"2017-06-16 15:40:29")
 	instrumentID = request.args.get('instrumentID',"ABCDEF")
 	#start_time = "2017-06-16 15:40:29"
-	print start_time
-	print start_save
+	#print start_time
+	#print start_save
 	end_time = datetime.now()
 	#datalist = get_data_from_starttime(start_time,end_time)
 	datalist = get_data_up(instrumentID,start_time)
@@ -543,7 +560,23 @@ def test():
 	return response
 	return "test"
 
+@app.route("/testurl",methods=['GET','POST'])
+def testurl():
+	start_time = "2017-07-9 15:40:29"
+	print start_time
+	para = request.args.get('para','init para')
+	#print para
+	log.debug("here log debug")
+	#print history_data_list;
+	return para
 
+@app.route("/pages",methods=['GET','POST'])
+def pages():
+	#one = request.args.get('one','init para')
+	one = "test"
+	print one
+	#print history_data_list;
+	return one
 if __name__ == '__main__':
 	app.run(host=os.getenv('IP','0.0.0.0'),port=int(os.getenv('PORT',4020)),debug = True)
 

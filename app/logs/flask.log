@@ -1,0 +1,454 @@
+root         2017-04-27 17:04:05,282 level-ERROR    <module> F:\iprogram\FlaskServer\app
+root         2017-04-27 17:04:05,283 level-DEBUG    <module> here
+werkzeug     2017-04-27 17:04:05,309 level-INFO     _log  * Running on http://0.0.0.0:4020/ (Press CTRL+C to quit)
+werkzeug     2017-04-27 17:04:05,312 level-INFO     _log  * Restarting with stat
+root         2017-04-27 17:04:05,815 level-ERROR    <module> F:\iprogram\FlaskServer\app
+root         2017-04-27 17:04:05,816 level-DEBUG    <module> here
+root         2017-04-27 17:04:46,690 level-DEBUG    testurl here log debug
+werkzeug     2017-04-27 17:04:46,691 level-INFO     _log 127.0.0.1 - - [27/Apr/2017 17:04:46] "GET /testurl HTTP/1.1" 200 -
+werkzeug     2017-04-27 17:04:46,878 level-INFO     _log 127.0.0.1 - - [27/Apr/2017 17:04:46] "GET /favicon.ico HTTP/1.1" 404 -
+root         2017-04-27 17:05:15,509 level-DEBUG    testurl here log debug
+werkzeug     2017-04-27 17:05:15,512 level-INFO     _log 127.0.0.1 - - [27/Apr/2017 17:05:15] "GET /testurl HTTP/1.1" 200 -
+root         2017-04-27 17:05:16,236 level-DEBUG    testurl here log debug
+werkzeug     2017-04-27 17:05:16,236 level-INFO     _log 127.0.0.1 - - [27/Apr/2017 17:05:16] "GET /testurl HTTP/1.1" 200 -
+root         2017-04-27 17:05:16,838 level-DEBUG    testurl here log debug
+werkzeug     2017-04-27 17:05:16,841 level-INFO     _log 127.0.0.1 - - [27/Apr/2017 17:05:16] "GET /testurl HTTP/1.1" 200 -
+root         2017-04-27 17:05:17,374 level-DEBUG    testurl here log debug
+werkzeug     2017-04-27 17:05:17,375 level-INFO     _log 127.0.0.1 - - [27/Apr/2017 17:05:17] "GET /testurl HTTP/1.1" 200 -
+root         2017-04-27 17:05:17,867 level-DEBUG    testurl here log debug
+werkzeug     2017-04-27 17:05:17,869 level-INFO     _log 127.0.0.1 - - [27/Apr/2017 17:05:17] "GET /testurl HTTP/1.1" 200 -
+root         2017-04-27 17:05:18,638 level-DEBUG    testurl here log debug
+werkzeug     2017-04-27 17:05:18,641 level-INFO     _log 127.0.0.1 - - [27/Apr/2017 17:05:18] "GET /testurl HTTP/1.1" 200 -
+root         2017-04-27 17:05:19,194 level-DEBUG    testurl here log debug
+werkzeug     2017-04-27 17:05:19,197 level-INFO     _log 127.0.0.1 - - [27/Apr/2017 17:05:19] "GET /testurl HTTP/1.1" 200 -
+root         2017-04-27 17:05:19,750 level-DEBUG    testurl here log debug
+werkzeug     2017-04-27 17:05:19,753 level-INFO     _log 127.0.0.1 - - [27/Apr/2017 17:05:19] "GET /testurl HTTP/1.1" 200 -
+root         2017-04-27 17:05:20,262 level-DEBUG    testurl here log debug
+werkzeug     2017-04-27 17:05:20,263 level-INFO     _log 127.0.0.1 - - [27/Apr/2017 17:05:20] "GET /testurl HTTP/1.1" 200 -
+root         2017-04-27 17:05:55,734 level-ERROR    <module> F:\iprogram\FlaskServer\app
+root         2017-04-27 17:05:55,734 level-DEBUG    <module> here
+root         2017-04-27 17:05:55,744 level-DEBUG    testurl here log debug
+root         2017-04-27 17:06:03,243 level-DEBUG    testurl here log debug
+root         2017-04-27 17:06:03,924 level-DEBUG    testurl here log debug
+root         2017-04-27 17:06:04,398 level-DEBUG    testurl here log debug
+root         2017-04-27 17:06:05,023 level-DEBUG    testurl here log debug
+app.main     2017-04-27 17:06:38,717 level-ERROR    log_exception Exception on /testurl [GET]
+Traceback (most recent call last):
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "F:/iprogram/FlaskServer\app\main.py", line 568, in testurl
+    print para
+LookupError: unknown encoding: cp0
+werkzeug     2017-04-27 17:08:22,723 level-INFO     _log  * Detected change in 'F:\\iprogram\\FlaskServer\\app\\main.py', reloading
+werkzeug     2017-04-27 17:08:22,750 level-INFO     _log  * Restarting with stat
+root         2017-04-27 17:08:23,214 level-ERROR    <module> F:\iprogram\FlaskServer\app
+root         2017-04-27 17:08:23,214 level-DEBUG    <module> here
+root         2017-04-27 17:08:41,749 level-ERROR    <module> F:\iprogram\FlaskServer\app
+root         2017-04-27 17:08:41,749 level-DEBUG    <module> here
+root         2017-04-27 17:08:41,759 level-DEBUG    testurl here log debug
+root         2017-04-27 17:08:43,053 level-DEBUG    testurl here log debug
+root         2017-04-27 17:08:43,789 level-DEBUG    testurl here log debug
+root         2017-04-27 17:08:44,530 level-DEBUG    testurl here log debug
+root         2017-04-27 17:08:45,107 level-DEBUG    testurl here log debug
+root         2017-04-27 17:08:49,815 level-DEBUG    testurl here log debug
+root         2017-04-27 17:08:52,875 level-DEBUG    testurl here log debug
+root         2017-04-27 17:08:53,405 level-DEBUG    testurl here log debug
+root         2017-04-27 17:08:54,209 level-DEBUG    testurl here log debug
+root         2017-04-27 17:08:54,795 level-DEBUG    testurl here log debug
+root         2017-04-27 17:08:55,365 level-DEBUG    testurl here log debug
+root         2017-04-27 17:08:55,795 level-DEBUG    testurl here log debug
+root         2017-04-27 17:08:56,275 level-DEBUG    testurl here log debug
+werkzeug     2017-04-27 17:09:37,509 level-INFO     _log  * Detected change in 'F:\\iprogram\\FlaskServer\\app\\main.py', reloading
+werkzeug     2017-04-27 17:09:37,533 level-INFO     _log  * Restarting with stat
+root         2017-04-27 17:09:38,017 level-ERROR    <module> F:\iprogram\FlaskServer\app
+root         2017-04-27 17:09:38,019 level-DEBUG    <module> here
+werkzeug     2017-04-27 17:09:40,289 level-INFO     _log  * Detected change in 'F:\\iprogram\\FlaskServer\\app\\main.py', reloading
+werkzeug     2017-04-27 17:09:40,318 level-INFO     _log  * Restarting with stat
+root         2017-04-27 17:09:40,832 level-ERROR    <module> F:\iprogram\FlaskServer\app
+root         2017-04-27 17:09:40,832 level-DEBUG    <module> here
+werkzeug     2017-04-27 17:09:42,009 level-INFO     _log  * Detected change in 'F:\\iprogram\\FlaskServer\\app\\main.py', reloading
+werkzeug     2017-04-27 17:09:42,035 level-INFO     _log  * Restarting with stat
+root         2017-04-27 17:09:42,513 level-ERROR    <module> F:\iprogram\FlaskServer\app
+root         2017-04-27 17:09:42,517 level-DEBUG    <module> here
+app.main     2017-04-27 17:09:51,823 level-ERROR    log_exception Exception on /starttime [GET]
+Traceback (most recent call last):
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "F:/iprogram/FlaskServer\app\main.py", line 280, in starttime
+    #print start_time
+LookupError: unknown encoding: cp0
+app.main     2017-04-27 17:09:52,818 level-ERROR    log_exception Exception on /starttime [GET]
+Traceback (most recent call last):
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "F:/iprogram/FlaskServer\app\main.py", line 280, in starttime
+    #print start_time
+LookupError: unknown encoding: cp0
+app.main     2017-04-27 17:09:53,821 level-ERROR    log_exception Exception on /starttime [GET]
+Traceback (most recent call last):
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "F:/iprogram/FlaskServer\app\main.py", line 280, in starttime
+    #print start_time
+LookupError: unknown encoding: cp0
+app.main     2017-04-27 17:09:54,822 level-ERROR    log_exception Exception on /starttime [GET]
+Traceback (most recent call last):
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "F:/iprogram/FlaskServer\app\main.py", line 280, in starttime
+    #print start_time
+LookupError: unknown encoding: cp0
+app.main     2017-04-27 17:09:55,819 level-ERROR    log_exception Exception on /starttime [GET]
+Traceback (most recent call last):
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "F:/iprogram/FlaskServer\app\main.py", line 280, in starttime
+    #print start_time
+LookupError: unknown encoding: cp0
+app.main     2017-04-27 17:09:56,819 level-ERROR    log_exception Exception on /starttime [GET]
+Traceback (most recent call last):
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "F:/iprogram/FlaskServer\app\main.py", line 280, in starttime
+    #print start_time
+LookupError: unknown encoding: cp0
+app.main     2017-04-27 17:09:57,835 level-ERROR    log_exception Exception on /starttime [GET]
+Traceback (most recent call last):
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "F:/iprogram/FlaskServer\app\main.py", line 280, in starttime
+    #print start_time
+LookupError: unknown encoding: cp0
+app.main     2017-04-27 17:09:58,821 level-ERROR    log_exception Exception on /starttime [GET]
+Traceback (most recent call last):
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "F:/iprogram/FlaskServer\app\main.py", line 280, in starttime
+    #print start_time
+LookupError: unknown encoding: cp0
+app.main     2017-04-27 17:09:59,819 level-ERROR    log_exception Exception on /starttime [GET]
+Traceback (most recent call last):
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "F:/iprogram/FlaskServer\app\main.py", line 280, in starttime
+    #print start_time
+LookupError: unknown encoding: cp0
+app.main     2017-04-27 17:10:00,821 level-ERROR    log_exception Exception on /starttime [GET]
+Traceback (most recent call last):
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "F:/iprogram/FlaskServer\app\main.py", line 280, in starttime
+    #print start_time
+LookupError: unknown encoding: cp0
+app.main     2017-04-27 17:10:02,654 level-ERROR    log_exception Exception on /starttime [GET]
+Traceback (most recent call last):
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "F:/iprogram/FlaskServer\app\main.py", line 280, in starttime
+    #print start_time
+LookupError: unknown encoding: cp0
+app.main     2017-04-27 17:10:03,644 level-ERROR    log_exception Exception on /starttime [GET]
+Traceback (most recent call last):
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "F:/iprogram/FlaskServer\app\main.py", line 280, in starttime
+    #print start_time
+LookupError: unknown encoding: cp0
+app.main     2017-04-27 17:10:04,642 level-ERROR    log_exception Exception on /starttime [GET]
+Traceback (most recent call last):
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "F:/iprogram/FlaskServer\app\main.py", line 280, in starttime
+    #print start_time
+LookupError: unknown encoding: cp0
+app.main     2017-04-27 17:10:05,671 level-ERROR    log_exception Exception on /starttime [GET]
+Traceback (most recent call last):
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "F:/iprogram/FlaskServer\app\main.py", line 280, in starttime
+    #print start_time
+LookupError: unknown encoding: cp0
+app.main     2017-04-27 17:10:06,673 level-ERROR    log_exception Exception on /starttime [GET]
+Traceback (most recent call last):
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "F:/iprogram/FlaskServer\app\main.py", line 280, in starttime
+    #print start_time
+LookupError: unknown encoding: cp0
+app.main     2017-04-27 17:10:07,667 level-ERROR    log_exception Exception on /starttime [GET]
+Traceback (most recent call last):
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "F:/iprogram/FlaskServer\app\main.py", line 280, in starttime
+    #print start_time
+LookupError: unknown encoding: cp0
+app.main     2017-04-27 17:10:08,671 level-ERROR    log_exception Exception on /starttime [GET]
+Traceback (most recent call last):
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "F:/iprogram/FlaskServer\app\main.py", line 280, in starttime
+    #print start_time
+LookupError: unknown encoding: cp0
+app.main     2017-04-27 17:10:09,644 level-ERROR    log_exception Exception on /starttime [GET]
+Traceback (most recent call last):
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "F:/iprogram/FlaskServer\app\main.py", line 280, in starttime
+    #print start_time
+LookupError: unknown encoding: cp0
+app.main     2017-04-27 17:10:10,644 level-ERROR    log_exception Exception on /starttime [GET]
+Traceback (most recent call last):
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "F:/iprogram/FlaskServer\app\main.py", line 280, in starttime
+    #print start_time
+LookupError: unknown encoding: cp0
+app.main     2017-04-27 17:10:11,641 level-ERROR    log_exception Exception on /starttime [GET]
+Traceback (most recent call last):
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "F:/iprogram/FlaskServer\app\main.py", line 280, in starttime
+    #print start_time
+LookupError: unknown encoding: cp0
+app.main     2017-04-27 17:10:12,648 level-ERROR    log_exception Exception on /starttime [GET]
+Traceback (most recent call last):
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "F:/iprogram/FlaskServer\app\main.py", line 280, in starttime
+    #print start_time
+LookupError: unknown encoding: cp0
+app.main     2017-04-27 17:10:13,683 level-ERROR    log_exception Exception on /starttime [GET]
+Traceback (most recent call last):
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "F:/iprogram/FlaskServer\app\main.py", line 280, in starttime
+    #print start_time
+LookupError: unknown encoding: cp0
+app.main     2017-04-27 17:10:14,671 level-ERROR    log_exception Exception on /starttime [GET]
+Traceback (most recent call last):
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "F:/iprogram/FlaskServer\app\main.py", line 280, in starttime
+    #print start_time
+LookupError: unknown encoding: cp0
+app.main     2017-04-27 17:10:15,661 level-ERROR    log_exception Exception on /starttime [GET]
+Traceback (most recent call last):
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Python27\lib\site-packages\flask\app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "F:/iprogram/FlaskServer\app\main.py", line 280, in starttime
+    #print start_time
+LookupError: unknown encoding: cp0
+root         2017-04-27 17:10:22,450 level-ERROR    <module> F:\iprogram\FlaskServer\app
+root         2017-04-27 17:10:22,450 level-DEBUG    <module> here
+werkzeug     2017-04-27 17:12:38,661 level-INFO     _log  * Detected change in 'F:\\iprogram\\FlaskServer\\app\\main.py', reloading
+werkzeug     2017-04-27 17:12:38,691 level-INFO     _log  * Restarting with stat
+root         2017-04-27 17:12:39,168 level-ERROR    <module> F:\iprogram\FlaskServer\app
+root         2017-04-27 17:12:39,170 level-DEBUG    <module> here
+werkzeug     2017-04-27 17:12:40,342 level-INFO     _log  * Detected change in 'F:\\iprogram\\FlaskServer\\app\\main.py', reloading
+werkzeug     2017-04-27 17:12:40,371 level-INFO     _log  * Restarting with stat
+root         2017-04-27 17:12:40,888 level-ERROR    <module> F:\iprogram\FlaskServer\app
+root         2017-04-27 17:12:40,890 level-DEBUG    <module> here
+werkzeug     2017-04-27 17:12:42,065 level-INFO     _log  * Detected change in 'F:\\iprogram\\FlaskServer\\app\\main.py', reloading
+werkzeug     2017-04-27 17:12:42,091 level-INFO     _log  * Restarting with stat
+root         2017-04-27 17:12:42,591 level-ERROR    <module> F:\iprogram\FlaskServer\app
+root         2017-04-27 17:12:42,591 level-DEBUG    <module> here
