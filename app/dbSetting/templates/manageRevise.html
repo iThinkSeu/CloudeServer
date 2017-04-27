@@ -1,0 +1,327 @@
+
+
+{% extends "managebase.html" %}
+
+
+{% block title %}
+   <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+   <script src="https://code.highcharts.com/highcharts.js"></script>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+    <div class="panel panel-default">
+            <div class="panel-heading">
+                <div style="float:left">
+                    <span>校正设备ID</span>
+                    <select id="selectID">
+                      <option value ="001">001</option>
+                      <option value ="001">002</option>
+                      <option value ="ABCDEF">ABCDEF</option>
+                    </select> &nbsp;&nbsp;
+                    <span>模式选择</span>
+                    <select id="modeselect1" style="width: 60px">
+                      <option value ="VAC">VAC</option>
+                      <option value ="VDC">VDC</option>
+                      <option value="IDC">IDC</option>
+                      <option value="IAC">IAC</option>
+                    </select>
+                    <select id="modeselect2" style="width: 60px">
+                      <option value ="VAC">VDC</option>
+                      <option value ="VDC">VAC</option>
+                      <option value="IDC">IDC</option>
+                      <option value="IAC">IAC</option>
+                    </select>
+                    <select id="modeselect3" style="width: 60px">
+                    </select>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button id="query" onclick="queryButton()" type="button" class="btn btn-success">查询</button>                      
+                 </div>
+                 <br><br>
+          </div>
+          <div class="panel-body">
+               <table id = "revisetable"class="table">  
+               <thead>
+                <tr>
+                  <!-- <th></th>
+                  <th>审核状态</th>
+                  <th>标题</th> -->
+                  <th>编号</th>
+                  <th>类型</th>
+                  <th>实际值</th>
+                  <th>测量值</th>
+                  <th>状态</th>
+                  <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for revise in revises %}
+                <tr>
+                  <td>{{loop.index}}</td>
+                  <td>{{revise.type}}</td>
+                  <td>{{revise.realvalue}}</td>
+                  <td>{{revise.measurevalue}}</td>
+                  <td>{{revise.flag}}</td>
+                  <td><button id= "{{revise.id}}" type = "submit" onclick = "deleteReviseTable(this.id)" class="btn btn-danger">删除</button><input class="btn btn-success" type="button" value="修改"></input></td>
+                </tr>
+                {% endfor %}
+
+               </tbody>
+            </table>
+          </div>
+    </div>
+
+
+    <button class="btn btn-primary" style="float: right;margin-right: 200px" onclick = "submitButton()">确认设置</button>
+ 
+    <div style="float:left">
+    <sapn >实际值: </span>
+    <input id = "text_realval" type='text' style="width:79px" ></input>
+    <sapn >测量值: </span>
+    <input id="text_measurevalue" type='text' style="width:79px" ></input>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button class="btn btn-success" style="width:79px" onclick="addButton()">添加</button>
+
+    </div>
+ 
+
+ </div>
+
+<script language="javascript">
+        
+        $(document).ready(function() {
+            //绑定下拉框change事件，当下来框改变时调用 SelectChange()方法
+            Select1Change();
+            Select2Change();
+            $("#modeselect1").change(function() { Select1Change(); Select2Change();}); 
+            $("#modeselect2").change(function() { Select2Change(); }); 
+
+        })
+         function Select1Change() {
+            //获取下拉框选中项的text属性值
+            var selectValue = $("#modeselect1").val();
+            $("#modeselect3").empty();
+            $("#modeselect2").empty();
+            switch(selectValue)
+            {
+               case "VDC":
+                 $("#modeselect2").append("<option value='P'>P</option>");
+                 $("#modeselect2").append("<option value='N'>N</option>");
+                 break;
+               case "VAC":
+                 $("#modeselect2").append("<option value='V'>V</option>");
+                 $("#modeselect2").append("<option value='F'>F</option>");
+                 break;
+               case "IAC":
+                 $("#modeselect2").append("<option value='I'>I</option>");
+                 $("#modeselect2").append("<option value='F'>F</option>");
+                 break;
+               case "IDC":
+                 $("#modeselect2").append("<option value='P'>P</option>");
+                 $("#modeselect2").append("<option value='N'>N</option>");
+                 break;
+            }
+      
+        }
+
+        function Select2Change() {
+            //获取下拉框选中项的text属性值
+            var select1Value = $("#modeselect1").val();
+            var select2Value = $("#modeselect2").val();
+            $("#modeselect3").empty();
+            switch(select1Value)
+            {
+               case "VDC":
+                 break;
+               case "VAC":
+                 break;
+               case "IAC": 
+                    if(select2Value=="I")
+                    {
+                      $("#modeselect3").append("<option value= 1>1</option>");
+                      $("#modeselect3").append("<option value= 2>2</option>");
+                      $("#modeselect3").append("<option value= 3>3</option>");
+                      $("#modeselect3").append("<option value= 4>4</option>");
+                      $("#modeselect3").append("<option value= 5>5</option>");
+                      $("#modeselect3").append("<option value= 6>6</option>");
+                      $("#modeselect3").append("<option value= 7>7</option>");
+                      $("#modeselect3").append("<option value= 8>8</option>");                           
+                    }
+                 break;
+               case "IDC":
+                      $("#modeselect3").append("<option value= 1>1</option>");
+                      $("#modeselect3").append("<option value= 2>2</option>");
+                      $("#modeselect3").append("<option value= 3>3</option>");
+                      $("#modeselect3").append("<option value= 4>4</option>");
+                      $("#modeselect3").append("<option value= 5>5</option>");
+                      $("#modeselect3").append("<option value= 6>6</option>");
+                      $("#modeselect3").append("<option value= 7>7</option>");
+                      $("#modeselect3").append("<option value= 8>8</option>");     
+                 break;
+            }
+      
+        }
+
+
+</script>
+
+<script language="JavaScript">
+function queryButton(){
+      console.log("reviseButton query!!!");
+      //获取当前模式
+      var select1Value = $("#modeselect1").val();
+      var select2Value = $("#modeselect2").val();
+      var select3Value = $("#modeselect3").val();
+
+      var selectID = $("#selectID").val();
+      //去除null
+      if(select1Value==null) select1Value="";
+      if(select2Value==null) select2Value="";
+      if(select3Value==null) select3Value="";
+
+      revisetype = select1Value+select2Value+select3Value;
+      console.log(revisetype);
+      console.log(selectID);
+      $('#revisetable tr:not(:first)').remove();
+      $.getJSON("/getrevisetable", { instrumentID:selectID,revisetype: revisetype,token:"18d54ec8446d03451f5552033c64dbda" }, function(result){
+       var list=result.result;
+       for(var i =0;i<list.length;i++)
+       {
+          //添加表格行
+          var row = document.getElementById("revisetable").insertRow();
+          var cell;
+          var rid= list[i].id;
+          cell = row.insertCell(-1);
+          cell.innerHTML =  i+1;
+          cell.align = "center";
+
+          cell = row.insertCell(-1);
+          cell.innerHTML = list[i].revisetype;
+          cell.align = "center";
+
+          cell = row.insertCell(-1);
+          cell.innerHTML = list[i].realvalue;
+          cell.align = "center";
+
+          cell = row.insertCell(-1);
+          cell.innerHTML = list[i].measurevalue;
+          cell.align = "center";  
+
+          cell = row.insertCell(-1);
+          cell.innerHTML = list[i].flag;
+          cell.align = "center";  
+
+          cell = row.insertCell(-1);
+          cell.innerHTML = '<button id='+list[i].id+' type = "submit" onclick = "deleteReviseTable(this.id)" class="btn btn-danger">删除</button><input class="btn btn-success" type="button" value="修改" onclick = "editReviseTable(this.id)"></input>';
+          cell.align = "center";                         
+       }
+       test();  
+      });
+ }   
+
+
+function addButton(){
+      console.log("addButton!");
+      var realvalue =  $("#text_realval").val();
+      var measurevalue = $("#text_measurevalue").val();
+       var selectID = $("#selectID").val();
+
+      //获取当前模式
+      var select1Value = $("#modeselect1").val();
+      var select2Value = $("#modeselect2").val();
+      var select3Value = $("#modeselect3").val();
+      //去除null
+      if(select1Value==null) select1Value="";
+      if(select2Value==null) select2Value="";
+      if(select3Value==null) select3Value="";
+      revisetype = select1Value+select2Value+select3Value;
+      
+      console.log(revisetype+"  :"+realvalue+"  "+measurevalue);
+      $.post('addrevise', { instrumentID:selectID,revisetype:revisetype,realvalue: realvalue,measurevalue:measurevalue}, function (response) {
+    // var obj = window.open("about:blank");  
+        //document.write(response);
+        //location.href = '/revise';
+        queryButton();
+        alert(response);
+         });
+}
+
+function submitButton(){
+      console.log("reviseButton query!!!");
+      var obj = document.getElementById("revisetable");
+      length = $("#revisetable").find("tr").length;
+      instrumentID = $("#selectID").val();;  
+      console.log(obj.rows.length+"new length="+length);
+      //alert(obj.rows[1].cells[1].innerText);
+      var str = '';
+      
+      for(var i=1;i<obj.rows.length;i++)
+      {
+        if(i==1)
+          str = str + obj.rows[i].cells[1].innerText+":"+obj.rows[i].cells[2].innerText+":"+obj.rows[i].cells[3].innerText; 
+        else
+          str = str +":"+ obj.rows[i].cells[1].innerText+":"+obj.rows[i].cells[2].innerText+":"+obj.rows[i].cells[3].innerText; 
+
+      }
+      console.log(str);
+      json = {instrumentID:instrumentID,data:str};
+      $.post('submitrevise', json, function (response) {
+    // var obj = window.open("about:blank");  
+        //document.write(response);
+        //location.href = '/revise';
+        queryButton();
+        alert(response);
+         });      
+
+}
+
+function deleteReviseTable(id){
+ if(window.confirm('你确定要删除该记录吗？')){ 
+    console.log("id==="+id);
+    $.post('deleterevise', { id: id}, function (response) {
+        // var obj = window.open("about:blank");  
+            //document.write(response);
+            queryButton();
+            //location.href = '/revise';
+             });
+}else{ 
+  //alert("取消"); 
+    
+  }
+}
+
+
+
+function editReviseTable(id){
+ console.log("test");
+ //test();
+
+ }
+ function test(){
+  $("input:button").click(function() {
+      console.log("test222");
+      str = $(this).val()=="修改"?"确定":"修改";  
+      $(this).val(str);   // 按钮被点击后，在“编辑”和“确定”之间切换
+
+      $(this).parent().siblings("td").each(function() {  // 获取当前行的其他单元格
+
+          obj_text = $(this).find("input:text");    // 判断单元格下是否有文本框
+
+          if(!obj_text.length)   // 如果没有文本框，则添加文本框使之可以编辑
+
+              $(this).html("<input type='text' size='"+$(this).text.length+"' value='"+$(this).text()+"'>");
+
+          else   // 如果已经存在文本框，则将其显示为文本框修改的值
+
+              $(this).html(obj_text.val()); 
+
+      });
+
+  });
+}
+
+</script>
+
+{% endblock %}

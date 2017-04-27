@@ -1,0 +1,164 @@
+﻿<!DOCTYPE HTML>
+<!--未加入Bootstrap的两行链接---->
+<html lang="en" xmlns="http://www.w3.org/1999/html" style="text-align: center" xmlns="http://www.w3.org/1999/html"
+      xmlns="http://www.w3.org/1999/html">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>首页</title>
+	<link href="static/stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="static/stylesheets/common.css" rel="stylesheet" type="text/css" media="screen">
+    <link href="static/stylesheets/index.css" rel="stylesheet" type="text/css">
+    <!---->
+    <script src="static/javascripts/chart/ichart.js"></script>
+	<script src="/jquery/dist/jquery.js"></script>
+    <style type="text/css">
+    .menu{
+
+        height: 54px;
+    }
+    #menuExp:hover {
+    height: 54px;
+}
+#menuReport:hover {
+     height: 54px; 
+}
+</style>
+</head>
+
+<!--加上auto居中-->
+<body onload="updateFrequencyValue();">
+
+<div id="top" align="center"  style="background:url(static/images/common/top.png);">
+
+	<li id="menuLesson" class="menu">
+        <a href="#">系统简介</a>
+	</li>
+	<li id="menuExp" class="menu">
+        <a href="/indicator">实时测量</a>        
+	</li>
+	<li id="menuReport" class="menu">
+		<a href="/revise">远程校正</a>     
+	</li>
+	<li class="menu">
+		<a href="/manage">后台管理</a>
+	</li>
+
+	<div id="userName">
+        <a href="#">
+            admin
+        </a>
+        &nbsp;
+        <a href="/logout">安全退出</a>
+
+    </div>
+    <a href="/" target="_blank">
+        <div align="center"></div>
+    </a>
+</div>
+
+<div id="log">
+
+    <div id="container" class="container">
+
+        <div class="log">
+            <!--
+            <form class="form-signin" method="post" role="form">
+                <input id="txtUserName" class="login" type="text" name="txtUserName" placeholder="用户名"  required autofocus />
+                <br>
+                <input id="txtUserPwd" class="login" type="password" name="txtUserPwd" placeholder=" 密码" required/>
+                <br>
+                <input id="subButton" class="btn btn-lg btn-default" type="submit" value="登录" >
+                <br>
+                <label class="checkbox checkbox-inline">
+                <input name="chbRem" id="chbRem" type="checkbox" value="remember-me" /> 记住密码
+                </label>
+                <a class="btn btn-link" href="/reg" role="button">注  册</a>
+            </form>
+           -->
+        </div>
+        </div>
+
+</div>
+
+    <div class="banner-bottom-section" id="aboutExp">
+        <div class="container">
+            <div class="setc">
+                <img src="static/images/index/coi1.jpg" alt="" />
+                <p>
+                    云平台网站手机App
+                    <br />多终端展示
+                </p>
+            </div>
+            <div class="setc">
+                <img src="static/images/index/coi2.jpg" alt="" />
+                <p>远程在线操作<br />安全方便快捷</p>
+            </div>
+            <div class="setc">
+
+                <img src="static/images/index/coi3.jpg" alt="" />
+                <p>分选统计<br />在线统计分析智能高效</p>
+            </div>
+            <div class="setc">
+                <img src="static/images/index/coi3.jpg" alt="" />
+                <p>远程设置校正<br />灵活便捷</p>
+            </div>
+        </div>
+    </div>
+    <div class="banner-bottom-section" id="introExp">
+        <div class="container">
+            <div class="header3"><h3 class="htitle">网站简介</h3></div>
+            <div class="text">
+                <p>
+                    针对传统的高压表仪器需要实验人员接触存在的安全隐患和对仪器参数动态修正不便的问题，本项目基于云计算设计高压远程测量系统，利用最新的云计算技术设计全新的高压表远程测量系统。实现高压表测量和校正的远程测控、云存储和仪器校验参数的云端动态修正和设置。实验人员可以用手机客户端或者网页操控高压表的测量和校正工作、远程数据查看、远程打印等等。大大提高高压表测量校正的安全保证和自动化水平。
+                </p>
+            </div>
+        </div>
+    </div>
+<div id="bottom" align="center" style="position:absolute; top:1300px;">
+    <div class="all">
+        <div class="b_text">
+            <h6>介绍</h6>
+            <ul>
+                <li><a href="#">关于我们</a></li>
+                <li><a href="#">联系我们</a></li>
+                <li><a href="#">加入我们</a></li>
+                <li><a href="#">技术支持</a></li>
+            </ul>
+        </div>
+        <div class="b_text">
+            <h6>合作</h6>
+            <ul>
+                <li><a href="#">新加仪器</a></li>
+                <li><a href="#">高校合作</a></li>
+                <li><a href="#">友情链接</a></li>
+            </ul>
+        </div>
+        <div class="b_text">
+            <h6>服务</h6>
+            <ul>
+                <li><a href="#">在线测量</a></li>
+                <li><a href="#">注册登录</a></li>
+                <li><a href="#">统计分析</a></li>
+                <li><a href="#">常见问题</a></li>
+            </ul>
+        </div>
+        <div class="b_text">
+            <h6>学习路径</h6>
+            <ul>
+                <li><a href="#">原理介绍</a></li>
+                <li><a href="#">系统介绍</a></li>
+                <li><a href="#">经典案例</a></li>
+            </ul>
+        </div>
+    </div>
+
+  <div class="power">COPYRIGHT@2016-2018 南京长胜仪器有限公司</div>
+</div>
+
+</body>
+
+</html>

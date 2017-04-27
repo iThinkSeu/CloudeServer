@@ -14,12 +14,14 @@ import logging
 from logging.handlers import TimedRotatingFileHandler
 import re
 import sys
+from dbSetting import create_app,db
 reload(sys)
 
 sys.setdefaultencoding('utf8')
 
-app = Flask(__name__)
-app.secret_key = 'some_secret'
+#app = Flask(__name__)
+app = create_app()
+#app.secret_key = 'some_secret'
 bootstrap=Bootstrap()
 bootstrap.init_app(app)
 
@@ -124,7 +126,7 @@ def applogin():
 
 @app.route("/",methods=['GET','POST'])
 def index():
-	print "hi"
+	#print "hi"
 	#return "hello"
 	#return redirect(url_for('static', filename='profile_small.jpg'), code=301)
 	return render_template('index.html');
@@ -270,6 +272,7 @@ def add_numbers():
 	return response
 @app.route('/starttime',methods=['GET','POST'])
 def starttime():
+	log.debug("here starttime")
 	state = "successful"
 	reason = ""
 	#start_time = "2017-06-16 15:40:29"

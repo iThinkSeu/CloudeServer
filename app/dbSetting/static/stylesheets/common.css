@@ -1,0 +1,396 @@
+html{
+    text-align: center;
+}
+
+body {
+    margin:0 auto;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    width:1580px;
+    text-align:left;
+}
+/***************** copy from topStrip.css ******************************************/
+
+li{
+    display:inline;
+    list-style:none;
+    list-style-position:outside;
+    text-align:center;
+    font-weight:bold;
+    float:left;
+}
+
+a
+{
+    text-decoration:none;
+    color:#eeeeee;
+}
+a:hover
+{
+    text-decoration:none;
+}
+
+#top{
+    width:1580px;
+    height:55px;
+    z-index:1;
+    position: relative;
+    background-image: url(../images/common/top.png);
+}
+
+#top>a {
+    position: absolute;
+    left:200px;
+    top:0px;
+    width:350px;
+    height:55px;
+    z-index: 1000
+}
+
+.list{
+    line-height:20px;
+    text-align:left;
+    font-weight:normal;
+    background-color:rgba(119, 136, 153, 0.6);
+    color: #222222;
+}
+
+.menu{
+    width:170px;
+    height:10px;
+    background-color:rgba(255,255,255,0.0);
+    color:#eeeeee;
+    font-size: 15px;
+    overflow-y:hidden;
+    cursor:hand;
+    transition: height 0.2s ease-in-out;
+    -moz-transition: height 0.2s ease-in-out;
+    -webkit-transition: height 0.2s ease-in-out;
+    -o-transition: height 0.2s ease-in-out;
+}
+
+.menu>div:first-child {
+    height:55px;
+    line-height:55px;
+}
+
+.menu>a:first-child {
+    height:55px;
+    line-height:55px;
+    color:#ffffff;
+}
+
+.menu:hover
+{
+    background-color:rgba(255,255,255,0.2);
+}
+
+#menuLesson {
+    margin-left: 700px;
+}
+
+#menuExp:hover
+{
+    height:175px;
+}
+
+#menuReport:hover
+{
+    height:95px;
+}
+
+.menuItem
+{
+    display:block;
+    text-align:center;
+    height: 20px;
+    color: #ffffff;
+}
+.menuItem:hover
+{
+    background-color:#445566;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+#userName
+{
+    height: 55px;
+    color: #888888;
+    font-size: 15px;
+    line-height: 55px;
+    font-weight: 600;
+}
+
+#userName a {
+    color: #ddd;
+    font-size: 1em;
+}
+/*****************************************************************/
+
+
+.exptitle
+{
+    font-size: 45px;
+    font-weight: bold;
+    color:#CCCCCC;
+    position: absolute;
+    left:100px;
+    top:90px;
+}
+
+/*警告弹框*/
+.warning
+{
+    position: absolute;
+    margin-left: 290px;
+    top: 200px;
+    height: 320px;
+
+    /*初始状态都是隐藏*/
+    visibility: hidden;
+    opacity: 0;
+
+}
+
+.p_warning
+{
+    position:relative;
+    font-size: 30px;
+    line-height: 40px;
+    font-weight: bolder;
+    margin: 0 auto
+}
+
+.tableFirstLine
+{
+    font-weight: bolder;
+}
+
+/*仪器介绍弹框*/
+.instrumentIntro
+{
+    position: absolute;
+    left: 25%;
+    right: 25%;
+    top: 100px;
+    height: 500px;
+    align: center;
+
+    overflow-x: hidden;
+    overflow-y: scroll;
+    background-color:rgba(255, 255, 255, 0.9);
+
+    /*初始状态都是隐藏*/
+    visibility: hidden;
+    opacity: 0;
+
+    /*淡入淡出效果*/
+    /*
+    -webkit-transition: opacity 0.2s ease-in-out;
+    -moz-transition: opacity 0.2s ease-in-out;
+    -ms-transition: opacity 0.2s ease-in-out;
+    -o-transition: opacity 0.2s ease-in-out;
+    transition: opacity 0.2s ease-in-out;
+    */
+
+
+    /*首行缩进*/
+    text-indent: 2em;
+}
+
+hr
+{
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #333333;
+    margin: 1em 0;
+    padding: 0;
+
+}
+.instrumentIntroParagraph
+{
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+/***********************变频器拖动条***************************/
+.Slider input[type=range] {
+    -webkit-appearance: none;
+    position: absolute;
+    margin-top: 10px;
+    width: 150px;
+    height:4px;
+    background: transparent;
+}
+
+/*条子*/
+.Slider input[type=range]:focus {
+    outline: none;
+}
+.Slider input[type=range]::-webkit-slider-runnable-track {
+    height: 5px;
+    cursor: pointer;
+    background: transparent;
+    border-radius: 0px;
+    border: 0px solid #000101;
+}
+
+/*滑块*/
+.Slider input[type=range]::-webkit-slider-thumb {
+    box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+    border: 0px;
+    height: 0px;
+    width: 0px;
+    border-radius: 2px;
+    background: #cccccc;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -webkit-transition: all 0.1s ease;
+    margin-top: 2px;
+}
+
+.Slider:hover #frequencySlider::-webkit-slider-thumb
+{
+    height: 10px;
+    width: 22px;
+    margin-top: -2px;
+    margin-left: 0px;
+}
+
+.Slider:active #frequencySlider::-webkit-slider-thumb
+{
+    height: 10px;
+    width: 22px;
+    margin-top: -2px;
+    margin-left: 0px;
+}
+
+
+.Slider .sRange
+{
+    background: rgba(200, 200, 200, 0.3);
+    width:150px;
+    height:2px;
+    position: absolute;
+    margin-top: 11px;
+
+}
+
+
+.Slider .sValidRange
+{
+    background: #EEEEEE;
+    width:90px;
+    height:2px;
+    position: absolute;
+    margin-top: 11px;
+
+}
+
+/*********container部分****************/
+.banner-bottom-section{
+    margin-right: auto;
+    margin-left: auto;
+}
+.container {
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 80%;
+}
+/*
+@media (min-width: 768px) {
+  body {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  body {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  body {
+    width: 1170px;
+  }
+}
+*/
+
+.htitle {
+    text-align: center;
+    margin: 17px auto;
+    font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
+    font-size: xx-large;
+}
+
+.setc {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+    float: left;
+    width: 22%;
+}
+
+.text {
+    font-family: Impact, Haettenschweiler, "Franklin Gothic Bold", "Arial Black", sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: large;
+    line-height: 120%;
+    text-indent: 1cm;
+    width: 90%;
+}
+
+.text img {
+    float: left;
+    margin: auto 30px;
+}
+
+#bottom {
+    background:url(../images/common/bottom_empty.jpg) no-repeat;
+    height:240px;
+    width:1580px;
+}
+
+.all {
+    position: absolute;
+    left: 40%;
+}
+
+.b_text {
+    margin: 20px 20px;
+    width: 16%;
+    color: #FFFFFF;
+    float: left;
+}
+
+.b_text h6{
+    text-align: center;
+}
+
+.b_text a:link{
+    color: #FFFFFF;
+}
+.b_text a:visited{
+    color: #FFFFFF;
+}
+.b_text a:hover{
+    color: #808080;
+    text-decoration: none;
+}
+.b_text a:active{
+    color: #41bb80;
+}
+
+.power {
+    color: #FFFFFF;
+    position: absolute;
+    top:200px;
+    left: 40%;
+}

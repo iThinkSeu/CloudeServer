@@ -1,0 +1,105 @@
+
+
+{% extends "managebase.html" %}
+
+
+{% block title %}
+   <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+   <script src="https://code.highcharts.com/highcharts.js"></script>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+    <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 style="text-align: left">账户管理</h4>
+                      <!-- <div class="form-group">
+                        <span>全选 <input type="checkbox"/></span>
+                        <button class="btn btn-success">通过</button>
+                        <button class="btn btn-primary">恢复</button>
+                        <button class="btn btn-danger">删除</button>
+                        <ul class="pagination visible-md visible-lg visible-sm" id="page-right">
+                          <li><a href="#">&laquo;</a></li>
+                          <li class="active"><a href="#">1</a></li>
+                          <li><a href="#">2</a></li>
+                          <li><a href="#">3</a></li>
+                          <li><a href="#">4</a></li>
+                          <li><a href="#">5</a></li>
+                          <li><a href="#">&raquo;</a></li>
+                        </ul>
+                    </div> -->
+          </div>
+          <div class="panel-body">
+               <table class="table">  
+               <thead>
+                <tr>
+                  <!-- <th></th>
+                  <th>审核状态</th>
+                  <th>标题</th> -->
+                  <th>编号</th>
+                  <th>帐号名(设备ID)</th>
+                  <th>用户等级</th>
+                  <th>注册时间</th>
+                  <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>admin</td>
+                  <td>管理员</td>
+                  <td>2017-2-12 18:30:1</td>
+                  <td><button class="btn btn-danger">删除</button></td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>0XC9001001F102</td>
+                  <td>普通账户</td>
+                  <td>2016-10-12 15:20:43</td>
+                  <td><button class="btn btn-danger">删除</button></td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>0XC9001001F103</td>
+                  <td>普通账户</td>
+                  <td>2016-11-15 18:35:4</td>
+                  <td><button class="btn btn-danger">删除</button></td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>0XC9001001F104</td>
+                  <td>普通账户</td>
+                  <td>2016-10-10 18:25:18</td>
+                  <td><button class="btn btn-danger">删除</button></td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>0XC9001001F105</td>
+                  <td>普通账户</td>
+                  <td>2016-10-9 17:10:1</td>
+                  <td><button class="btn btn-danger">删除</button></td>
+                </tr>
+                <tr>
+                  <td>6</td>
+                  <td>0XC9001001F106</td>
+                  <td>普通账户</td>
+                  <td>2016-10-14 18:12:41</td>
+                  <td><button class="btn btn-danger">删除</button></td>
+                </tr>
+               </tbody>
+            </table>
+          </div>
+    </div>
+    <ul class="pagination visible-md visible-lg visible-sm" id="page-right">
+    <li><a href="#">&laquo;</a></li>
+    <li class="active"><a href="#">1</a></li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">5</a></li>
+    <li><a href="#">&raquo;</a></li>
+  </ul>
+ </div>
+{% endblock %}

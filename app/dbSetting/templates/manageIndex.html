@@ -1,0 +1,154 @@
+
+
+{% extends "managebase.html" %}
+
+
+{% block title %}
+   <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+   <script src="https://code.highcharts.com/highcharts.js"></script>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+    <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 style="text-align: left">高压表状态信息</h4>
+                      <!-- <div class="form-group">
+                        <span>全选 <input type="checkbox"/></span>
+                        <button class="btn btn-success">通过</button>
+                        <button class="btn btn-primary">恢复</button>
+                        <button class="btn btn-danger">删除</button>
+                        <ul class="pagination visible-md visible-lg visible-sm" id="page-right">
+                          <li><a href="#">&laquo;</a></li>
+                          <li class="active"><a href="#">1</a></li>
+                          <li><a href="#">2</a></li>
+                          <li><a href="#">3</a></li>
+                          <li><a href="#">4</a></li>
+                          <li><a href="#">5</a></li>
+                          <li><a href="#">&raquo;</a></li>
+                        </ul>
+                    </div> -->
+          </div>
+          <div class="panel-body">
+               <table class="table">  
+               <thead>
+                <tr>
+                  <!-- <th></th>
+                  <th>审核状态</th>
+                  <th>标题</th> -->
+                  <th>编号</th>
+                  <th>高压表ID</th>
+                  <th>最近一次更新</th>
+                  <th>运行状态</th>
+                  <th>详情</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>0XC9001001F101</td>
+                  <td>2017-2-12 18:30:1</td>
+                  <td style='color:green;font-size:16px'>在线</td>
+                  <td><button class="btn-success">设备详情</button></td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>0XC9001001F102</td>
+                  <td>2016-12-12 18:30:1</td>
+                  <td style='font-size:16px'>离线</td>
+                  <td><button class="btn-success">设备详情</button></td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>0XC9001001F103</td>
+                  <td>2016-11-15 18:35:4</td>
+                  <td style='font-size:16px'>离线</td>
+                  <td><button class="btn-success">设备详情</button></td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>0XC9001001F104</td>
+                  <td>2017-2-18 18:20:1</td>
+                  <td style='color:green;font-size:16px'>在线</td>
+                  <td><button class="btn-success">设备详情</button></td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>0XC9001001F105</td>
+                  <td>2016-12-9 18:10:1</td>
+                  <td style='font-size:16px'>离线</td>
+                  <td><button class="btn-success">设备详情</button></td>
+                </tr>
+                <tr>
+                  <td>6</td>
+                  <td>0XC9001001F106</td>
+                  <td>2016-11-14 18:15:4</td>
+                  <td style='font-size:16px'>离线</td>
+                  <td><button class="btn-success">设备详情</button></td>
+                </tr>
+                <tr>
+                  <td>7</td>
+                  <td>0XC9001001F107</td>
+                  <td>2016-12-12 18:30:1</td>
+                  <td style='font-size:16px'>离线</td>
+                  <td><button class="btn-success">设备详情</button></td>
+                </tr>
+                <tr>
+                  <td>8</td>
+                  <td>0XC9001001F108</td>
+                  <td>2016-11-15 18:35:4</td>
+                  <td style='font-size:16px'>离线</td>
+                  <td><button class="btn-success">设备详情</button></td>
+                </tr>
+                <tr>
+                  <td>9</td>
+                  <td>0XC9001001F109</td>
+                  <td>2017-2-18 18:20:1</td>
+                  <td style='color:green;font-size:16px'>在线</td>
+                  <td><button class="btn-success">设备详情</button></td>
+                </tr>
+                <tr>
+                  <td>10</td>
+                  <td>0XC9001001F110</td>
+                  <td>2016-12-9 18:10:1</td>
+                  <td style='font-size:16px'>离线</td>
+                  <td><button class="btn-success">设备详情</button></td>
+                </tr>
+                <tr>
+                  <td>11</td>
+                  <td>0XC9001001F111</td>
+                  <td>2016-11-14 18:15:4</td>
+                  <td style='font-size:16px'>离线</td>
+                  <td><button class="btn-success">设备详情</button></td>
+                </tr>
+                <tr>
+                  <td>12</td>
+                  <td>0XC9001001F112</td>
+                  <td>2016-11-14 18:15:4</td>
+                  <td style='font-size:16px'>离线</td>
+                  <td><button class="btn-success">设备详情</button></td>
+                </tr>
+                <tr>
+                  <td>13</td>
+                  <td>0XC9001001F113</td>
+                  <td>2016-12-12 18:30:1</td>
+                  <td style='font-size:16px'>离线</td>
+                  <td><button class="btn-success">设备详情</button></td>
+                </tr>
+               </tbody>
+            </table>
+          </div>
+    </div>
+    <ul class="pagination visible-md visible-lg visible-sm" id="page-right">
+    <li><a href="#">&laquo;</a></li>
+    <li class="active"><a href="#">1</a></li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">5</a></li>
+    <li><a href="#">&raquo;</a></li>
+  </ul>
+ </div>
+{% endblock %}

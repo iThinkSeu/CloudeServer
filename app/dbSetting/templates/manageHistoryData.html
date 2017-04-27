@@ -1,0 +1,82 @@
+
+
+{% extends "managebase.html" %}
+
+
+{% block title %}
+   <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+   <script src="https://code.highcharts.com/highcharts.js"></script>
+
+{% endblock %}
+
+{% block content %}
+
+<p><label for="meeting">开始时间</label></p>
+<p><input onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"></p>
+<p><label for="meeting">结束时间</label></p>
+<p><input onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"></p>
+
+<p><input type="checkbox" id="VDC" value="VDC">VDC  &nbsp; <input type="checkbox" id="VAC" value="VAC"> VAC &nbsp; <input type="checkbox" id="IDC" value="IDC"> IDC <input type="checkbox" id="IAC" value="IAC"> IAC <br></p> 
+<p><button type="button" class="btn btn-default">查询</button></p>  
+<!--<label for="meeting">开始时间：</label><input type="datetime-local" value="2015-09-24T13:59:59"/>
+<label for="meeting">开始时间：</label><input type="datetime-local" value="2015-09-24T13:59:59"/>
+-->
+<!--表格-->
+<table id = "table_id" class="table table-striped">
+  <caption>测量数据表格</caption>
+  <thead>
+    <tr>
+      <th>模式</th>
+      <th>时间</th>
+      <th>结果</th>
+      <th>分选</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>IDC</td>
+      <td>2016-6-28 18:30:1</td>
+      <td>0.30021A</td>
+      <td>合格</th>
+    </tr>
+    <tr>
+      <td>IDC</td>
+      <td>2016-6-28 18:32:1</td>
+      <td>0.30021A</td>
+      <td>合格</th>
+    </tr>
+    <tr>
+      <td>IDC</td>
+      <td>2016-6-28 18:35:1</td>
+      <td>0.30021A</td>
+      <td>不合格</th>
+    </tr>
+  </tbody>
+</table>
+
+<script language="JavaScript">
+  for(var i = 0;i<3;i++)
+  {
+    //添加表格标题行
+    var row = document.getElementById("table_id").insertRow();
+    var cell;
+    cell = row.insertCell(-1);
+    cell.innerHTML =  "VDC";
+    cell.align = "center";
+
+    cell = row.insertCell(-1);
+    cell.innerHTML = "2016-6-28 18:30:1";
+    cell.align = "center";
+
+    cell = row.insertCell(-1);
+    cell.innerHTML = "1.50001KV";
+    cell.align = "center";
+
+    cell = row.insertCell(-1);
+    cell.innerHTML = "合格";
+    cell.align = "center";
+  }
+</script>
+
+
+{% endblock %}

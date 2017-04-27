@@ -9,17 +9,25 @@ from sqlalchemy import and_
 
 #from flask.ext.sqlalchemy import SQLALchemy
 
-app = Flask(__name__)
+#app = Flask(__name__)
 
 #app.config['SQLALCHEMY_DATABASE_URI']="mysql://root:0596@223.3.56.220:3306/dataserverble?charset=utf8"
 #app.config['SQLALCHEMY_DATABASE_URI']="mysql://root:root@127.0.0.1:3306/dataserverble?charset=utf8"
-app.config['SQLALCHEMY_DATABASE_URI']="mysql://root:SEUqianshou2015@218.244.147.240:3306/dataserverble?charset=utf8"
-
-db = SQLAlchemy(app)
-migrage = Migrate(app,db)
-manager = Manager(app)
-manager.add_command('db',MigrateCommand)
-
+#app.config['SQLALCHEMY_DATABASE_URI']="mysql://root:SEUqianshou2015@218.244.147.240:3306/dataserverble?charset=utf8"
+"""
+from flask.ext.script import Manager
+from flask.ext.migrate import Migrate, MigrateCommand
+"""
+from dbSetting import create_app,db,sqlurl
+"""
+if __name__ == '__main__':
+	app = Flask(__name__)
+	app.config['SQLALCHEMY_DATABASE_URI']=sqlurl
+	db.init_app(app)
+	migrage = Migrate(app,db)
+	manager = Manager(app)
+	manager.add_command('db',MigrateCommand)
+"""
 class manageinstrument(db.Model):
 	__tablename__ = 'manageinstruments'
 	id = db.Column(db.Integer, primary_key = True)

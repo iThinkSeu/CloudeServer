@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+   <meta charset="UTF-8" />
+   <title>高压远程测量云技术研究及系统研制</title>
+   <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+   <script src="https://code.highcharts.com/highcharts.js"></script>
+   <link href="static/stylesheets/bootstrap.min.css" rel="stylesheet"/>
+   <link href="static/stylesheets/animate.css" rel="stylesheet"/>
+   <link href="{{ url_for('static', filename="stylesheets/style1.css") }}"  rel="stylesheet"/>
+   <link href="{{ url_for('static', filename="stylesheets/mystyle.css") }}"  rel="stylesheet"/>
+
+   <script src="static/javascripts/laydate/laydate.js"></script>
+
+
+   <style type="text/css">
+      td {
+          text-align:center;
+      }
+   </style>
+</head>
+<body>
+  
+
+<div id="wrapper">
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li style="text-align:center">
+                        <button type="button" class="btn btn-sm btn-success" style="background-color:#1AB394" onclick="window.location.href='http://www.baidu.com'">返回前台首页</button> 
+                    </li>
+                    <li class="nav-header">
+
+                        <div class="dropdown profile-element"> <span>
+                            <img alt="image" class="img-circle" height="70" width="70" id="cover" src={{url_for('static',filename = "images/profile_small.jpg")}}/>
+                             </span>
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="index.aspx#" >
+                                <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">
+                                   当前用户</strong>
+                             </span> 
+                            <span class="text-muted text-xs block">admin<b class="caret"></b></span> 
+                            </span>
+                            </a>
+                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                                <li>
+                                    <a href="profile.aspx" id="logininfo">个人资料</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li><a href="../login.aspx">安全退出</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="logo-element">
+                            高压远程云平台云管理系统
+                      </div>
+
+                    </li>
+
+                    <li id="dlgl" visible="false" >
+                        <a href="index.aspx"><span class="nav-label">登录管理</span></a>
+                        <ul class="nav nav-second-level">
+                            <li ><a id="usermanager" href="javascript:linkto(1)">管理员账号管理</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li id="setting" visible="false" >
+                        <a href="index.aspx"> <span class="nav-label">用户管理</span></a>
+                    </li>
+                    <li id="setting" visible="false" >
+                        <a href="index.aspx"> <span class="nav-label">设备管理</span></a>
+                    </li>
+                     <li id="setting" visible="false" >
+                        <a href="index.aspx"> <span class="nav-label">参数校正</span></a>
+                    </li>
+
+                 
+              </ul>
+          </div>   
+      </nav>
+  
+
+       <div id="page-wrapper" class="gray-bg dashbard-1">
+            <div id = "title" style="text-align:center;">
+            <span style="text-align:center;font-size:22px;font-weight:bold;"><img alt="image" id="titleimg" height="60" width="60" src={{url_for('static',filename = "images/titleimg.png")}}/>高压远程云平台管理系统</span>
+            <span style = "float:right;margin-top: 30px">◆退出</span>      
+            <hr style="color=#000000;" />    
+            {% block content %}
+
+            {% endblock %}
+
+            <!--
+            <div id="container" style="width: 550px; height: 400px; margin: 0 auto"></div>
+            <script language="JavaScript">
+            $(document).ready(function() {
+               var title = {
+                   text: '月平均气温'   
+               };
+               var subtitle = {
+                    text: 'Source: runoob.com'
+               };
+               var xAxis = {
+                   categories: ['一月', '二月', '三月', '四月', '五月', '六月'
+                          ,'七月', '八月', '九月', '十月', '十一月', '十二月']
+               };
+               var yAxis = {
+                  title: {
+                     text: 'Temperature (\xB0C)'
+                  },
+                  plotLines: [{
+                     value: 0,
+                     width: 1,
+                     color: '#808080'
+                  }]
+               };   
+
+               var tooltip = {
+                  valueSuffix: '\xB0C'
+               }
+
+               var legend = {
+                  layout: 'vertical',
+                  align: 'right',
+                  verticalAlign: 'middle',
+                  borderWidth: 0
+               };
+
+               var series =  [
+                  {
+                     name: 'Tokyo',
+                     data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
+                        26.5, 23.3, 18.3, 13.9, 9.6]
+                  }, 
+                  {
+                     name: 'New York',
+                     data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8,
+                        24.1, 20.1, 14.1, 8.6, 2.5]
+                  }, 
+                  {
+                     name: 'Berlin',
+                     data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6,
+                        17.9, 14.3, 9.0, 3.9, 1.0]
+                  }, 
+                  {
+                     name: 'London',
+                     data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 
+                        16.6, 14.2, 10.3, 6.6, 4.8]
+                  }
+               ];
+
+               var json = {};
+
+               json.title = title;
+               json.subtitle = subtitle;
+               json.xAxis = xAxis;
+               json.yAxis = yAxis;
+               json.tooltip = tooltip;
+               json.legend = legend;
+               json.series = series;
+
+               $('#container').highcharts(json);
+            });
+            </script>
+            -->
+       </div>
+</div>
+</body>
+</html>
