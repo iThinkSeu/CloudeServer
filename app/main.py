@@ -19,7 +19,6 @@ reload(sys)
 
 sys.setdefaultencoding('utf8')
 
-#app = Flask(__name__)
 app = create_app()
 #app.secret_key = 'some_secret'
 bootstrap=Bootstrap()
